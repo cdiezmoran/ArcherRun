@@ -1,0 +1,639 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A03F3EA11D287CFD00E177F9 /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03F3EA01D287CFD00E177F9 /* Hero.swift */; };
+		A046D67B1D25B8A7007608A1 /* Clouds.sks in Resources */ = {isa = PBXBuildFile; fileRef = A046D6791D25B8A7007608A1 /* Clouds.sks */; };
+		A046D67E1D25B98C007608A1 /* cloud2.png in Resources */ = {isa = PBXBuildFile; fileRef = A046D67D1D25B98C007608A1 /* cloud2.png */; };
+		A0E4CD851D26EA9F0091FD5F /* StartingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E4CD841D26EA9F0091FD5F /* StartingState.swift */; };
+		A0E4CD871D26EAC20091FD5F /* PlayingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E4CD861D26EAC20091FD5F /* PlayingState.swift */; };
+		A0E4CD891D26EACF0091FD5F /* GameOverState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E4CD881D26EACF0091FD5F /* GameOverState.swift */; };
+		A0EDE1CB1D233F4A008B5371 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EDE1CA1D233F4A008B5371 /* AppDelegate.swift */; };
+		A0EDE1CD1D233F4A008B5371 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = A0EDE1CC1D233F4A008B5371 /* GameScene.sks */; };
+		A0EDE1CF1D233F4A008B5371 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EDE1CE1D233F4A008B5371 /* GameScene.swift */; };
+		A0EDE1D11D233F4A008B5371 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EDE1D01D233F4A008B5371 /* GameViewController.swift */; };
+		A0EDE1D41D233F4A008B5371 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0EDE1D21D233F4A008B5371 /* Main.storyboard */; };
+		A0EDE1D61D233F4A008B5371 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0EDE1D51D233F4A008B5371 /* Assets.xcassets */; };
+		A0EDE1D91D233F4A008B5371 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0EDE1D71D233F4A008B5371 /* LaunchScreen.storyboard */; };
+		A0EDE1E41D233F4A008B5371 /* Archer_RunTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EDE1E31D233F4A008B5371 /* Archer_RunTests.swift */; };
+		A0EDE1EF1D233F4A008B5371 /* Archer_RunUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EDE1EE1D233F4A008B5371 /* Archer_RunUITests.swift */; };
+		A0EDE1FD1D23406E008B5371 /* StartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = A0EDE1FC1D23406E008B5371 /* StartScene.sks */; };
+		A0EDE1FF1D234080008B5371 /* StartScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EDE1FE1D234080008B5371 /* StartScene.swift */; };
+		A0EDE2101D23432F008B5371 /* MSButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EDE2011D23432F008B5371 /* MSButtonNode.swift */; };
+		A0EDE2111D23432F008B5371 /* MSReferenceNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EDE2021D23432F008B5371 /* MSReferenceNode.swift */; };
+		A0EDE2121D23432F008B5371 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EDE2041D23432F008B5371 /* CGFloat+Extensions.swift */; };
+		A0EDE2131D23432F008B5371 /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EDE2051D23432F008B5371 /* CGPoint+Extensions.swift */; };
+		A0EDE2141D23432F008B5371 /* CGVector+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EDE2061D23432F008B5371 /* CGVector+Extensions.swift */; };
+		A0EDE2151D23432F008B5371 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EDE2071D23432F008B5371 /* Int+Extensions.swift */; };
+		A0EDE2161D23432F008B5371 /* SKAction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EDE2081D23432F008B5371 /* SKAction+Extensions.swift */; };
+		A0EDE2171D23432F008B5371 /* SKAction+SpecialEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EDE2091D23432F008B5371 /* SKAction+SpecialEffects.swift */; };
+		A0EDE2181D23432F008B5371 /* SKColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EDE20A1D23432F008B5371 /* SKColor+Extensions.swift */; };
+		A0EDE2191D23432F008B5371 /* SKNode+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EDE20B1D23432F008B5371 /* SKNode+Extensions.swift */; };
+		A0EDE21A1D23432F008B5371 /* SKTAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EDE20C1D23432F008B5371 /* SKTAudio.swift */; };
+		A0EDE21B1D23432F008B5371 /* SKTEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EDE20D1D23432F008B5371 /* SKTEffects.swift */; };
+		A0EDE21C1D23432F008B5371 /* SKTTimingFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EDE20E1D23432F008B5371 /* SKTTimingFunctions.swift */; };
+		A0EDE21D1D23432F008B5371 /* Vector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EDE20F1D23432F008B5371 /* Vector3.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A0EDE1E01D233F4A008B5371 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0EDE1BF1D233F49008B5371 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A0EDE1C61D233F49008B5371;
+			remoteInfo = "Archer Run";
+		};
+		A0EDE1EB1D233F4A008B5371 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0EDE1BF1D233F49008B5371 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A0EDE1C61D233F49008B5371;
+			remoteInfo = "Archer Run";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A03F3EA01D287CFD00E177F9 /* Hero.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
+		A046D6791D25B8A7007608A1 /* Clouds.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Clouds.sks; sourceTree = "<group>"; };
+		A046D67D1D25B98C007608A1 /* cloud2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud2.png; sourceTree = "<group>"; };
+		A0E4CD841D26EA9F0091FD5F /* StartingState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartingState.swift; sourceTree = "<group>"; };
+		A0E4CD861D26EAC20091FD5F /* PlayingState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayingState.swift; sourceTree = "<group>"; };
+		A0E4CD881D26EACF0091FD5F /* GameOverState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverState.swift; sourceTree = "<group>"; };
+		A0EDE1C71D233F49008B5371 /* Archer Run.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Archer Run.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0EDE1CA1D233F4A008B5371 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A0EDE1CC1D233F4A008B5371 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		A0EDE1CE1D233F4A008B5371 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		A0EDE1D01D233F4A008B5371 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		A0EDE1D31D233F4A008B5371 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A0EDE1D51D233F4A008B5371 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A0EDE1D81D233F4A008B5371 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A0EDE1DA1D233F4A008B5371 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A0EDE1DF1D233F4A008B5371 /* Archer RunTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Archer RunTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0EDE1E31D233F4A008B5371 /* Archer_RunTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Archer_RunTests.swift; sourceTree = "<group>"; };
+		A0EDE1E51D233F4A008B5371 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A0EDE1EA1D233F4A008B5371 /* Archer RunUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Archer RunUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0EDE1EE1D233F4A008B5371 /* Archer_RunUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Archer_RunUITests.swift; sourceTree = "<group>"; };
+		A0EDE1F01D233F4A008B5371 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A0EDE1FC1D23406E008B5371 /* StartScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartScene.sks; sourceTree = "<group>"; };
+		A0EDE1FE1D234080008B5371 /* StartScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartScene.swift; sourceTree = "<group>"; };
+		A0EDE2011D23432F008B5371 /* MSButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSButtonNode.swift; sourceTree = "<group>"; };
+		A0EDE2021D23432F008B5371 /* MSReferenceNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSReferenceNode.swift; sourceTree = "<group>"; };
+		A0EDE2041D23432F008B5371 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
+		A0EDE2051D23432F008B5371 /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
+		A0EDE2061D23432F008B5371 /* CGVector+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGVector+Extensions.swift"; sourceTree = "<group>"; };
+		A0EDE2071D23432F008B5371 /* Int+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
+		A0EDE2081D23432F008B5371 /* SKAction+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKAction+Extensions.swift"; sourceTree = "<group>"; };
+		A0EDE2091D23432F008B5371 /* SKAction+SpecialEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKAction+SpecialEffects.swift"; sourceTree = "<group>"; };
+		A0EDE20A1D23432F008B5371 /* SKColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKColor+Extensions.swift"; sourceTree = "<group>"; };
+		A0EDE20B1D23432F008B5371 /* SKNode+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKNode+Extensions.swift"; sourceTree = "<group>"; };
+		A0EDE20C1D23432F008B5371 /* SKTAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTAudio.swift; sourceTree = "<group>"; };
+		A0EDE20D1D23432F008B5371 /* SKTEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTEffects.swift; sourceTree = "<group>"; };
+		A0EDE20E1D23432F008B5371 /* SKTTimingFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTTimingFunctions.swift; sourceTree = "<group>"; };
+		A0EDE20F1D23432F008B5371 /* Vector3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A0EDE1C41D233F49008B5371 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0EDE1DC1D233F4A008B5371 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0EDE1E71D233F4A008B5371 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A046D6781D25B88C007608A1 /* Particles */ = {
+			isa = PBXGroup;
+			children = (
+				A046D6791D25B8A7007608A1 /* Clouds.sks */,
+				A046D67D1D25B98C007608A1 /* cloud2.png */,
+			);
+			name = Particles;
+			sourceTree = "<group>";
+		};
+		A0EDE1BE1D233F49008B5371 = {
+			isa = PBXGroup;
+			children = (
+				A0EDE1C91D233F4A008B5371 /* Archer Run */,
+				A0EDE1E21D233F4A008B5371 /* Archer RunTests */,
+				A0EDE1ED1D233F4A008B5371 /* Archer RunUITests */,
+				A0EDE1C81D233F49008B5371 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A0EDE1C81D233F49008B5371 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A0EDE1C71D233F49008B5371 /* Archer Run.app */,
+				A0EDE1DF1D233F4A008B5371 /* Archer RunTests.xctest */,
+				A0EDE1EA1D233F4A008B5371 /* Archer RunUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A0EDE1C91D233F4A008B5371 /* Archer Run */ = {
+			isa = PBXGroup;
+			children = (
+				A046D6781D25B88C007608A1 /* Particles */,
+				A0EDE2001D23432F008B5371 /* Utils */,
+				A0EDE1CA1D233F4A008B5371 /* AppDelegate.swift */,
+				A0EDE1CC1D233F4A008B5371 /* GameScene.sks */,
+				A0EDE1CE1D233F4A008B5371 /* GameScene.swift */,
+				A03F3EA01D287CFD00E177F9 /* Hero.swift */,
+				A0E4CD841D26EA9F0091FD5F /* StartingState.swift */,
+				A0E4CD861D26EAC20091FD5F /* PlayingState.swift */,
+				A0E4CD881D26EACF0091FD5F /* GameOverState.swift */,
+				A0EDE1D01D233F4A008B5371 /* GameViewController.swift */,
+				A0EDE1D21D233F4A008B5371 /* Main.storyboard */,
+				A0EDE1D51D233F4A008B5371 /* Assets.xcassets */,
+				A0EDE1D71D233F4A008B5371 /* LaunchScreen.storyboard */,
+				A0EDE1DA1D233F4A008B5371 /* Info.plist */,
+				A0EDE1FC1D23406E008B5371 /* StartScene.sks */,
+				A0EDE1FE1D234080008B5371 /* StartScene.swift */,
+			);
+			path = "Archer Run";
+			sourceTree = "<group>";
+		};
+		A0EDE1E21D233F4A008B5371 /* Archer RunTests */ = {
+			isa = PBXGroup;
+			children = (
+				A0EDE1E31D233F4A008B5371 /* Archer_RunTests.swift */,
+				A0EDE1E51D233F4A008B5371 /* Info.plist */,
+			);
+			path = "Archer RunTests";
+			sourceTree = "<group>";
+		};
+		A0EDE1ED1D233F4A008B5371 /* Archer RunUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A0EDE1EE1D233F4A008B5371 /* Archer_RunUITests.swift */,
+				A0EDE1F01D233F4A008B5371 /* Info.plist */,
+			);
+			path = "Archer RunUITests";
+			sourceTree = "<group>";
+		};
+		A0EDE2001D23432F008B5371 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				A0EDE2011D23432F008B5371 /* MSButtonNode.swift */,
+				A0EDE2021D23432F008B5371 /* MSReferenceNode.swift */,
+				A0EDE2031D23432F008B5371 /* SKTUtils */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		A0EDE2031D23432F008B5371 /* SKTUtils */ = {
+			isa = PBXGroup;
+			children = (
+				A0EDE2041D23432F008B5371 /* CGFloat+Extensions.swift */,
+				A0EDE2051D23432F008B5371 /* CGPoint+Extensions.swift */,
+				A0EDE2061D23432F008B5371 /* CGVector+Extensions.swift */,
+				A0EDE2071D23432F008B5371 /* Int+Extensions.swift */,
+				A0EDE2081D23432F008B5371 /* SKAction+Extensions.swift */,
+				A0EDE2091D23432F008B5371 /* SKAction+SpecialEffects.swift */,
+				A0EDE20A1D23432F008B5371 /* SKColor+Extensions.swift */,
+				A0EDE20B1D23432F008B5371 /* SKNode+Extensions.swift */,
+				A0EDE20C1D23432F008B5371 /* SKTAudio.swift */,
+				A0EDE20D1D23432F008B5371 /* SKTEffects.swift */,
+				A0EDE20E1D23432F008B5371 /* SKTTimingFunctions.swift */,
+				A0EDE20F1D23432F008B5371 /* Vector3.swift */,
+			);
+			path = SKTUtils;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A0EDE1C61D233F49008B5371 /* Archer Run */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A0EDE1F31D233F4A008B5371 /* Build configuration list for PBXNativeTarget "Archer Run" */;
+			buildPhases = (
+				A0EDE1C31D233F49008B5371 /* Sources */,
+				A0EDE1C41D233F49008B5371 /* Frameworks */,
+				A0EDE1C51D233F49008B5371 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Archer Run";
+			productName = "Archer Run";
+			productReference = A0EDE1C71D233F49008B5371 /* Archer Run.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A0EDE1DE1D233F4A008B5371 /* Archer RunTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A0EDE1F61D233F4A008B5371 /* Build configuration list for PBXNativeTarget "Archer RunTests" */;
+			buildPhases = (
+				A0EDE1DB1D233F4A008B5371 /* Sources */,
+				A0EDE1DC1D233F4A008B5371 /* Frameworks */,
+				A0EDE1DD1D233F4A008B5371 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A0EDE1E11D233F4A008B5371 /* PBXTargetDependency */,
+			);
+			name = "Archer RunTests";
+			productName = "Archer RunTests";
+			productReference = A0EDE1DF1D233F4A008B5371 /* Archer RunTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A0EDE1E91D233F4A008B5371 /* Archer RunUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A0EDE1F91D233F4A008B5371 /* Build configuration list for PBXNativeTarget "Archer RunUITests" */;
+			buildPhases = (
+				A0EDE1E61D233F4A008B5371 /* Sources */,
+				A0EDE1E71D233F4A008B5371 /* Frameworks */,
+				A0EDE1E81D233F4A008B5371 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A0EDE1EC1D233F4A008B5371 /* PBXTargetDependency */,
+			);
+			name = "Archer RunUITests";
+			productName = "Archer RunUITests";
+			productReference = A0EDE1EA1D233F4A008B5371 /* Archer RunUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A0EDE1BF1D233F49008B5371 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Carlos Diez";
+				TargetAttributes = {
+					A0EDE1C61D233F49008B5371 = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = JZ7L2MEN7G;
+					};
+					A0EDE1DE1D233F4A008B5371 = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = A0EDE1C61D233F49008B5371;
+					};
+					A0EDE1E91D233F4A008B5371 = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = A0EDE1C61D233F49008B5371;
+					};
+				};
+			};
+			buildConfigurationList = A0EDE1C21D233F49008B5371 /* Build configuration list for PBXProject "Archer Run" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A0EDE1BE1D233F49008B5371;
+			productRefGroup = A0EDE1C81D233F49008B5371 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A0EDE1C61D233F49008B5371 /* Archer Run */,
+				A0EDE1DE1D233F4A008B5371 /* Archer RunTests */,
+				A0EDE1E91D233F4A008B5371 /* Archer RunUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A0EDE1C51D233F49008B5371 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0EDE1CD1D233F4A008B5371 /* GameScene.sks in Resources */,
+				A046D67E1D25B98C007608A1 /* cloud2.png in Resources */,
+				A0EDE1D91D233F4A008B5371 /* LaunchScreen.storyboard in Resources */,
+				A0EDE1D61D233F4A008B5371 /* Assets.xcassets in Resources */,
+				A0EDE1FD1D23406E008B5371 /* StartScene.sks in Resources */,
+				A0EDE1D41D233F4A008B5371 /* Main.storyboard in Resources */,
+				A046D67B1D25B8A7007608A1 /* Clouds.sks in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0EDE1DD1D233F4A008B5371 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0EDE1E81D233F4A008B5371 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A0EDE1C31D233F49008B5371 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0EDE1CF1D233F4A008B5371 /* GameScene.swift in Sources */,
+				A0EDE21C1D23432F008B5371 /* SKTTimingFunctions.swift in Sources */,
+				A0EDE1D11D233F4A008B5371 /* GameViewController.swift in Sources */,
+				A0EDE2141D23432F008B5371 /* CGVector+Extensions.swift in Sources */,
+				A0EDE2131D23432F008B5371 /* CGPoint+Extensions.swift in Sources */,
+				A0EDE2121D23432F008B5371 /* CGFloat+Extensions.swift in Sources */,
+				A0EDE1CB1D233F4A008B5371 /* AppDelegate.swift in Sources */,
+				A0EDE21A1D23432F008B5371 /* SKTAudio.swift in Sources */,
+				A0EDE1FF1D234080008B5371 /* StartScene.swift in Sources */,
+				A0EDE2191D23432F008B5371 /* SKNode+Extensions.swift in Sources */,
+				A0EDE2161D23432F008B5371 /* SKAction+Extensions.swift in Sources */,
+				A0EDE2171D23432F008B5371 /* SKAction+SpecialEffects.swift in Sources */,
+				A0EDE2101D23432F008B5371 /* MSButtonNode.swift in Sources */,
+				A0EDE2111D23432F008B5371 /* MSReferenceNode.swift in Sources */,
+				A0EDE21B1D23432F008B5371 /* SKTEffects.swift in Sources */,
+				A0E4CD851D26EA9F0091FD5F /* StartingState.swift in Sources */,
+				A0E4CD891D26EACF0091FD5F /* GameOverState.swift in Sources */,
+				A03F3EA11D287CFD00E177F9 /* Hero.swift in Sources */,
+				A0EDE2151D23432F008B5371 /* Int+Extensions.swift in Sources */,
+				A0EDE21D1D23432F008B5371 /* Vector3.swift in Sources */,
+				A0E4CD871D26EAC20091FD5F /* PlayingState.swift in Sources */,
+				A0EDE2181D23432F008B5371 /* SKColor+Extensions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0EDE1DB1D233F4A008B5371 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0EDE1E41D233F4A008B5371 /* Archer_RunTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0EDE1E61D233F4A008B5371 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0EDE1EF1D233F4A008B5371 /* Archer_RunUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A0EDE1E11D233F4A008B5371 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A0EDE1C61D233F49008B5371 /* Archer Run */;
+			targetProxy = A0EDE1E01D233F4A008B5371 /* PBXContainerItemProxy */;
+		};
+		A0EDE1EC1D233F4A008B5371 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A0EDE1C61D233F49008B5371 /* Archer Run */;
+			targetProxy = A0EDE1EB1D233F4A008B5371 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A0EDE1D21D233F4A008B5371 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A0EDE1D31D233F4A008B5371 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A0EDE1D71D233F4A008B5371 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A0EDE1D81D233F4A008B5371 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A0EDE1F11D233F4A008B5371 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A0EDE1F21D233F4A008B5371 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A0EDE1F41D233F4A008B5371 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = "Archer Run/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.Archer-Run";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Debug;
+		};
+		A0EDE1F51D233F4A008B5371 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = "Archer Run/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.Archer-Run";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Release;
+		};
+		A0EDE1F71D233F4A008B5371 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				INFOPLIST_FILE = "Archer RunTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.Archer-RunTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Archer Run.app/Archer Run";
+			};
+			name = Debug;
+		};
+		A0EDE1F81D233F4A008B5371 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Archer RunTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.Archer-RunTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Archer Run.app/Archer Run";
+			};
+			name = Release;
+		};
+		A0EDE1FA1D233F4A008B5371 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				INFOPLIST_FILE = "Archer RunUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.Archer-RunUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Archer Run";
+			};
+			name = Debug;
+		};
+		A0EDE1FB1D233F4A008B5371 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Archer RunUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.Archer-RunUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Archer Run";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A0EDE1C21D233F49008B5371 /* Build configuration list for PBXProject "Archer Run" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0EDE1F11D233F4A008B5371 /* Debug */,
+				A0EDE1F21D233F4A008B5371 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A0EDE1F31D233F4A008B5371 /* Build configuration list for PBXNativeTarget "Archer Run" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0EDE1F41D233F4A008B5371 /* Debug */,
+				A0EDE1F51D233F4A008B5371 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A0EDE1F61D233F4A008B5371 /* Build configuration list for PBXNativeTarget "Archer RunTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0EDE1F71D233F4A008B5371 /* Debug */,
+				A0EDE1F81D233F4A008B5371 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A0EDE1F91D233F4A008B5371 /* Build configuration list for PBXNativeTarget "Archer RunUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0EDE1FA1D233F4A008B5371 /* Debug */,
+				A0EDE1FB1D233F4A008B5371 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A0EDE1BF1D233F49008B5371 /* Project object */;
+}
