@@ -18,19 +18,8 @@ class StartingState: GKState {
     }
     
     override func didEnterWithPreviousState(previousState: GKState?) {
-        let jump = SKAction.moveByX(0, y: 50, duration: 0.5)
-        let dropY = (scene.hero.position.y + 50) - 69
-        let drop = SKAction.moveByX(0, y: -dropY, duration: 1)
-        
-        let jumpDrop = SKAction.sequence([jump, drop])
-        
-        let startPlaying = SKAction.runBlock {
-            self.scene.gameState.enterState(PlayingState)
-        }
-        
-        let startingAction = SKAction.sequence([jumpDrop, startPlaying])
-        
-        scene.hero.runAction(startingAction)
+        scene.archer.createPhysicsBody()
+        scene.archer.jump()
     }
     
     override func isValidNextState(stateClass: AnyClass) -> Bool {
@@ -43,6 +32,17 @@ class StartingState: GKState {
     
     override func updateWithDeltaTime(seconds: NSTimeInterval) {
         scene.startingScrollLayer.position.x -= 8
+        scene.startTreesFront.position.x -= 8
+        scene.startTreesBack.position.x -= 8
+        scene.startMountains.position.x -= 8
+        
+        scene.mountains1.position.x -= 8
+        scene.mountains2.position.x -= 8
+        scene.treesBack1.position.x -= 8
+        scene.treesBack2.position.x -= 8
+        scene.treesFront1.position.x -= 8
+        scene.treesFront2.position.x -= 8
+        
         scene.levelHolder1.position.x -= 8
         scene.levelHolder2.position.x -= 8
     }

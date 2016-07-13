@@ -18,7 +18,13 @@ class GameOverState: GKState {
     }
     
     override func didEnterWithPreviousState(previousState: GKState?) {
+        let displayGameOverScreen = SKAction(named: "DisplayGameOver")!
+        let waitForDeadAnimation = SKAction.waitForDuration(0.8)
+        let gameOverSequence = SKAction.sequence([waitForDeadAnimation, displayGameOverScreen])
         
+        scene.archer.die()
+        
+        scene.gameOverScreen.runAction(gameOverSequence)
     }
     
     override func isValidNextState(stateClass: AnyClass) -> Bool {

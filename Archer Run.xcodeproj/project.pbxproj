@@ -7,9 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A03F3EA11D287CFD00E177F9 /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03F3EA01D287CFD00E177F9 /* Hero.swift */; };
+		A03F3EA11D287CFD00E177F9 /* Archer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03F3EA01D287CFD00E177F9 /* Archer.swift */; };
 		A046D67B1D25B8A7007608A1 /* Clouds.sks in Resources */ = {isa = PBXBuildFile; fileRef = A046D6791D25B8A7007608A1 /* Clouds.sks */; };
 		A046D67E1D25B98C007608A1 /* cloud2.png in Resources */ = {isa = PBXBuildFile; fileRef = A046D67D1D25B98C007608A1 /* cloud2.png */; };
+		A06081C61D3457EE00596B59 /* Spike.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06081C51D3457EE00596B59 /* Spike.swift */; };
+		A0A266081D36C09200054ECE /* Archer.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A0A266071D36C09200054ECE /* Archer.atlas */; };
+		A0A2660E1D36EE1900054ECE /* Orc.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A0A2660D1D36EE1900054ECE /* Orc.atlas */; };
+		A0ADEC841D35987900E21CE0 /* Orc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADEC831D35987900E21CE0 /* Orc.swift */; };
+		A0ADEC861D359CE200E21CE0 /* Animations.sks in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEC851D359CE200E21CE0 /* Animations.sks */; };
 		A0E4CD851D26EA9F0091FD5F /* StartingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E4CD841D26EA9F0091FD5F /* StartingState.swift */; };
 		A0E4CD871D26EAC20091FD5F /* PlayingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E4CD861D26EAC20091FD5F /* PlayingState.swift */; };
 		A0E4CD891D26EACF0091FD5F /* GameOverState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E4CD881D26EACF0091FD5F /* GameOverState.swift */; };
@@ -58,9 +63,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A03F3EA01D287CFD00E177F9 /* Hero.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
+		A03F3EA01D287CFD00E177F9 /* Archer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Archer.swift; sourceTree = "<group>"; };
 		A046D6791D25B8A7007608A1 /* Clouds.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Clouds.sks; sourceTree = "<group>"; };
 		A046D67D1D25B98C007608A1 /* cloud2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud2.png; sourceTree = "<group>"; };
+		A06081C51D3457EE00596B59 /* Spike.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spike.swift; sourceTree = "<group>"; };
+		A0A266071D36C09200054ECE /* Archer.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Archer.atlas; sourceTree = "<group>"; };
+		A0A2660D1D36EE1900054ECE /* Orc.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Orc.atlas; sourceTree = "<group>"; };
+		A0ADEC831D35987900E21CE0 /* Orc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Orc.swift; sourceTree = "<group>"; };
+		A0ADEC851D359CE200E21CE0 /* Animations.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Animations.sks; sourceTree = "<group>"; };
 		A0E4CD841D26EA9F0091FD5F /* StartingState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartingState.swift; sourceTree = "<group>"; };
 		A0E4CD861D26EAC20091FD5F /* PlayingState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayingState.swift; sourceTree = "<group>"; };
 		A0E4CD881D26EACF0091FD5F /* GameOverState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverState.swift; sourceTree = "<group>"; };
@@ -131,6 +141,15 @@
 			name = Particles;
 			sourceTree = "<group>";
 		};
+		A06081C41D3455F300596B59 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				A06081C51D3457EE00596B59 /* Spike.swift */,
+				A0ADEC831D35987900E21CE0 /* Orc.swift */,
+			);
+			name = Entities;
+			sourceTree = "<group>";
+		};
 		A0EDE1BE1D233F49008B5371 = {
 			isa = PBXGroup;
 			children = (
@@ -154,22 +173,26 @@
 		A0EDE1C91D233F4A008B5371 /* Archer Run */ = {
 			isa = PBXGroup;
 			children = (
+				A0ADEC851D359CE200E21CE0 /* Animations.sks */,
+				A06081C41D3455F300596B59 /* Entities */,
 				A046D6781D25B88C007608A1 /* Particles */,
 				A0EDE2001D23432F008B5371 /* Utils */,
 				A0EDE1CA1D233F4A008B5371 /* AppDelegate.swift */,
 				A0EDE1CC1D233F4A008B5371 /* GameScene.sks */,
 				A0EDE1CE1D233F4A008B5371 /* GameScene.swift */,
-				A03F3EA01D287CFD00E177F9 /* Hero.swift */,
+				A03F3EA01D287CFD00E177F9 /* Archer.swift */,
 				A0E4CD841D26EA9F0091FD5F /* StartingState.swift */,
 				A0E4CD861D26EAC20091FD5F /* PlayingState.swift */,
 				A0E4CD881D26EACF0091FD5F /* GameOverState.swift */,
+				A0EDE1FC1D23406E008B5371 /* StartScene.sks */,
+				A0EDE1FE1D234080008B5371 /* StartScene.swift */,
 				A0EDE1D01D233F4A008B5371 /* GameViewController.swift */,
 				A0EDE1D21D233F4A008B5371 /* Main.storyboard */,
 				A0EDE1D51D233F4A008B5371 /* Assets.xcassets */,
-				A0EDE1D71D233F4A008B5371 /* LaunchScreen.storyboard */,
+				A0A2660D1D36EE1900054ECE /* Orc.atlas */,
+				A0A266071D36C09200054ECE /* Archer.atlas */,
 				A0EDE1DA1D233F4A008B5371 /* Info.plist */,
-				A0EDE1FC1D23406E008B5371 /* StartScene.sks */,
-				A0EDE1FE1D234080008B5371 /* StartScene.swift */,
+				A0EDE1D71D233F4A008B5371 /* LaunchScreen.storyboard */,
 			);
 			path = "Archer Run";
 			sourceTree = "<group>";
@@ -289,7 +312,7 @@
 				TargetAttributes = {
 					A0EDE1C61D233F49008B5371 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = JZ7L2MEN7G;
+						DevelopmentTeam = 3J3JXXXLEU;
 					};
 					A0EDE1DE1D233F4A008B5371 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -326,8 +349,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0A2660E1D36EE1900054ECE /* Orc.atlas in Resources */,
+				A0ADEC861D359CE200E21CE0 /* Animations.sks in Resources */,
 				A0EDE1CD1D233F4A008B5371 /* GameScene.sks in Resources */,
 				A046D67E1D25B98C007608A1 /* cloud2.png in Resources */,
+				A0A266081D36C09200054ECE /* Archer.atlas in Resources */,
 				A0EDE1D91D233F4A008B5371 /* LaunchScreen.storyboard in Resources */,
 				A0EDE1D61D233F4A008B5371 /* Assets.xcassets in Resources */,
 				A0EDE1FD1D23406E008B5371 /* StartScene.sks in Resources */,
@@ -365,6 +391,7 @@
 				A0EDE2121D23432F008B5371 /* CGFloat+Extensions.swift in Sources */,
 				A0EDE1CB1D233F4A008B5371 /* AppDelegate.swift in Sources */,
 				A0EDE21A1D23432F008B5371 /* SKTAudio.swift in Sources */,
+				A0ADEC841D35987900E21CE0 /* Orc.swift in Sources */,
 				A0EDE1FF1D234080008B5371 /* StartScene.swift in Sources */,
 				A0EDE2191D23432F008B5371 /* SKNode+Extensions.swift in Sources */,
 				A0EDE2161D23432F008B5371 /* SKAction+Extensions.swift in Sources */,
@@ -374,9 +401,10 @@
 				A0EDE21B1D23432F008B5371 /* SKTEffects.swift in Sources */,
 				A0E4CD851D26EA9F0091FD5F /* StartingState.swift in Sources */,
 				A0E4CD891D26EACF0091FD5F /* GameOverState.swift in Sources */,
-				A03F3EA11D287CFD00E177F9 /* Hero.swift in Sources */,
+				A03F3EA11D287CFD00E177F9 /* Archer.swift in Sources */,
 				A0EDE2151D23432F008B5371 /* Int+Extensions.swift in Sources */,
 				A0EDE21D1D23432F008B5371 /* Vector3.swift in Sources */,
+				A06081C61D3457EE00596B59 /* Spike.swift in Sources */,
 				A0E4CD871D26EAC20091FD5F /* PlayingState.swift in Sources */,
 				A0EDE2181D23432F008B5371 /* SKColor+Extensions.swift in Sources */,
 			);
