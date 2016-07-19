@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A0EDE1C61D233F49008B5371"
-               BuildableName = "Archer Run.app"
-               BlueprintName = "Archer Run"
-               ReferencedContainer = "container:Archer Run.xcodeproj">
+               BuildableName = "Archer Rush.app"
+               BlueprintName = "Archer Rush"
+               ReferencedContainer = "container:Archer Rush.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A0EDE1DE1D233F4A008B5371"
-               BuildableName = "Archer RunTests.xctest"
-               BlueprintName = "Archer RunTests"
-               ReferencedContainer = "container:Archer Run.xcodeproj">
+               BuildableName = "Archer Rush.xctest"
+               BlueprintName = "Archer RushTests"
+               ReferencedContainer = "container:Archer Rush.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A0EDE1E91D233F4A008B5371"
-               BuildableName = "Archer RunUITests.xctest"
-               BlueprintName = "Archer RunUITests"
-               ReferencedContainer = "container:Archer Run.xcodeproj">
+               BuildableName = "Archer Rush.xctest"
+               BlueprintName = "Archer RushUITests"
+               ReferencedContainer = "container:Archer Rush.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -53,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A0EDE1C61D233F49008B5371"
-            BuildableName = "Archer Run.app"
-            BlueprintName = "Archer Run"
-            ReferencedContainer = "container:Archer Run.xcodeproj">
+            BuildableName = "Archer Rush.app"
+            BlueprintName = "Archer Rush"
+            ReferencedContainer = "container:Archer Rush.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A0EDE1C61D233F49008B5371"
-            BuildableName = "Archer Run.app"
-            BlueprintName = "Archer Run"
-            ReferencedContainer = "container:Archer Run.xcodeproj">
+            BuildableName = "Archer Rush.app"
+            BlueprintName = "Archer Rush"
+            ReferencedContainer = "container:Archer Rush.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,9 +95,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A0EDE1C61D233F49008B5371"
-            BuildableName = "Archer Run.app"
-            BlueprintName = "Archer Run"
-            ReferencedContainer = "container:Archer Run.xcodeproj">
+            BuildableName = "Archer Rush.app"
+            BlueprintName = "Archer Rush"
+            ReferencedContainer = "container:Archer Rush.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

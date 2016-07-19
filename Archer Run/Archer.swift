@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-enum ArcherState {
+enum EntityState {
     case None, Jumping, Running, Dead
 }
 
@@ -17,7 +17,7 @@ class Archer: SKSpriteNode {
     var deadAnimation: SKAction!
     var jumpAnimation: SKAction!
     var runAnimation: SKAction!
-    var state:ArcherState = .None
+    var state:EntityState = .None
     
     init() {
         let defaulTexture = SKTexture(imageNamed: "idle-1")
@@ -91,12 +91,17 @@ class Archer: SKSpriteNode {
     }
     
     func die() {
+        if state == .Dead { return }
+        
         removeActionForKey("runForever")
         removeAllActions()
         
         runAction(deadAnimation)
         
         state = .Dead
+    }
+    
+    func shootArrowAnimation() {
     }
     
     func getTextures(prefix: String, total: Int) -> [SKTexture] {

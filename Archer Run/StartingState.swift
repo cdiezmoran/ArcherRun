@@ -18,7 +18,6 @@ class StartingState: GKState {
     }
     
     override func didEnterWithPreviousState(previousState: GKState?) {
-        scene.archer.createPhysicsBody()
         scene.archer.jump()
     }
     

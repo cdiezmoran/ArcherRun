@@ -8,36 +8,20 @@
 
 import SpriteKit
 
-class orc: SKSpriteNode {
+class Orc: SKSpriteNode {
     
     var deadAnimation: SKAction!
-    var runAnimation: SKAction!
-    var throwLeftAnimation: SKAction!
-    var throwRightAnimation: SKAction!
+    var state: EntityState = .None
     
 /*-----------------------------------------------INIT-------------------------------------------------------------*/
     init() {
         let defaultTexture = SKTexture(imageNamed: "idleOrc-1")
         super.init(texture: defaultTexture, color: UIColor.clearColor(), size: defaultTexture.size())
         
-    
-        setupOrc()
+        xScale = -1
+        createPhysicsBody()
         
-        //RUN ANIMATION
         var textures = [SKTexture]()
-        textures = getTextures("walkOrc-", total: 14)
-        
-        let animate = SKAction.animateWithTextures(textures, timePerFrame: 0.05, resize: true, restore: false)
-        
-        runAnimation = SKAction.repeatActionForever(animate)
-        
-        //THROW-LEFT ANIMATION
-        textures = getTextures("throw_left-", total: 8)
-        throwLeftAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)
-        
-        //THROW-RIGHT ANIMATION
-        textures = getTextures("throw_right-", total: 8)
-        throwRightAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)
         
         //DEAD ANIMATION
         textures = getTextures("deadOrc-", total: 6)
@@ -65,13 +49,6 @@ class orc: SKSpriteNode {
         return textures
     }
     
-/*-----------------------------------------------SETUP ORC-------------------------------------------------------*/
-    func setupOrc() {
-        xScale = -1
-        
-        createPhysicsBody()
-    }
-    
 /*-------------------------------------------CREATE PHYSICS BODY-------------------------------------------------*/
     func createPhysicsBody() {
         let orcPhysicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 36, height: 39), center: CGPoint(x: -4, y: -9))
@@ -89,16 +66,14 @@ class orc: SKSpriteNode {
         
         physicsBody = orcPhysicsBody
     }
-    
-/*-----------------------------------------------RUN------------------------------------------------------------*/
-    func run() {
-        runAction(runAnimation, withKey: "runForever")
-    }
+
     
     
 /*-----------------------------------------------DEAD-----------------------------------------------------------*/
-    func dead() {
+    func die() {
         removeAllActions()
+        
+        self.physicsBody?.categoryBitMask = PhysicsCategory.None
         
         runAction(deadAnimation)
     }

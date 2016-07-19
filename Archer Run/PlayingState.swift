@@ -13,12 +13,14 @@ class PlayingState: GKState {
     
     unowned let scene: GameScene
     
+    var compoundObjects: CompoundObjects!
+    
     init(scene: GameScene) {
         self.scene = scene
     }
     
     override func didEnterWithPreviousState(previousState: GKState?) {
-        addSpriteToScene(Spike())
+        compoundObjects = CompoundObjects(scene: scene)
     }
     
     override func isValidNextState(stateClass: AnyClass) -> Bool {
@@ -26,16 +28,29 @@ class PlayingState: GKState {
     }
     
     override func willExitWithNextState(nextState: GKState) {
-        
     }
     
     override func updateWithDeltaTime(seconds: NSTimeInterval) {
         scene.score += 1
         
         if scene.timer >= Double(scene.randomInterval) {
-            addSpriteToScene(Spike())
+            let randomSelector = CGFloat.random(min: 0, max: 1)
+            
+            if randomSelector > 0 && randomSelector <= 0.3 {
+                addSpriteToScene(MeleeOrc(), isEnemy: true)
+            }
+            else if randomSelector > 0.3 && randomSelector <= 0.6 {
+                addSpriteToScene(Spike(), isEnemy: false)
+            }
+            else if randomSelector > 0.6 && randomSelector <= 0.8 {
+                compoundObjects.generateCoinBlock()
+            }
+            else if randomSelector > 0.8 {
+                compoundObjects.generateSpikesWithTarget()
+            }
+            
             scene.timer = 0
-            scene.randomInterval = CGFloat.random(min: 0.3, max: 1.25)
+            scene.randomInterval = CGFloat.random(min: 0.5, max: 1.25)
         }
         
         scene.timer += scene.fixedDelta
@@ -57,7 +72,9 @@ class PlayingState: GKState {
         scrollSprite(scene.treesBack2, speed: 2)
         scrollSprite(scene.treesFront1, speed: 4)
         scrollSprite(scene.treesFront2, speed: 4)
+        
         scene.obstacleScrollLayer.position.x -= 6
+        scene.enemyScrollLayer.position.x -= 6.5
     }
     
     func scrollStartingWorldElement(sprite: SKSpriteNode, speed: CGFloat) {
@@ -90,13 +107,20 @@ class PlayingState: GKState {
         }
     }
     
-    func addSpriteToScene(sprite: SKSpriteNode) {
+    func addSpriteToScene(sprite: SKSpriteNode, isEnemy: Bool) {
         var newPosition: CGPoint!
-        let x = scene.size.width
+        let x = scene.size.width + 10
         let y = scene.levelHolder1.size.height + sprite.size.height / 2
         newPosition = CGPointMake(x, y)
-        sprite.position = scene.convertPoint(newPosition, toNode: scene.obstacleScrollLayer)
-        scene.obstacleScrollLayer.addChild(sprite)
+        
+        if isEnemy {
+            sprite.position = scene.convertPoint(newPosition, toNode: scene.enemyScrollLayer)
+            scene.enemyScrollLayer.addChild(sprite)
+        }
+        else {
+            sprite.position = scene.convertPoint(newPosition, toNode: scene.obstacleScrollLayer)
+            scene.obstacleScrollLayer.addChild(sprite)
+        }
     }
     
     func addRandomEntity() {

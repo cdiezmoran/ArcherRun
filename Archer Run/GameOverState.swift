@@ -25,6 +25,10 @@ class GameOverState: GKState {
         scene.archer.die()
         
         scene.gameOverScreen.runAction(gameOverSequence)
+        
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        userDefaults.setValue(scene.coinCount, forKey: "coinCount")
+        userDefaults.synchronize()
     }
     
     override func isValidNextState(stateClass: AnyClass) -> Bool {
@@ -36,6 +40,6 @@ class GameOverState: GKState {
     }
     
     override func updateWithDeltaTime(seconds: NSTimeInterval) {
-        
+        scene.enemyScrollLayer.position.x -= 6.5
     }
 }
