@@ -31,7 +31,7 @@ class PlayingState: GKState {
     }
     
     override func updateWithDeltaTime(seconds: NSTimeInterval) {
-        scene.score += 30 * CGFloat(seconds)
+        scene.score += 20 * CGFloat(seconds)
         
         var floorSpeed: CGFloat = 4
         floorSpeed += 0.0005
@@ -58,31 +58,34 @@ class PlayingState: GKState {
         
         /*--------------------------------------------------------------------------------------*/
         
-        if scene.timer >= Double(scene.randomInterval) {
-            let randomSelector = CGFloat.random(min: 0, max: 1)
+        if scene.score >= 100 {
+            if scene.timer >= Double(scene.randomInterval) {
+                let randomSelector = CGFloat.random(min: 0, max: 1)
+                
+                if randomSelector > 0 && randomSelector <= 0.3 {
+                    addSpriteToScene(MeleeOrc(), isEnemy: true)
+                }
+                else if randomSelector > 0.3 && randomSelector <= 0.6 {
+                    addSpriteToScene(Spike(), isEnemy: false)
+                }
+                else if randomSelector > 0.6 && randomSelector <= 0.9 {
+                    compoundObjects.generateCoinBlock()
+                }
+                else if randomSelector > 0.9 && scene.score >= 500 {
+                    compoundObjects.generateSpikesWithTarget()
+                    scene.intervalMin = 1
+                }
+                else if randomSelector > 0.9 && scene.score < 500 {
+                    compoundObjects.generateCoinBlock()
+                }
+                
+                scene.timer = 0
+                scene.randomInterval = CGFloat.random(min: scene.intervalMin, max: scene.intervalMax)
+            }
             
-            if randomSelector > 0 && randomSelector <= 0.3 {
-                addSpriteToScene(MeleeOrc(), isEnemy: true)
-            }
-            else if randomSelector > 0.3 && randomSelector <= 0.6 {
-                addSpriteToScene(Spike(), isEnemy: false)
-            }
-            else if randomSelector > 0.6 && randomSelector <= 0.9 {
-                compoundObjects.generateCoinBlock()
-            }
-            else if randomSelector > 0.9 && scene.score >= 500 {
-                compoundObjects.generateSpikesWithTarget()
-                scene.intervalMin = 1
-            }
-            else if randomSelector > 0.9 && scene.score < 500 {
-                compoundObjects.generateCoinBlock()
-            }
-            
-            scene.timer = 0
-            scene.randomInterval = CGFloat.random(min: scene.intervalMin, max: scene.intervalMax)
+            scene.timer += scene.fixedDelta
         }
         
-        scene.timer += scene.fixedDelta
         
         /*--------------------------------------------------------------------------------------*/
         

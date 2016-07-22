@@ -40,6 +40,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     var currentLevelHolder: String = "levelHolder1"
+    var didTutJump: Bool = false
+    var didTutShoot: Bool = false
     var firstTouchLocation = CGPointZero
     var fixedDelta: CFTimeInterval = 1.0/60.0
     var intervalMin: CGFloat = 0.5
@@ -176,7 +178,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             archer.run()
             
             if gameState.currentState is StartingState {
-                gameState.enterState(PlayingState)
+                if playedGames < 3 {
+                    gameState.enterState(TutorialState)
+                }
+                else {
+                    gameState.enterState(PlayingState)
+                }
             }
             
         }
@@ -219,13 +226,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
        /* Called when a touch begins */
-        if !(gameState.currentState is PlayingState) { return }
+        if gameState.currentState is GameOverState || gameState.currentState is StartingState { return }
         
         let touch = touches.first
         let location = touch?.locationInNode(self)
         if location?.x < (frame.width / 2)/2 {
             // make the hero jump
             if archer.state == .Jumping { return }
+            if gameState.currentState is TutorialState { didTutJump = true }
             archer.jump()
         }
         else {
@@ -234,7 +242,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if !(gameState.currentState is PlayingState) { return }
+        if gameState.currentState is GameOverState || gameState.currentState is StartingState { return }
         
         let TouchDistanceThreshold: CGFloat = 4
         
@@ -255,8 +263,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         let arrow = Arrow()
                         addChild(arrow)
                         arrows.append(arrow)
-                        arrow.position = archer.position
+                        arrow.position = archer.position + CGPoint(x: 10, y: -5)
                         arrow.physicsBody?.applyImpulse(CGVector(dx: arrowDx * 4, dy: arrowDy * 4))
+                        if gameState.currentState is TutorialState { didTutShoot = true }
                     }
                 }
             }
@@ -356,10 +365,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         for case let spike as Spike in target.children {
             let slideDown = SKAction.moveBy(CGVector(dx: 0, dy: -spike.size.height), duration: 0.25)
+            let removeSpike = SKAction.runBlock({ spike.removeFromParent() })
+            
+            let slideAndRemove = SKAction.sequence([slideDown, removeSpike])
+            
             spike.zPosition = -1
-            spike.runAction(slideDown)
-            /*let removeSpike = SKAction.runBlock({ spike.removeFromParent() })
-            runAction(removeSpike)*/
+            spike.runAction(slideAndRemove)
         }
     }
     
