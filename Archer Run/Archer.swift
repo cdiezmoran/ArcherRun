@@ -77,8 +77,8 @@ class Archer: SKSpriteNode {
     func jump() {
         removeActionForKey("runForever")
         
-        //physicsBody?.applyImpulse(CGVector(dx: 0, dy: 35)) //Phone
-        physicsBody?.applyImpulse(CGVector(dx: 0, dy: 60)) //Emulator
+        physicsBody?.applyImpulse(CGVector(dx: 0, dy: 30)) //Phone
+        //physicsBody?.applyImpulse(CGVector(dx: 0, dy: 60)) //Emulator
         
         runAction(jumpAnimation)
         state = .Jumping

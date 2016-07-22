@@ -19,6 +19,7 @@
 		A0A2660E1D36EE1900054ECE /* Orc.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A0A2660D1D36EE1900054ECE /* Orc.atlas */; };
 		A0ADEC841D35987900E21CE0 /* Orc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADEC831D35987900E21CE0 /* Orc.swift */; };
 		A0ADEC861D359CE200E21CE0 /* Animations.sks in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEC851D359CE200E21CE0 /* Animations.sks */; };
+		A0C813C51D41908D00AF4581 /* TutorialState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C813C41D41908D00AF4581 /* TutorialState.swift */; };
 		A0DF62E21D3D4799005926A5 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DF62E11D3D4799005926A5 /* Coin.swift */; };
 		A0DF62E41D3D4A59005926A5 /* CompoundObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DF62E31D3D4A59005926A5 /* CompoundObjects.swift */; };
 		A0DF62ED1D3D89CC005926A5 /* CoinGrab.sks in Resources */ = {isa = PBXBuildFile; fileRef = A0DF62EB1D3D89CC005926A5 /* CoinGrab.sks */; };
@@ -83,6 +84,7 @@
 		A0A2660D1D36EE1900054ECE /* Orc.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Orc.atlas; sourceTree = "<group>"; };
 		A0ADEC831D35987900E21CE0 /* Orc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Orc.swift; sourceTree = "<group>"; };
 		A0ADEC851D359CE200E21CE0 /* Animations.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Animations.sks; sourceTree = "<group>"; };
+		A0C813C41D41908D00AF4581 /* TutorialState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialState.swift; sourceTree = "<group>"; };
 		A0DF62E11D3D4799005926A5 /* Coin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
 		A0DF62E31D3D4A59005926A5 /* CompoundObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompoundObjects.swift; sourceTree = "<group>"; };
 		A0DF62EB1D3D89CC005926A5 /* CoinGrab.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CoinGrab.sks; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				A0E4CD841D26EA9F0091FD5F /* StartingState.swift */,
+				A0C813C41D41908D00AF4581 /* TutorialState.swift */,
 				A0E4CD861D26EAC20091FD5F /* PlayingState.swift */,
 				A0E4CD881D26EACF0091FD5F /* GameOverState.swift */,
 			);
@@ -467,6 +470,7 @@
 				A03F3EA11D287CFD00E177F9 /* Archer.swift in Sources */,
 				A0EDE2151D23432F008B5371 /* Int+Extensions.swift in Sources */,
 				A024BFFC1D3EDDFA00164646 /* Target.swift in Sources */,
+				A0C813C51D41908D00AF4581 /* TutorialState.swift in Sources */,
 				A0EDE21D1D23432F008B5371 /* Vector3.swift in Sources */,
 				A06081C61D3457EE00596B59 /* Spike.swift in Sources */,
 				A0E4CD871D26EAC20091FD5F /* PlayingState.swift in Sources */,

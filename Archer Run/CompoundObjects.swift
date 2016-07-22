@@ -57,20 +57,82 @@ class CompoundObjects {
         
         scene.obstacleScrollLayer.addChild(coinNode)
         coinNode.position = scene.convertPoint(newPosition, toNode: scene.obstacleScrollLayer)
+        coinNode.zPosition = 50
     }
     
     func generateSpikesWithTarget() {
         let target = Target()
         let firstSpike = Spike()
         var spikes: [Spike] = []
+        var chainLinks: [SKSpriteNode] = []
 
+        /*-----------------------------SETUP TARGET-----------------------------------------------*/
         let targetX = scene.size.width + (firstSpike.size.width * 5) / 2
         let targetY = CGFloat.random(min: scene.size.height / 2, max: scene.size.height - 100)
         
-        target.position = scene.convertPoint(CGPointMake(targetX, targetY), toNode: scene.obstacleScrollLayer)
+        let targetPosition = CGPointMake(targetX, targetY)
         
+        target.position = scene.convertPoint(targetPosition, toNode: scene.obstacleScrollLayer)
         scene.obstacleScrollLayer.addChild(target)
         
+        /*-----------------------------SETUP CHAIN-----------------------------------------------*/
+        let numberOfLinks = round((scene.size.height - targetPosition.y) / 30) + 1
+        var linkPos = target.position
+        
+        for _ in 0..<Int(numberOfLinks) {
+            let texture = SKTexture(imageNamed: "chain")
+            let chainLink = SKSpriteNode(texture: texture, color: UIColor.clearColor(), size: texture.size())
+            
+            chainLink.physicsBody = SKPhysicsBody(rectangleOfSize: texture.size())
+            
+            chainLink.physicsBody?.mass *= 0.5
+            
+            chainLink.physicsBody?.categoryBitMask = PhysicsCategory.None
+            chainLink.physicsBody?.collisionBitMask = PhysicsCategory.None
+            
+            chainLink.position = linkPos
+            linkPos.y += texture.size().height
+            
+            chainLink.zPosition = -1
+            
+            scene.obstacleScrollLayer.addChild(chainLink)
+            chainLinks.append(chainLink)
+        }
+        
+        for i in 0..<chainLinks.count {
+            if i == 0 {
+                let position = scene.convertPoint(target.position, fromNode: scene.obstacleScrollLayer)
+                let pin = SKPhysicsJointPin.jointWithBodyA(target.physicsBody!, bodyB: chainLinks[i].physicsBody!, anchor: position)
+                scene.physicsWorld.addJoint(pin)
+            }
+            else {
+                var anchor = scene.convertPoint(chainLinks[i].position, fromNode: scene.obstacleScrollLayer)
+                anchor.y -= 15
+                let pin = SKPhysicsJointPin.jointWithBodyA(chainLinks[i-1].physicsBody!, bodyB: chainLinks[i].physicsBody!, anchor: anchor)
+                scene.physicsWorld.addJoint(pin)
+            }
+        }
+        
+        let lastLink = chainLinks.last!
+        
+        let topNode = SKSpriteNode(color: UIColor.clearColor(), size: CGSize(width: 50, height: 50))
+        
+        topNode.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 50, height: 50))
+        topNode.physicsBody?.affectedByGravity = false
+        topNode.physicsBody?.dynamic = false
+        topNode.physicsBody?.allowsRotation = false
+        
+        topNode.physicsBody?.categoryBitMask = PhysicsCategory.None
+        topNode.physicsBody?.collisionBitMask = PhysicsCategory.None
+        
+        topNode.position = lastLink.position
+        scene.obstacleScrollLayer.addChild(topNode)
+        
+        let lastPinPosition = scene.convertPoint(topNode.position, fromNode: scene.obstacleScrollLayer)
+        let lastPin = SKPhysicsJointPin.jointWithBodyA(topNode.physicsBody!, bodyB: lastLink.physicsBody!, anchor: lastPinPosition)
+        scene.physicsWorld.addJoint(lastPin)
+        
+        /*-----------------------------SETUP SPIKES-----------------------------------------------*/
         let x = scene.size.width + 10
         let y = scene.levelHolder1.size.height + firstSpike.size.height / 2
         firstSpike.position = scene.convertPoint(CGPointMake(x, y), toNode: target)

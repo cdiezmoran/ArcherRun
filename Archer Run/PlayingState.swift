@@ -31,7 +31,32 @@ class PlayingState: GKState {
     }
     
     override func updateWithDeltaTime(seconds: NSTimeInterval) {
-        scene.score += 1
+        scene.score += 30 * CGFloat(seconds)
+        
+        var floorSpeed: CGFloat = 4
+        floorSpeed += 0.0005
+        if scene.score < 500 {
+            floorSpeed = 4
+        }
+        
+        if floorSpeed > 9 {
+            floorSpeed = 9
+        }
+        
+        if floorSpeed >= 4 && floorSpeed < 6 {
+            scene.intervalMin = 0.5
+            scene.intervalMax = 1.25
+        }
+        else if floorSpeed >= 6 && floorSpeed < 8 {
+            scene.intervalMin = 0.8
+            scene.intervalMax = 1.5
+        }
+        else if floorSpeed >= 8 && floorSpeed <= 9 {
+            scene.intervalMin = 1.25
+            scene.intervalMax = 2
+        }
+        
+        /*--------------------------------------------------------------------------------------*/
         
         if scene.timer >= Double(scene.randomInterval) {
             let randomSelector = CGFloat.random(min: 0, max: 1)
@@ -42,39 +67,55 @@ class PlayingState: GKState {
             else if randomSelector > 0.3 && randomSelector <= 0.6 {
                 addSpriteToScene(Spike(), isEnemy: false)
             }
-            else if randomSelector > 0.6 && randomSelector <= 0.8 {
+            else if randomSelector > 0.6 && randomSelector <= 0.9 {
                 compoundObjects.generateCoinBlock()
             }
-            else if randomSelector > 0.8 {
+            else if randomSelector > 0.9 && scene.score >= 500 {
                 compoundObjects.generateSpikesWithTarget()
+                scene.intervalMin = 1
+            }
+            else if randomSelector > 0.9 && scene.score < 500 {
+                compoundObjects.generateCoinBlock()
             }
             
             scene.timer = 0
-            scene.randomInterval = CGFloat.random(min: 0.5, max: 1.25)
+            scene.randomInterval = CGFloat.random(min: scene.intervalMin, max: scene.intervalMax)
         }
         
         scene.timer += scene.fixedDelta
         
-    /*--------------------------------------------------------------------------------------*/
+        /*--------------------------------------------------------------------------------------*/
+        
+        let secondsFloat = CGFloat(seconds)
+        
+        let scrollSpeed = (floorSpeed * 60) * secondsFloat
+        let treesFrontSpeed = (2 * 60) * secondsFloat
+        let treesBackSpeed = 60 * secondsFloat
+        let mountainsSpeed = 30 * secondsFloat
+        let enemyScrollSpeedSlow = ((floorSpeed + 1) * 60) * secondsFloat
+        let enemyScrollSpeed = ((floorSpeed + 2) * 60) * secondsFloat
+        let enemyScrollSpeedFast = ((floorSpeed + 3) * 60) * secondsFloat
+        
         //Scroll rest of starting world
-        scrollStartingWorldLayer(scene.startingScrollLayer, speed: 6)
-        scrollStartingWorldElement(scene.startTreesFront, speed: 4)
-        scrollStartingWorldElement(scene.startTreesBack, speed: 2)
-        scrollStartingWorldElement(scene.startMountains, speed: 0.5)
+        scrollStartingWorldLayer(scene.startingScrollLayer, speed: scrollSpeed)
+        scrollStartingWorldElement(scene.startTreesFront, speed: treesFrontSpeed)
+        scrollStartingWorldElement(scene.startTreesBack, speed: treesBackSpeed)
+        scrollStartingWorldElement(scene.startMountains, speed: mountainsSpeed)
         
-    /*--------------------------------------------------------------------------------------*/
         //Infinite Scroll
-        scrollSprite(scene.levelHolder1, speed: 6)
-        scrollSprite(scene.levelHolder2, speed: 6)
-        scrollSprite(scene.mountains1, speed: 0.5)
-        scrollSprite(scene.mountains2, speed: 0.5)
-        scrollSprite(scene.treesBack1, speed: 2)
-        scrollSprite(scene.treesBack2, speed: 2)
-        scrollSprite(scene.treesFront1, speed: 4)
-        scrollSprite(scene.treesFront2, speed: 4)
+        scrollSprite(scene.levelHolder1, speed: scrollSpeed)
+        scrollSprite(scene.levelHolder2, speed: scrollSpeed)
+        scrollSprite(scene.mountains1, speed: mountainsSpeed)
+        scrollSprite(scene.mountains2, speed: mountainsSpeed)
+        scrollSprite(scene.treesBack1, speed: treesBackSpeed)
+        scrollSprite(scene.treesBack2, speed: treesBackSpeed)
+        scrollSprite(scene.treesFront1, speed: treesFrontSpeed)
+        scrollSprite(scene.treesFront2, speed: treesFrontSpeed)
         
-        scene.obstacleScrollLayer.position.x -= 6
-        scene.enemyScrollLayer.position.x -= 6.5
+        scene.obstacleScrollLayer.position.x -= scrollSpeed
+        scene.enemyScrollLayer.position.x -= enemyScrollSpeed
+        scene.enemyScrollLayerSlow.position.x -= enemyScrollSpeedSlow
+        scene.enemyScrollLayerFast.position.x -= enemyScrollSpeedFast
     }
     
     func scrollStartingWorldElement(sprite: SKSpriteNode, speed: CGFloat) {
@@ -114,8 +155,19 @@ class PlayingState: GKState {
         newPosition = CGPointMake(x, y)
         
         if isEnemy {
-            sprite.position = scene.convertPoint(newPosition, toNode: scene.enemyScrollLayer)
-            scene.enemyScrollLayer.addChild(sprite)
+            let randomSelector = CGFloat.random(min: 0, max: 1)
+            if randomSelector <= 0.4 {
+                sprite.position = scene.convertPoint(newPosition, toNode: scene.enemyScrollLayer)
+                scene.enemyScrollLayer.addChild(sprite)
+            }
+            else if randomSelector > 0.4 && randomSelector <= 0.8 {
+                sprite.position = scene.convertPoint(newPosition, toNode: scene.enemyScrollLayerSlow)
+                scene.enemyScrollLayerSlow.addChild(sprite)
+            }
+            else if randomSelector > 0.8 {
+                sprite.position = scene.convertPoint(newPosition, toNode: scene.enemyScrollLayerFast)
+                scene.enemyScrollLayerFast.addChild(sprite)
+            }
         }
         else {
             sprite.position = scene.convertPoint(newPosition, toNode: scene.obstacleScrollLayer)

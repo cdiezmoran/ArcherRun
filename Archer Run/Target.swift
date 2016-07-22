@@ -25,9 +25,9 @@ class Target: SKSpriteNode {
     func createPhysicsBody() {
         let body = SKPhysicsBody(texture: defaultTexture, size: defaultTexture.size())
         
-        body.affectedByGravity = false
         body.allowsRotation = false
-        body.dynamic = false
+        
+        body.mass *= 0.5
         
         body.categoryBitMask = PhysicsCategory.Target
         body.collisionBitMask = PhysicsCategory.Arrow

@@ -24,21 +24,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameOverState: GKState!
     var playingState: GKState!
     var startingState: GKState!
+    var tutorialState: GKState!
     
     var arrows: [Arrow] = []
     var coinCount: Int = 0 {
         didSet {
-            coinCountLabel.text = String(coinCount)
+            var coinString = String(coinCount)
+            if coinString.characters.count == 1 {
+                coinString = "00" + coinString
+            }
+            else if coinString.characters.count == 2 {
+                coinString = "0" + coinString
+            }
+            coinCountLabel.text = coinString
         }
     }
     var currentLevelHolder: String = "levelHolder1"
     var firstTouchLocation = CGPointZero
     var fixedDelta: CFTimeInterval = 1.0/60.0
+    var intervalMin: CGFloat = 0.5
+    var intervalMax:CGFloat = 1.5
     var lastUpdateTime: CFTimeInterval = 0
+    var playedGames: Int = 0
     var randomInterval: CGFloat!
-    var score: Int = 0 {
+    var score: CGFloat = 0 {
         didSet {
-            scoreLabel.text = "\(score)m"
+            let roundedScore = Int(round(score))
+            scoreLabel.text = "\(roundedScore)m"
         }
     }
     var timer: CFTimeInterval = 0
@@ -47,7 +59,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var clouds: SKEmitterNode!
     var coinCountLabel: SKLabelNode!
     var enemyScrollLayer: SKNode!
+    var enemyScrollLayerFast: SKNode!
+    var enemyScrollLayerSlow: SKNode!
     var gameOverScreen: SKSpriteNode!
+    var highScoreLabel: SKLabelNode!
     var invisibleGround: SKSpriteNode!
     var levelHolder1: SKSpriteNode!
     var levelHolder2: SKSpriteNode!
@@ -57,6 +72,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var playAgainButton: MSButtonNode!
     var startGroundLarge: SKSpriteNode!
     var scoreLabel: SKLabelNode!
+    var scoreLabelGO: SKLabelNode!
     var startMountains: SKSpriteNode!
     var startingScrollLayer: SKNode!
     var startTreesBack: SKSpriteNode!
@@ -79,7 +95,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         clouds = self.childNodeWithName("clouds") as! SKEmitterNode
         coinCountLabel = self.childNodeWithName("coinCountLabel") as! SKLabelNode
         enemyScrollLayer = self.childNodeWithName("enemyScrollLayer")
+        enemyScrollLayerFast = self.childNodeWithName("enemyScrollLayerFast")
+        enemyScrollLayerSlow = self.childNodeWithName("enemyScrollLayerSlow")
         gameOverScreen = self.childNodeWithName("gameOverScreen") as! SKSpriteNode
+        highScoreLabel = self.childNodeWithName("//highScoreLabel") as! SKLabelNode
         invisibleGround = self.childNodeWithName("//invisibleGround") as! SKSpriteNode
         levelHolder1 = self.childNodeWithName("levelHolder1") as! SKSpriteNode
         levelHolder2 = self.childNodeWithName("levelHolder2") as! SKSpriteNode
@@ -89,6 +108,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playAgainButton = self.childNodeWithName("//playAgainButton") as! MSButtonNode
         startGroundLarge = self.childNodeWithName("//startGroundLarge") as! SKSpriteNode
         scoreLabel = self.childNodeWithName("scoreLabel") as! SKLabelNode
+        scoreLabelGO = self.childNodeWithName("//scoreLabelGO") as! SKLabelNode
         startMountains = self.childNodeWithName("startMountains") as! SKSpriteNode
         startingScrollLayer = self.childNodeWithName("startingScrollLayer")
         startTreesBack = self.childNodeWithName("startTreesBack") as! SKSpriteNode
@@ -100,15 +120,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         water = self.childNodeWithName("//water") as! SKSpriteNode
         water2 = self.childNodeWithName("//water2") as! SKSpriteNode
         
-        clouds.advanceSimulationTime(120)
+        clouds.advanceSimulationTime(320)
         
         setupGroundPhysics()
         
         gameOverState = GameOverState(scene: self)
         playingState = PlayingState(scene: self)
         startingState = StartingState(scene: self)
+        tutorialState = TutorialState(scene: self)
         
-        gameState = GKStateMachine(states: [startingState, playingState, gameOverState])
+        gameState = GKStateMachine(states: [startingState, playingState, gameOverState, tutorialState])
         
         randomInterval = CGFloat.random(min: 0.3, max: 1.5)
         
@@ -117,6 +138,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let skView = self.view!
                 skView.showsFPS = true
                 skView.showsNodeCount = true
+                //skView.showsPhysics = true
                 
                 /* Sprite Kit applies additional optimizations to improve rendering performance */
                 skView.ignoresSiblingOrder = true
@@ -127,6 +149,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 skView.presentScene(scene)
             }
         }
+        
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        playedGames = userDefaults.integerForKey("playedGames")
         
         gameState.enterState(StartingState)
     }
@@ -198,7 +223,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let touch = touches.first
         let location = touch?.locationInNode(self)
-        if location?.x > frame.width / 2 {
+        if location?.x < (frame.width / 2)/2 {
             // make the hero jump
             if archer.state == .Jumping { return }
             archer.jump()
@@ -215,7 +240,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if let touch = touches.first {
             let location = touch.locationInNode(self)
-            if location.x < frame.width / 2 {
+            if location.x > (frame.width / 2)/2 {
                 let swipe = CGVector(dx: location.x - firstTouchLocation.x, dy: location.y - firstTouchLocation.y)
                 let swipeLength = sqrt(swipe.dx * swipe.dx + swipe.dy * swipe.dy)
                 if swipeLength > TouchDistanceThreshold {
@@ -231,7 +256,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         addChild(arrow)
                         arrows.append(arrow)
                         arrow.position = archer.position
-                        arrow.physicsBody?.applyImpulse(CGVector(dx: arrowDx * 5, dy: arrowDy * 5))
+                        arrow.physicsBody?.applyImpulse(CGVector(dx: arrowDx * 4, dy: arrowDy * 4))
                     }
                 }
             }
@@ -242,8 +267,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(currentTime: NSTimeInterval) {
         
         /* Update states with deltaTime */
-        let deltaTime = currentTime - lastUpdateTime
+        var deltaTime = currentTime - lastUpdateTime
         lastUpdateTime = currentTime
+        if deltaTime > 1 {
+            deltaTime = 1.0 / 60.0
+            lastUpdateTime = currentTime
+        }
         gameState.updateWithDeltaTime(deltaTime)
         
         /* Scroll water to make it look animated */
@@ -252,6 +281,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         /* Manage active arrows on scene */
         checkForArrowOutOfBounds()
+        
     }
     
     func checkForArrowOutOfBounds() {
@@ -274,15 +304,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func grabCoin(node: SKNode) {
         let coin = node as! Coin
-        let particles = SKEmitterNode(fileNamed: "CoinGrab")!
+        /*let particles = SKEmitterNode(fileNamed: "CoinGrab")!
         // Look into position
         particles.position = obstacleScrollLayer.convertPoint(coin.position, fromNode: coin)
         particles.advanceSimulationTime(0.15)
-        obstacleScrollLayer.addChild(particles)
+        obstacleScrollLayer.addChild(particles)*/
         
         coin.removeFromParent()
         
-        let removeParticlesAction = SKAction.runBlock({
+        /*let removeParticlesAction = SKAction.runBlock({
             particles.removeFromParent()
         })
         
@@ -290,7 +320,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let removeParticlesSequence = SKAction.sequence([waitAction, removeParticlesAction])
         
-        obstacleScrollLayer.runAction(removeParticlesSequence)
+        obstacleScrollLayer.runAction(removeParticlesSequence)*/
         
         coinCount += 1
     }
@@ -311,6 +341,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         orc.physicsBody?.applyImpulse(CGVector(dx: 5, dy: 0))
         
         orc.die()
+        
+        let removeAndAddOrc = SKAction.runBlock({
+            orc.position = orc.parent!.convertPoint(orc.position, toNode: self.obstacleScrollLayer)
+            orc.removeFromParent()
+            self.obstacleScrollLayer.addChild(orc)
+        })
+        
+        self.runAction(removeAndAddOrc)
     }
     
     func hitTargetWithSpikes(node: SKNode) {
@@ -326,7 +364,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func setupGroundPhysics() {
-        startGroundLarge.physicsBody = SKPhysicsBody(texture: startGroundLarge!.texture!, size:startGroundLarge.size)
+        startGroundLarge.physicsBody = SKPhysicsBody(texture: startGroundLarge!.texture!, size: startGroundLarge.size)
         startGroundLarge.physicsBody?.affectedByGravity = false
         startGroundLarge.physicsBody?.dynamic = false
         startGroundLarge.physicsBody?.restitution = 0

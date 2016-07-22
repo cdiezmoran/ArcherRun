@@ -30,19 +30,20 @@ class StartingState: GKState {
     }
     
     override func updateWithDeltaTime(seconds: NSTimeInterval) {
-        scene.startingScrollLayer.position.x -= 8
-        scene.startTreesFront.position.x -= 8
-        scene.startTreesBack.position.x -= 8
-        scene.startMountains.position.x -= 8
+        let pixelsToMove = CGFloat(360 * seconds)
+        scene.startingScrollLayer.position.x -= pixelsToMove
+        scene.startTreesFront.position.x -= pixelsToMove
+        scene.startTreesBack.position.x -= pixelsToMove
+        scene.startMountains.position.x -= pixelsToMove
         
-        scene.mountains1.position.x -= 8
-        scene.mountains2.position.x -= 8
-        scene.treesBack1.position.x -= 8
-        scene.treesBack2.position.x -= 8
-        scene.treesFront1.position.x -= 8
-        scene.treesFront2.position.x -= 8
+        scene.mountains1.position.x -= pixelsToMove
+        scene.mountains2.position.x -= pixelsToMove
+        scene.treesBack1.position.x -= pixelsToMove
+        scene.treesBack2.position.x -= pixelsToMove
+        scene.treesFront1.position.x -= pixelsToMove
+        scene.treesFront2.position.x -= pixelsToMove
         
-        scene.levelHolder1.position.x -= 8
-        scene.levelHolder2.position.x -= 8
+        scene.levelHolder1.position.x -= pixelsToMove
+        scene.levelHolder2.position.x -= pixelsToMove
     }
 }

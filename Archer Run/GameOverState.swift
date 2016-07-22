@@ -27,8 +27,19 @@ class GameOverState: GKState {
         scene.gameOverScreen.runAction(gameOverSequence)
         
         let userDefaults = NSUserDefaults.standardUserDefaults()
-        userDefaults.setValue(scene.coinCount, forKey: "coinCount")
+        var highscore = userDefaults.integerForKey("highscore")
+        let roundedScore = Int(round(scene.score))
+        
+        if roundedScore > highscore {
+            userDefaults.setValue(roundedScore, forKey: "highscore")
+            highscore = roundedScore
+        }
+        
+        userDefaults.setValue(scene.playedGames + 1, forKey: "playedGames")
         userDefaults.synchronize()
+        
+        scene.scoreLabelGO.text = "\(roundedScore)m"
+        scene.highScoreLabel.text = "\(highscore)m"
     }
     
     override func isValidNextState(stateClass: AnyClass) -> Bool {
@@ -40,6 +51,8 @@ class GameOverState: GKState {
     }
     
     override func updateWithDeltaTime(seconds: NSTimeInterval) {
-        scene.enemyScrollLayer.position.x -= 6.5
+        scene.enemyScrollLayer.position.x -= 4
+        scene.enemyScrollLayerSlow.position.x -= 4
+        scene.enemyScrollLayerFast.position.x -= 4
     }
 }
