@@ -19,6 +19,8 @@
 		A0A2660E1D36EE1900054ECE /* Orc.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A0A2660D1D36EE1900054ECE /* Orc.atlas */; };
 		A0ADEC841D35987900E21CE0 /* Orc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADEC831D35987900E21CE0 /* Orc.swift */; };
 		A0ADEC861D359CE200E21CE0 /* Animations.sks in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEC851D359CE200E21CE0 /* Animations.sks */; };
+		A0B486691D468E74004F8EB8 /* ChallengeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B486681D468E74004F8EB8 /* ChallengeManager.swift */; };
+		A0B4866D1D4691E8004F8EB8 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B4866C1D4691E8004F8EB8 /* Challenge.swift */; };
 		A0C813C51D41908D00AF4581 /* TutorialState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C813C41D41908D00AF4581 /* TutorialState.swift */; };
 		A0DF62E21D3D4799005926A5 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DF62E11D3D4799005926A5 /* Coin.swift */; };
 		A0DF62E41D3D4A59005926A5 /* CompoundObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DF62E31D3D4A59005926A5 /* CompoundObjects.swift */; };
@@ -84,6 +86,8 @@
 		A0A2660D1D36EE1900054ECE /* Orc.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Orc.atlas; sourceTree = "<group>"; };
 		A0ADEC831D35987900E21CE0 /* Orc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Orc.swift; sourceTree = "<group>"; };
 		A0ADEC851D359CE200E21CE0 /* Animations.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Animations.sks; sourceTree = "<group>"; };
+		A0B486681D468E74004F8EB8 /* ChallengeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengeManager.swift; sourceTree = "<group>"; };
+		A0B4866C1D4691E8004F8EB8 /* Challenge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Challenge.swift; sourceTree = "<group>"; };
 		A0C813C41D41908D00AF4581 /* TutorialState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialState.swift; sourceTree = "<group>"; };
 		A0DF62E11D3D4799005926A5 /* Coin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
 		A0DF62E31D3D4A59005926A5 /* CompoundObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompoundObjects.swift; sourceTree = "<group>"; };
@@ -252,6 +256,8 @@
 				A0EDE1D51D233F4A008B5371 /* Assets.xcassets */,
 				A0A2660D1D36EE1900054ECE /* Orc.atlas */,
 				A0A266071D36C09200054ECE /* Archer.atlas */,
+				A0B486681D468E74004F8EB8 /* ChallengeManager.swift */,
+				A0B4866C1D4691E8004F8EB8 /* Challenge.swift */,
 			);
 			name = "Archer Rush";
 			path = "Archer Run";
@@ -449,6 +455,7 @@
 				A0EDE21C1D23432F008B5371 /* SKTTimingFunctions.swift in Sources */,
 				A0EDE1D11D233F4A008B5371 /* GameViewController.swift in Sources */,
 				A03C1B941D38146200973F27 /* LongRangeOrc.swift in Sources */,
+				A0B4866D1D4691E8004F8EB8 /* Challenge.swift in Sources */,
 				A0EDE2141D23432F008B5371 /* CGVector+Extensions.swift in Sources */,
 				A0EDE2131D23432F008B5371 /* CGPoint+Extensions.swift in Sources */,
 				A0DF62E21D3D4799005926A5 /* Coin.swift in Sources */,
@@ -460,6 +467,7 @@
 				A0EDE1FF1D234080008B5371 /* StartScene.swift in Sources */,
 				A0EDE2191D23432F008B5371 /* SKNode+Extensions.swift in Sources */,
 				A0EDE2161D23432F008B5371 /* SKAction+Extensions.swift in Sources */,
+				A0B486691D468E74004F8EB8 /* ChallengeManager.swift in Sources */,
 				A0EDE2171D23432F008B5371 /* SKAction+SpecialEffects.swift in Sources */,
 				A0EDE2101D23432F008B5371 /* MSButtonNode.swift in Sources */,
 				A0EDE2111D23432F008B5371 /* MSReferenceNode.swift in Sources */,

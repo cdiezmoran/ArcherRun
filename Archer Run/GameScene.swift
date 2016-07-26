@@ -29,14 +29,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var arrows: [Arrow] = []
     var coinCount: Int = 0 {
         didSet {
-            var coinString = String(coinCount)
-            if coinString.characters.count == 1 {
-                coinString = "00" + coinString
-            }
-            else if coinString.characters.count == 2 {
-                coinString = "0" + coinString
-            }
-            coinCountLabel.text = coinString
+            coinCountLabel.text = String(coinCount)
         }
     }
     var currentLevelHolder: String = "levelHolder1"
@@ -53,16 +46,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         didSet {
             let roundedScore = Int(round(score))
             scoreLabel.text = "\(roundedScore)m"
+            ChallengeManager.sharedInstance.ranMeters(roundedScore)
         }
     }
     var timer: CFTimeInterval = 0
     
     var archer: Archer!
+    var challengeCompletedBanner: SKSpriteNode!
+    var challengeCompletedLabel: SKLabelNode!
     var clouds: SKEmitterNode!
     var coinCountLabel: SKLabelNode!
     var enemyScrollLayer: SKNode!
     var enemyScrollLayerFast: SKNode!
     var enemyScrollLayerSlow: SKNode!
+    var firstChallengeLabel: SKLabelNode!
     var gameOverScreen: SKSpriteNode!
     var highScoreLabel: SKLabelNode!
     var invisibleGround: SKSpriteNode!
@@ -75,10 +72,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var startGroundLarge: SKSpriteNode!
     var scoreLabel: SKLabelNode!
     var scoreLabelGO: SKLabelNode!
+    var secondChallengeLabel: SKLabelNode!
     var startMountains: SKSpriteNode!
     var startingScrollLayer: SKNode!
     var startTreesBack: SKSpriteNode!
     var startTreesFront: SKSpriteNode!
+    var thirdChallengeLabel: SKLabelNode!
     var treesBack1: SKSpriteNode!
     var treesBack2: SKSpriteNode!
     var treesFront1: SKSpriteNode!
@@ -94,11 +93,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         archer = Archer()
         addChild(archer)
         
+        challengeCompletedBanner = self.childNodeWithName("challengeCompletedBanner") as! SKSpriteNode
+        challengeCompletedLabel = self.childNodeWithName("//challengeCompletedLabel") as! SKLabelNode
         clouds = self.childNodeWithName("clouds") as! SKEmitterNode
         coinCountLabel = self.childNodeWithName("coinCountLabel") as! SKLabelNode
         enemyScrollLayer = self.childNodeWithName("enemyScrollLayer")
         enemyScrollLayerFast = self.childNodeWithName("enemyScrollLayerFast")
         enemyScrollLayerSlow = self.childNodeWithName("enemyScrollLayerSlow")
+        firstChallengeLabel = self.childNodeWithName("//firstChallengeLabel") as! SKLabelNode
         gameOverScreen = self.childNodeWithName("gameOverScreen") as! SKSpriteNode
         highScoreLabel = self.childNodeWithName("//highScoreLabel") as! SKLabelNode
         invisibleGround = self.childNodeWithName("//invisibleGround") as! SKSpriteNode
@@ -111,10 +113,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         startGroundLarge = self.childNodeWithName("//startGroundLarge") as! SKSpriteNode
         scoreLabel = self.childNodeWithName("scoreLabel") as! SKLabelNode
         scoreLabelGO = self.childNodeWithName("//scoreLabelGO") as! SKLabelNode
+        secondChallengeLabel = self.childNodeWithName("//secondChallengeLabel") as! SKLabelNode
         startMountains = self.childNodeWithName("startMountains") as! SKSpriteNode
         startingScrollLayer = self.childNodeWithName("startingScrollLayer")
         startTreesBack = self.childNodeWithName("startTreesBack") as! SKSpriteNode
         startTreesFront = self.childNodeWithName("startTreesFront") as! SKSpriteNode
+        thirdChallengeLabel = self.childNodeWithName("//thirdChallengeLabel") as! SKLabelNode
         treesBack1 = self.childNodeWithName("treesBack1") as! SKSpriteNode
         treesBack2 = self.childNodeWithName("treesBack2") as! SKSpriteNode
         treesFront1 = self.childNodeWithName("treesFront1") as! SKSpriteNode
@@ -140,7 +144,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let skView = self.view!
                 skView.showsFPS = true
                 skView.showsNodeCount = true
-                //skView.showsPhysics = true
                 
                 /* Sprite Kit applies additional optimizations to improve rendering performance */
                 skView.ignoresSiblingOrder = true
@@ -154,6 +157,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let userDefaults = NSUserDefaults.standardUserDefaults()
         playedGames = userDefaults.integerForKey("playedGames")
+        
+        firstChallengeLabel.text = ChallengeManager.sharedInstance.activeChallenges["firstChallenge"]!.description()
+        secondChallengeLabel.text = ChallengeManager.sharedInstance.activeChallenges["secondChallenge"]!.description()
+        thirdChallengeLabel.text = ChallengeManager.sharedInstance.activeChallenges["thirdChallenge"]!.description()
         
         gameState.enterState(StartingState)
     }
@@ -185,7 +192,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     gameState.enterState(PlayingState)
                 }
             }
-            
         }
         
         //Player contacts obstacle
@@ -255,18 +261,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     
                     let mag = sqrt(pow(swipe.dx, 2) + pow(swipe.dy, 2))
                     
-                    let arrowDx = -swipe.dx / mag
-                    let arrowDy = -swipe.dy / mag
+                    var arrowDx = -swipe.dx / mag
+                    var arrowDy = -swipe.dy / mag
                     
                     //Block shooting backwards
-                    if arrowDx > 0 {
-                        let arrow = Arrow()
-                        addChild(arrow)
-                        arrows.append(arrow)
-                        arrow.position = archer.position + CGPoint(x: 10, y: -5)
-                        arrow.physicsBody?.applyImpulse(CGVector(dx: arrowDx * 4, dy: arrowDy * 4))
-                        if gameState.currentState is TutorialState { didTutShoot = true }
+                    if arrowDx < 0 {
+                        arrowDx *= -1
+                        arrowDy *= -1
                     }
+                    let arrow = Arrow()
+                    addChild(arrow)
+                    arrows.append(arrow)
+                    arrow.position = archer.position + CGPoint(x: 10, y: -10)
+                    arrow.physicsBody?.applyImpulse(CGVector(dx: arrowDx * 4, dy: arrowDy * 4))
+                    if gameState.currentState is TutorialState { didTutShoot = true }
+                    ChallengeManager.sharedInstance.shotArrow()
                 }
             }
         }
@@ -332,6 +341,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         obstacleScrollLayer.runAction(removeParticlesSequence)*/
         
         coinCount += 1
+        
+        ChallengeManager.sharedInstance.collectedCoin()
     }
     
     func killOrc(nodeOrc: SKNode, nodeArrow: SKNode) {
@@ -358,6 +369,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         })
         
         self.runAction(removeAndAddOrc)
+        
+        ChallengeManager.sharedInstance.killedOrc()
     }
     
     func hitTargetWithSpikes(node: SKNode) {
@@ -372,6 +385,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             spike.zPosition = -1
             spike.runAction(slideAndRemove)
         }
+        
+        ChallengeManager.sharedInstance.hitTarget()
     }
     
     func setupGroundPhysics() {
