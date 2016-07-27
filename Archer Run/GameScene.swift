@@ -60,6 +60,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var enemyScrollLayerFast: SKNode!
     var enemyScrollLayerSlow: SKNode!
     var firstChallengeLabel: SKLabelNode!
+    var firstProgressLabel: SKLabelNode!
     var gameOverScreen: SKSpriteNode!
     var highScoreLabel: SKLabelNode!
     var invisibleGround: SKSpriteNode!
@@ -73,11 +74,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scoreLabel: SKLabelNode!
     var scoreLabelGO: SKLabelNode!
     var secondChallengeLabel: SKLabelNode!
+    var secondProgressLabel: SKLabelNode!
     var startMountains: SKSpriteNode!
     var startingScrollLayer: SKNode!
     var startTreesBack: SKSpriteNode!
     var startTreesFront: SKSpriteNode!
     var thirdChallengeLabel: SKLabelNode!
+    var thirdProgressLabel: SKLabelNode!
     var treesBack1: SKSpriteNode!
     var treesBack2: SKSpriteNode!
     var treesFront1: SKSpriteNode!
@@ -101,6 +104,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemyScrollLayerFast = self.childNodeWithName("enemyScrollLayerFast")
         enemyScrollLayerSlow = self.childNodeWithName("enemyScrollLayerSlow")
         firstChallengeLabel = self.childNodeWithName("//firstChallengeLabel") as! SKLabelNode
+        firstProgressLabel = self.childNodeWithName("//firstProgressLabel") as! SKLabelNode
         gameOverScreen = self.childNodeWithName("gameOverScreen") as! SKSpriteNode
         highScoreLabel = self.childNodeWithName("//highScoreLabel") as! SKLabelNode
         invisibleGround = self.childNodeWithName("//invisibleGround") as! SKSpriteNode
@@ -114,11 +118,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel = self.childNodeWithName("scoreLabel") as! SKLabelNode
         scoreLabelGO = self.childNodeWithName("//scoreLabelGO") as! SKLabelNode
         secondChallengeLabel = self.childNodeWithName("//secondChallengeLabel") as! SKLabelNode
+        secondProgressLabel = self.childNodeWithName("//secondProgressLabel") as! SKLabelNode
         startMountains = self.childNodeWithName("startMountains") as! SKSpriteNode
         startingScrollLayer = self.childNodeWithName("startingScrollLayer")
         startTreesBack = self.childNodeWithName("startTreesBack") as! SKSpriteNode
         startTreesFront = self.childNodeWithName("startTreesFront") as! SKSpriteNode
         thirdChallengeLabel = self.childNodeWithName("//thirdChallengeLabel") as! SKLabelNode
+        thirdProgressLabel = self.childNodeWithName("//thirdProgressLabel") as! SKLabelNode
         treesBack1 = self.childNodeWithName("treesBack1") as! SKSpriteNode
         treesBack2 = self.childNodeWithName("treesBack2") as! SKSpriteNode
         treesFront1 = self.childNodeWithName("treesFront1") as! SKSpriteNode
@@ -158,9 +164,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let userDefaults = NSUserDefaults.standardUserDefaults()
         playedGames = userDefaults.integerForKey("playedGames")
         
-        firstChallengeLabel.text = ChallengeManager.sharedInstance.activeChallenges["firstChallenge"]!.description()
-        secondChallengeLabel.text = ChallengeManager.sharedInstance.activeChallenges["secondChallenge"]!.description()
-        thirdChallengeLabel.text = ChallengeManager.sharedInstance.activeChallenges["thirdChallenge"]!.description()
+        setChallengeLabels()
+        setProgressLabels()
         
         gameState.enterState(StartingState)
     }
@@ -420,5 +425,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         invisibleGround.physicsBody?.categoryBitMask = PhysicsCategory.Floor
         invisibleGround.physicsBody?.contactTestBitMask = PhysicsCategory.None
         invisibleGround.physicsBody?.collisionBitMask = PhysicsCategory.Player
+    }
+    
+    func setChallengeLabels() {
+        firstChallengeLabel.text = ChallengeManager.sharedInstance.activeChallenges["firstChallenge"]!.description()
+        secondChallengeLabel.text = ChallengeManager.sharedInstance.activeChallenges["secondChallenge"]!.description()
+        thirdChallengeLabel.text = ChallengeManager.sharedInstance.activeChallenges["thirdChallenge"]!.description()
+    }
+    
+    func setProgressLabels() {
+        firstProgressLabel.text = ChallengeManager.sharedInstance.activeChallenges["firstChallenge"]!.progressDescription()
+        secondProgressLabel.text = ChallengeManager.sharedInstance.activeChallenges["secondChallenge"]!.progressDescription()
+        thirdProgressLabel.text = ChallengeManager.sharedInstance.activeChallenges["thirdChallenge"]!.progressDescription()
     }
 }

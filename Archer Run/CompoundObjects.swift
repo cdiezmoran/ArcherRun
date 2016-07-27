@@ -89,6 +89,7 @@ class CompoundObjects {
             
             chainLink.physicsBody?.categoryBitMask = PhysicsCategory.None
             chainLink.physicsBody?.collisionBitMask = PhysicsCategory.None
+            chainLink.physicsBody?.contactTestBitMask = PhysicsCategory.None
             
             chainLink.position = linkPos
             linkPos.y += texture.size().height

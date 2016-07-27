@@ -42,6 +42,12 @@ class GameOverState: GKState {
         scene.highScoreLabel.text = "\(highscore)m"
         
         ChallengeManager.sharedInstance.cleanUpOnGameOver()
+        ChallengeManager.sharedInstance.checkForCompletedChallenges()
+        
+        scene.setChallengeLabels()
+        scene.setProgressLabels()
+        
+        ChallengeManager.sharedInstance.storeChallengesData()
     }
     
     override func isValidNextState(stateClass: AnyClass) -> Bool {

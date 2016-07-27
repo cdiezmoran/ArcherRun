@@ -93,6 +93,9 @@ class Archer: SKSpriteNode {
     func die() {
         if state == .Dead { return }
         
+        physicsBody?.categoryBitMask = PhysicsCategory.None
+        physicsBody?.contactTestBitMask = PhysicsCategory.None
+        
         removeActionForKey("runForever")
         removeAllActions()
         

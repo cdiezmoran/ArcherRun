@@ -18,7 +18,6 @@ class ChallengeManager {
     var activeChallenges = [String: Challenge]()
     
     var lastGoals = [String: Int]()
-    var lastGoalTypes = [String: GoalType]()
     
     var highestGoals = [String: Int]()
     
@@ -61,18 +60,26 @@ class ChallengeManager {
             lastGoals["shootGoal"] = 0
         }
         
-        /*if let dictionary = userDefaults.dictionaryForKey("lastGoalTypes") {
-            for (key, rawValue) in dictionary {
-                lastGoalTypes[key] = GoalType(rawValue: rawValue as! String)
-            }
+        if let dictionary = userDefaults.dictionaryForKey("highestGoals") {
+            highestGoals = dictionary as! [String: Int]
         }
         else {
-            lastGoalTypes["orcGoalType"] = .Overall
-            lastGoalTypes["runGoalType"] = .Overall
-            lastGoalTypes["targetGoalType"] = .Overall
-            lastGoalTypes["coinGoalType"] = .Overall
-            lastGoalTypes["ShootGoalType"] = .Overall
-        }*/
+            highestGoals["orcHighestOverall"] = 0
+            highestGoals["orcHighestSingleGame"] = 0
+            highestGoals["orcHighestTimes"] = 0
+            highestGoals["runHighestOverall"] = 0
+            highestGoals["runHighestSingleGame"] = 0
+            highestGoals["runHighestTimes"] = 0
+            highestGoals["targetHighestOverall"] = 0
+            highestGoals["targetHighestSingleGame"] = 0
+            highestGoals["targetHighestTimes"] = 0
+            highestGoals["coinHighestOverall"] = 0
+            highestGoals["coinHighestSingleGame"] = 0
+            highestGoals["coinHighestTimes"] = 0
+            highestGoals["shootHighestOverall"] = 0
+            highestGoals["shootHighestSingleGame"] = 0
+            highestGoals["shootHighestTimes"] = 0
+        }
         
         let challengesExist = userDefaults.boolForKey("challengesExist")
         
@@ -92,6 +99,7 @@ class ChallengeManager {
     func storeChallengesData() {
         //Store challenges in local storage
         userDefaults.setObject(lastGoals, forKey: "lastGoals")
+        userDefaults.setObject(highestGoals, forKey: "highestGoals")
         
         saveChallenge(activeChallenges["firstChallenge"]!, selector: "-first")
         saveChallenge(activeChallenges["secondChallenge"]!, selector: "-second")
@@ -107,6 +115,7 @@ class ChallengeManager {
         userDefaults.setValue(challenge.goal, forKey: "goal" + selector)
         userDefaults.setValue(challenge.progress, forKey: "progress" + selector)
         userDefaults.setValue(challenge.times, forKey: "times" + selector)
+        userDefaults.setValue(challenge.timesProgress, forKey: "timesProgress" + selector)
         userDefaults.setObject(challenge.goalType.rawValue, forKey: "goalType" + selector)
         userDefaults.setObject(challenge.state.rawValue, forKey: "state" + selector)
     }
@@ -114,6 +123,8 @@ class ChallengeManager {
     func retrieveChallenge(selector: String) -> Challenge {
         let goal = userDefaults.integerForKey("goal" + selector)
         let progress = userDefaults.integerForKey("progress" + selector)
+        let times = userDefaults.integerForKey("times" + selector)
+        let timesProgress = userDefaults.integerForKey("timesProgress" + selector)
         
         let goalTypeRawValue = userDefaults.stringForKey("goalType" + selector)!
         let goalType = GoalType(rawValue: goalTypeRawValue)!
@@ -124,7 +135,7 @@ class ChallengeManager {
         let stateRawValue = userDefaults.stringForKey("state" + selector)!
         let state = ChallengeState(rawValue: stateRawValue)!
         
-        let newChallenge = Challenge(withProgress: progress, goal: goal, type: type, goalType: goalType, state: state)
+        let newChallenge = Challenge(withProgress: progress, goal: goal, type: type, goalType: goalType, state: state, times: times, timesProgress: timesProgress)
         
         return newChallenge
     }
@@ -139,12 +150,28 @@ class ChallengeManager {
                     else {
                         challenge.progress += 1
                     }
-                }
-                
-                if challenge.goal >= challenge.progress {
-                    challenge.state = .Completed
-                    challengeCompleted = challenge
-                    didCompleteChallenge = true
+                    
+                    if challenge.goalType == .Times {
+                        if !(challenge.timesFlag) {
+                            if challenge.goal <= challenge.progress {
+                                challenge.timesProgress += 1
+                                challenge.timesFlag = true
+                            }
+                            
+                            if challenge.times <= challenge.timesProgress {
+                                challenge.state = .Completed
+                                challengeCompleted = challenge
+                                didCompleteChallenge = true
+                            }
+                        }
+                    }
+                    else {
+                        if challenge.goal <= challenge.progress {
+                            challenge.state = .Completed
+                            challengeCompleted = challenge
+                            didCompleteChallenge = true
+                        }
+                    }
                 }
             }
         }
@@ -155,6 +182,15 @@ class ChallengeManager {
             if challenge.state != .Completed {
                 if challenge.goalType == .SingleGame {
                     challenge.progress = 0
+                }
+                
+                if challenge.goalType == .Times && !(challenge.timesFlag) {
+                    challenge.progress = 0
+                    challenge.timesProgress = 0
+                }
+                else if challenge.goalType == .Times && challenge.timesFlag {
+                    challenge.progress = 0
+                    challenge.timesFlag = false
                 }
             }
         }
@@ -170,143 +206,204 @@ class ChallengeManager {
         let lastGoalsKey = lastType.rawValue + "Goal"
         lastGoals[lastGoalsKey] = lastGoal
         
-        let lastGoalTypesKey = lastGoalType.rawValue + "GoalType"
-        lastGoalTypes[lastGoalTypesKey] = lastGoalType
-
-        //Get new type
-        var newType: ChallengeType!
-        while newType == lastType {
-            let randomSelector = arc4random_uniform(5)
-            switch randomSelector {
-            case 0:
-                newType = .Orc
-                break
-            case 1:
-                newType = .Run
-                break
-            case 2:
-                newType = .Coin
-                break
-            case 3:
-                newType = .Target
-                break
-            case 4:
-                newType = .Shoot
-                break
-            default:
-                newType = lastType
-                break
+        if lastType == .Orc {
+            if lastGoalType == .Overall {
+                highestGoals["orcHighestOverall"] = lastGoal
+            }
+            else if lastGoalType == .SingleGame {
+                highestGoals["orcHighestSingleGame"] = lastGoal
+            }
+            else if lastGoalType == .Times {
+                highestGoals["orcHighestTimes"] = lastGoal
             }
         }
+        else if lastType == .Run {
+            if lastGoalType == .Overall {
+                highestGoals["runHighestOverall"] = lastGoal
+            }
+            else if lastGoalType == .SingleGame {
+                highestGoals["runHighestSingleGame"] = lastGoal
+            }
+            else if lastGoalType == .Times {
+                highestGoals["runHighestTimes"] = lastGoal
+            }
+        }
+        else if lastType == .Target {
+            if lastGoalType == .Overall {
+                highestGoals["targetHighestOverall"] = lastGoal
+            }
+            else if lastGoalType == .SingleGame {
+                highestGoals["targetHighestSingleGame"] = lastGoal
+            }
+            else if lastGoalType == .Times {
+                highestGoals["targetHighestTimes"] = lastGoal
+            }
+        }
+        else if lastType == .Coin {
+            if lastGoalType == .Overall {
+                highestGoals["coinHighestOverall"] = lastGoal
+            }
+            else if lastGoalType == .SingleGame {
+                highestGoals["coinHighestSingleGame"] = lastGoal
+            }
+            else if lastGoalType == .Times {
+                highestGoals["coinHighestTimes"] = lastGoal
+            }
+        }
+        else if lastType == .Shoot {
+            if lastGoalType == .Overall {
+                highestGoals["shootHighestOverall"] = lastGoal
+            }
+            else if lastGoalType == .SingleGame {
+                highestGoals["shootHighestSingleGame"] = lastGoal
+            }
+            else if lastGoalType == .Times {
+                highestGoals["shootHighestTimes"] = lastGoal
+            }
+        }
+        
+        //Get new type
+        var newType: ChallengeType!
+        repeat {
+            let randomSelector = CGFloat.random(min: 0.0, max: 1.0)
+            if randomSelector >= 0 && randomSelector < 0.6 {
+                let randomNumber = Int(arc4random_uniform(2))
+                switch randomNumber {
+                case 0:
+                    newType = .Orc
+                    break
+                case 1:
+                    newType = .Run
+                    break
+                default:
+                    newType = lastType
+                    break
+                }
+            }
+            else if randomSelector >= 0.6 && randomSelector < 0.9{
+                let randomNumber = Int(arc4random_uniform(2))
+                switch randomNumber {
+                case 0:
+                    newType = .Coin
+                    break
+                case 1:
+                    newType = .Shoot
+                    break
+                default:
+                    newType = lastType
+                }
+            }
+            else if randomSelector >= 0.9 {
+                newType = .Target
+            }
+        } while newType == lastType
         
         //Get new goal type
         var newGoalType: GoalType!
-        let randomSelector = arc4random_uniform(3)
-        switch randomSelector {
-        case 0:
-            newGoalType = .Overall
-            break
-        case 1:
-            newGoalType = .SingleGame
-            break
-        case 2:
-            newGoalType = .Times
-            break
-        default:
-            newGoalType = .Overall
-            break
-        }
+        repeat {
+            let randomSelector = CGFloat.random(min: 0.0, max: 1.0)
+            if randomSelector >= 0 && randomSelector < 0.4 {
+                newGoalType = .Overall
+            }
+            else if randomSelector >= 0.4 && randomSelector < 0.8 {
+                newGoalType = .SingleGame
+            }
+            else if randomSelector >= 0.8 {
+                newGoalType = .Times
+            }
+        } while isGoalAndTypeEqual(newGoalType, type: newType)
+        
         //Get new goal
         var newGoal: Int!
+        var newTimes: Int = 1
         
-        /*---------------------------CHALLENGE GENERATION LOGIC-----------------------------*/
-        //Don't know how to explain this but i hope it works decently.
-        //And i also hope you don't try to understand this.
+        /*---------------------------CHALLENGE GOAL GENERATION LOGIC-----------------------------*/
         
-        /*var tempLastGoalType: GoalType!
-        var tempLastGoal: Int!
-        
-        if newType == .Run {
-            tempLastGoalType = lastGoalTypes["runGoalType"]
-            tempLastGoal = lastGoals["runGoal"]
-            
-            if tempLastGoalType == .Overall {
-                if newGoalType == .Overall {
-                    newGoal = tempLastGoal + 250
-                }
-                else if newGoalType == .SingleGame {
-                    newGoal = tempLastGoal - 150
-                    if newGoal <= 0 {
-                        newGoal = 100
-                    }
-                }
-                else if newGoalType == .Times {
-                    newGoal = tempLastGoal - 250
-                    if newGoal <= 0 {
-                        newGoal = 100
-                    }
-                }
+        if newType == .Orc {
+            if newGoalType == .Overall {
+                newGoal = highestGoals["orcHighestOverall"]! + 6
             }
-            else if tempLastGoalType == .SingleGame {
-                if newGoalType == .Overall {
-                    newGoal = tempLastGoal + 350
-                }
-                else if newGoalType == .SingleGame {
-                    newGoal = tempLastGoal + 150
-                }
-                else if newGoalType == .Times {
-                    newGoal = tempLastGoal - 100
-                    if newGoal <= 0 {
-                        newGoal = 100
-                    }
-                }
+            else if newGoalType == .SingleGame {
+                newGoal = highestGoals["orcHighestSingleGame"]! + 3
             }
-            else if tempLastGoalType == .Times {
-                if newGoalType == .Overall {
-                    newGoal = tempLastGoal + 500
-                }
-                else if newGoalType == .SingleGame {
-                    newGoal =
-                }
+            else if newGoalType == .Times {
+                newGoal = highestGoals["orcHighestTimes"]! + 2
+                newTimes += newGoal / 2
             }
-        }*/
+        }
+        else if newType == .Run {
+            if newGoalType == .Overall {
+              newGoal = highestGoals["runHighestOverall"]! + 250
+            }
+            else if newGoalType == .SingleGame {
+                newGoal = highestGoals["runHighestSingleGame"]! + 150
+            }
+            else if newGoalType == .Times {
+                newGoal = highestGoals["runHighestTimes"]! + 100
+                newTimes += newGoal / 100
+            }
+        }
+        else if newType == .Coin {
+            if newGoalType == .Overall {
+                newGoal = highestGoals["coinHighestOverall"]! + 100
+            }
+            else if newGoalType == .SingleGame {
+                newGoal = highestGoals["coinHighestSingleGame"]! + 75
+            }
+            else if newGoalType == .Times {
+                newGoal = highestGoals["coinHighestTimes"]! + 50
+                newTimes += newGoal / 50
+            }
+        }
+        else if newType == .Target {
+            if newGoalType == .Overall {
+                newGoal = highestGoals["targetHighestOverall"]! + 5
+            }
+            else if newGoalType == .SingleGame {
+                newGoal = highestGoals["targetHighestSingleGame"]! + 2
+            }
+            else if newGoalType == .Times {
+                newGoal = highestGoals["targetHighestTimes"]! + 1
+                newTimes += newGoal
+            }
+        }
+        else if newType == .Shoot {
+            if newGoalType == .Overall {
+                newGoal = highestGoals["shootHighestOverall"]! + 50
+            }
+            else if newGoalType == .SingleGame {
+                newGoal = highestGoals["shootHighestSingleGame"]! + 25
+            }
+            else if newGoalType == .Times {
+                newGoal = highestGoals["shootHighestTimes"]! + 10
+                newTimes += newGoal / 10
+            }
+        }
         
-        /*------------------------END OF CHALLENGE GENERATION LOGIC--------------------------*/
+        /*------------------------END OF CHALLENGE GOAL GENERATION LOGIC--------------------------*/
         
-        /*switch newType! {
-        case .Orc:
-            newGoal = lastGoals["orcGoal"]! + 3
-            break
-        case .Run:
-            newGoal = lastGoals["runGoal"]! + 250
-            break
-        case .Coin:
-            newGoal = lastGoals["coinGoal"]! + 100
-            break
-        case .Target:
-            newGoal = lastGoals["targetGoal"]! + 1
-            break
-        case .Shoot:
-            newGoal = lastGoals["shootGoal"]! + 30
-            break
-        }*/
+        if newGoalType == .Times {
+            activeChallenges[key] = Challenge(withTimes: newTimes, goal: newGoal, type: newType)
+        }
+        else {
+            activeChallenges[key] = Challenge(goal: newGoal, type: newType, goalType: newGoalType)
+        }
+    }
+    
+    func isGoalAndTypeEqual(goalType: GoalType, type: ChallengeType) -> Bool {
+        for (_, challenge) in activeChallenges {
+            if challenge.type == type && challenge.goalType == goalType {
+                return true
+            }
+        }
+        return false
+    }
+    
+    func checkForCompletedChallenges() {
+        for (key, challenge) in activeChallenges {
+            if challenge.state == .Completed {
+                replaceChallengeForKey(key)
+            }
+        }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
