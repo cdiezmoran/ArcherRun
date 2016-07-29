@@ -11,7 +11,7 @@ import SpriteKit
 class Spike: SKSpriteNode {
     
     let spikeTexture: SKTexture? = SKTexture(imageNamed: "spikes")
-    let spikeSize: CGSize = CGSize(width: 35, height: 35)
+    let spikeSize: CGSize = CGSize(width: 45, height: 45)
     let spikeColor: UIColor = UIColor.whiteColor()
     
     init() {

@@ -12,7 +12,6 @@ class ChallengeManager {
     static let sharedInstance = ChallengeManager()
     
     var challengeCompleted: Challenge!
-    var didCompleteChallenge: Bool = false
     var userDefaults: NSUserDefaults!
     
     var activeChallenges = [String: Challenge]()
@@ -161,7 +160,7 @@ class ChallengeManager {
                             if challenge.times <= challenge.timesProgress {
                                 challenge.state = .Completed
                                 challengeCompleted = challenge
-                                didCompleteChallenge = true
+                                challenge.didCompleteChallenge = true
                             }
                         }
                     }
@@ -169,7 +168,7 @@ class ChallengeManager {
                         if challenge.goal <= challenge.progress {
                             challenge.state = .Completed
                             challengeCompleted = challenge
-                            didCompleteChallenge = true
+                            challenge.didCompleteChallenge = true
                         }
                     }
                 }
@@ -405,5 +404,15 @@ class ChallengeManager {
                 replaceChallengeForKey(key)
             }
         }
+    }
+    
+    func notifyOnChallengeCompletion() -> Bool {
+        for (_, challenge) in activeChallenges {
+            if challenge.didCompleteChallenge {
+                challenge.didCompleteChallenge = false
+                return true
+            }
+        }
+        return false
     }
 }

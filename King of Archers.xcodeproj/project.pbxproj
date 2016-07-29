@@ -14,7 +14,11 @@
 		A03F3EA11D287CFD00E177F9 /* Archer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03F3EA01D287CFD00E177F9 /* Archer.swift */; };
 		A046D67B1D25B8A7007608A1 /* Clouds.sks in Resources */ = {isa = PBXBuildFile; fileRef = A046D6791D25B8A7007608A1 /* Clouds.sks */; };
 		A046D67E1D25B98C007608A1 /* cloud2.png in Resources */ = {isa = PBXBuildFile; fileRef = A046D67D1D25B98C007608A1 /* cloud2.png */; };
+		A05B41A81D4A9B6F00D229C0 /* LevelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05B41A71D4A9B6F00D229C0 /* LevelManager.swift */; };
+		A05B41AA1D4ACA7A00D229C0 /* splashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = A05B41A91D4ACA7A00D229C0 /* splashScreen.png */; };
 		A06081C61D3457EE00596B59 /* Spike.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06081C51D3457EE00596B59 /* Spike.swift */; };
+		A092E1F41D4A7DE0008F3663 /* Undead.swift in Sources */ = {isa = PBXBuildFile; fileRef = A092E1F31D4A7DE0008F3663 /* Undead.swift */; };
+		A092E1F61D4A8261008F3663 /* Undead.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A092E1F51D4A8261008F3663 /* Undead.atlas */; };
 		A0A266081D36C09200054ECE /* Archer.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A0A266071D36C09200054ECE /* Archer.atlas */; };
 		A0A2660E1D36EE1900054ECE /* Orc.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A0A2660D1D36EE1900054ECE /* Orc.atlas */; };
 		A0ADEC841D35987900E21CE0 /* Orc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADEC831D35987900E21CE0 /* Orc.swift */; };
@@ -81,7 +85,11 @@
 		A03F3EA01D287CFD00E177F9 /* Archer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Archer.swift; sourceTree = "<group>"; };
 		A046D6791D25B8A7007608A1 /* Clouds.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Clouds.sks; sourceTree = "<group>"; };
 		A046D67D1D25B98C007608A1 /* cloud2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud2.png; sourceTree = "<group>"; };
+		A05B41A71D4A9B6F00D229C0 /* LevelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelManager.swift; sourceTree = "<group>"; };
+		A05B41A91D4ACA7A00D229C0 /* splashScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splashScreen.png; sourceTree = "<group>"; };
 		A06081C51D3457EE00596B59 /* Spike.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spike.swift; sourceTree = "<group>"; };
+		A092E1F31D4A7DE0008F3663 /* Undead.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Undead.swift; sourceTree = "<group>"; };
+		A092E1F51D4A8261008F3663 /* Undead.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Undead.atlas; sourceTree = "<group>"; };
 		A0A266071D36C09200054ECE /* Archer.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Archer.atlas; sourceTree = "<group>"; };
 		A0A2660D1D36EE1900054ECE /* Orc.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Orc.atlas; sourceTree = "<group>"; };
 		A0ADEC831D35987900E21CE0 /* Orc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Orc.swift; sourceTree = "<group>"; };
@@ -96,7 +104,7 @@
 		A0E4CD841D26EA9F0091FD5F /* StartingState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartingState.swift; sourceTree = "<group>"; };
 		A0E4CD861D26EAC20091FD5F /* PlayingState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayingState.swift; sourceTree = "<group>"; };
 		A0E4CD881D26EACF0091FD5F /* GameOverState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverState.swift; sourceTree = "<group>"; };
-		A0EDE1C71D233F49008B5371 /* Archer Rush.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Archer Rush.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0EDE1C71D233F49008B5371 /* King of Archers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "King of Archers.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0EDE1CA1D233F4A008B5371 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A0EDE1CC1D233F4A008B5371 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		A0EDE1CE1D233F4A008B5371 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -105,10 +113,10 @@
 		A0EDE1D51D233F4A008B5371 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A0EDE1D81D233F4A008B5371 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A0EDE1DA1D233F4A008B5371 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A0EDE1DF1D233F4A008B5371 /* Archer Rush.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Archer Rush.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0EDE1DF1D233F4A008B5371 /* King of Archers.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "King of Archers.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0EDE1E31D233F4A008B5371 /* Archer_RunTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Archer_RunTests.swift; sourceTree = "<group>"; };
 		A0EDE1E51D233F4A008B5371 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A0EDE1EA1D233F4A008B5371 /* Archer Rush.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Archer Rush.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0EDE1EA1D233F4A008B5371 /* King of Archers.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "King of Archers.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0EDE1EE1D233F4A008B5371 /* Archer_RunUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Archer_RunUITests.swift; sourceTree = "<group>"; };
 		A0EDE1F01D233F4A008B5371 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A0EDE1FC1D23406E008B5371 /* StartScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartScene.sks; sourceTree = "<group>"; };
@@ -180,6 +188,7 @@
 				A0EDE1D21D233F4A008B5371 /* Main.storyboard */,
 				A0EDE1DA1D233F4A008B5371 /* Info.plist */,
 				A0EDE1D71D233F4A008B5371 /* LaunchScreen.storyboard */,
+				A05B41A91D4ACA7A00D229C0 /* splashScreen.png */,
 			);
 			name = App;
 			sourceTree = "<group>";
@@ -218,6 +227,7 @@
 				A0ADEC831D35987900E21CE0 /* Orc.swift */,
 				A06081C51D3457EE00596B59 /* Spike.swift */,
 				A024BFFB1D3EDDFA00164646 /* Target.swift */,
+				A092E1F31D4A7DE0008F3663 /* Undead.swift */,
 			);
 			name = Entities;
 			sourceTree = "<group>";
@@ -235,9 +245,9 @@
 		A0EDE1C81D233F49008B5371 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A0EDE1C71D233F49008B5371 /* Archer Rush.app */,
-				A0EDE1DF1D233F4A008B5371 /* Archer Rush.xctest */,
-				A0EDE1EA1D233F4A008B5371 /* Archer Rush.xctest */,
+				A0EDE1C71D233F49008B5371 /* King of Archers.app */,
+				A0EDE1DF1D233F4A008B5371 /* King of Archers.xctest */,
+				A0EDE1EA1D233F4A008B5371 /* King of Archers.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -254,10 +264,12 @@
 				A024BFF81D3EC99A00164646 /* States */,
 				A0EDE2001D23432F008B5371 /* Utils */,
 				A0EDE1D51D233F4A008B5371 /* Assets.xcassets */,
+				A092E1F51D4A8261008F3663 /* Undead.atlas */,
 				A0A2660D1D36EE1900054ECE /* Orc.atlas */,
 				A0A266071D36C09200054ECE /* Archer.atlas */,
 				A0B486681D468E74004F8EB8 /* ChallengeManager.swift */,
 				A0B4866C1D4691E8004F8EB8 /* Challenge.swift */,
+				A05B41A71D4A9B6F00D229C0 /* LevelManager.swift */,
 			);
 			name = "Archer Rush";
 			path = "Archer Run";
@@ -313,9 +325,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A0EDE1C61D233F49008B5371 /* Archer Rush */ = {
+		A0EDE1C61D233F49008B5371 /* King of Archers */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A0EDE1F31D233F4A008B5371 /* Build configuration list for PBXNativeTarget "Archer Rush" */;
+			buildConfigurationList = A0EDE1F31D233F4A008B5371 /* Build configuration list for PBXNativeTarget "King of Archers" */;
 			buildPhases = (
 				A0EDE1C31D233F49008B5371 /* Sources */,
 				A0EDE1C41D233F49008B5371 /* Frameworks */,
@@ -325,14 +337,14 @@
 			);
 			dependencies = (
 			);
-			name = "Archer Rush";
+			name = "King of Archers";
 			productName = "Archer Run";
-			productReference = A0EDE1C71D233F49008B5371 /* Archer Rush.app */;
+			productReference = A0EDE1C71D233F49008B5371 /* King of Archers.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A0EDE1DE1D233F4A008B5371 /* Archer RushTests */ = {
+		A0EDE1DE1D233F4A008B5371 /* King of ArchersTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A0EDE1F61D233F4A008B5371 /* Build configuration list for PBXNativeTarget "Archer RushTests" */;
+			buildConfigurationList = A0EDE1F61D233F4A008B5371 /* Build configuration list for PBXNativeTarget "King of ArchersTests" */;
 			buildPhases = (
 				A0EDE1DB1D233F4A008B5371 /* Sources */,
 				A0EDE1DC1D233F4A008B5371 /* Frameworks */,
@@ -343,14 +355,14 @@
 			dependencies = (
 				A0EDE1E11D233F4A008B5371 /* PBXTargetDependency */,
 			);
-			name = "Archer RushTests";
+			name = "King of ArchersTests";
 			productName = "Archer RunTests";
-			productReference = A0EDE1DF1D233F4A008B5371 /* Archer Rush.xctest */;
+			productReference = A0EDE1DF1D233F4A008B5371 /* King of Archers.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		A0EDE1E91D233F4A008B5371 /* Archer RushUITests */ = {
+		A0EDE1E91D233F4A008B5371 /* King of ArchersUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A0EDE1F91D233F4A008B5371 /* Build configuration list for PBXNativeTarget "Archer RushUITests" */;
+			buildConfigurationList = A0EDE1F91D233F4A008B5371 /* Build configuration list for PBXNativeTarget "King of ArchersUITests" */;
 			buildPhases = (
 				A0EDE1E61D233F4A008B5371 /* Sources */,
 				A0EDE1E71D233F4A008B5371 /* Frameworks */,
@@ -361,9 +373,9 @@
 			dependencies = (
 				A0EDE1EC1D233F4A008B5371 /* PBXTargetDependency */,
 			);
-			name = "Archer RushUITests";
+			name = "King of ArchersUITests";
 			productName = "Archer RunUITests";
-			productReference = A0EDE1EA1D233F4A008B5371 /* Archer Rush.xctest */;
+			productReference = A0EDE1EA1D233F4A008B5371 /* King of Archers.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -390,7 +402,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A0EDE1C21D233F49008B5371 /* Build configuration list for PBXProject "Archer Rush" */;
+			buildConfigurationList = A0EDE1C21D233F49008B5371 /* Build configuration list for PBXProject "King of Archers" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -403,9 +415,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A0EDE1C61D233F49008B5371 /* Archer Rush */,
-				A0EDE1DE1D233F4A008B5371 /* Archer RushTests */,
-				A0EDE1E91D233F4A008B5371 /* Archer RushUITests */,
+				A0EDE1C61D233F49008B5371 /* King of Archers */,
+				A0EDE1DE1D233F4A008B5371 /* King of ArchersTests */,
+				A0EDE1E91D233F4A008B5371 /* King of ArchersUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -419,7 +431,9 @@
 				A0A2660E1D36EE1900054ECE /* Orc.atlas in Resources */,
 				A0ADEC861D359CE200E21CE0 /* Animations.sks in Resources */,
 				A0EDE1CD1D233F4A008B5371 /* GameScene.sks in Resources */,
+				A092E1F61D4A8261008F3663 /* Undead.atlas in Resources */,
 				A046D67E1D25B98C007608A1 /* cloud2.png in Resources */,
+				A05B41AA1D4ACA7A00D229C0 /* splashScreen.png in Resources */,
 				A0A266081D36C09200054ECE /* Archer.atlas in Resources */,
 				A0EDE1D91D233F4A008B5371 /* LaunchScreen.storyboard in Resources */,
 				A0EDE1D61D233F4A008B5371 /* Assets.xcassets in Resources */,
@@ -463,11 +477,13 @@
 				A0EDE1CB1D233F4A008B5371 /* AppDelegate.swift in Sources */,
 				A0EDE21A1D23432F008B5371 /* SKTAudio.swift in Sources */,
 				A0ADEC841D35987900E21CE0 /* Orc.swift in Sources */,
+				A092E1F41D4A7DE0008F3663 /* Undead.swift in Sources */,
 				A0DF62E41D3D4A59005926A5 /* CompoundObjects.swift in Sources */,
 				A0EDE1FF1D234080008B5371 /* StartScene.swift in Sources */,
 				A0EDE2191D23432F008B5371 /* SKNode+Extensions.swift in Sources */,
 				A0EDE2161D23432F008B5371 /* SKAction+Extensions.swift in Sources */,
 				A0B486691D468E74004F8EB8 /* ChallengeManager.swift in Sources */,
+				A05B41A81D4A9B6F00D229C0 /* LevelManager.swift in Sources */,
 				A0EDE2171D23432F008B5371 /* SKAction+SpecialEffects.swift in Sources */,
 				A0EDE2101D23432F008B5371 /* MSButtonNode.swift in Sources */,
 				A0EDE2111D23432F008B5371 /* MSReferenceNode.swift in Sources */,
@@ -508,12 +524,12 @@
 /* Begin PBXTargetDependency section */
 		A0EDE1E11D233F4A008B5371 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A0EDE1C61D233F49008B5371 /* Archer Rush */;
+			target = A0EDE1C61D233F49008B5371 /* King of Archers */;
 			targetProxy = A0EDE1E01D233F4A008B5371 /* PBXContainerItemProxy */;
 		};
 		A0EDE1EC1D233F4A008B5371 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A0EDE1C61D233F49008B5371 /* Archer Rush */;
+			target = A0EDE1C61D233F49008B5371 /* King of Archers */;
 			targetProxy = A0EDE1EB1D233F4A008B5371 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -631,8 +647,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Archer Run/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.Archer-Rush";
-				PRODUCT_NAME = "Archer Rush";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.King-of-Archers";
+				PRODUCT_NAME = "King of Archers";
 				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
@@ -645,8 +661,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Archer Run/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.Archer-Rush";
-				PRODUCT_NAME = "Archer Rush";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.King-of-Archers";
+				PRODUCT_NAME = "King of Archers";
 				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
@@ -659,8 +675,8 @@
 				INFOPLIST_FILE = "Archer RunTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.Archer-RunTests";
-				PRODUCT_NAME = "Archer Rush";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Archer Rush.app/Archer Rush";
+				PRODUCT_NAME = "King of Archers";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/King of Archers.app/King of Archers";
 			};
 			name = Debug;
 		};
@@ -671,8 +687,8 @@
 				INFOPLIST_FILE = "Archer RunTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.Archer-RunTests";
-				PRODUCT_NAME = "Archer Rush";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Archer Rush.app/Archer Rush";
+				PRODUCT_NAME = "King of Archers";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/King of Archers.app/King of Archers";
 			};
 			name = Release;
 		};
@@ -683,7 +699,7 @@
 				INFOPLIST_FILE = "Archer RunUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.Archer-RunUITests";
-				PRODUCT_NAME = "Archer Rush";
+				PRODUCT_NAME = "King of Archers";
 				TEST_TARGET_NAME = "Archer Run";
 			};
 			name = Debug;
@@ -694,7 +710,7 @@
 				INFOPLIST_FILE = "Archer RunUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.Archer-RunUITests";
-				PRODUCT_NAME = "Archer Rush";
+				PRODUCT_NAME = "King of Archers";
 				TEST_TARGET_NAME = "Archer Run";
 			};
 			name = Release;
@@ -702,7 +718,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A0EDE1C21D233F49008B5371 /* Build configuration list for PBXProject "Archer Rush" */ = {
+		A0EDE1C21D233F49008B5371 /* Build configuration list for PBXProject "King of Archers" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A0EDE1F11D233F4A008B5371 /* Debug */,
@@ -711,7 +727,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A0EDE1F31D233F4A008B5371 /* Build configuration list for PBXNativeTarget "Archer Rush" */ = {
+		A0EDE1F31D233F4A008B5371 /* Build configuration list for PBXNativeTarget "King of Archers" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A0EDE1F41D233F4A008B5371 /* Debug */,
@@ -720,7 +736,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A0EDE1F61D233F4A008B5371 /* Build configuration list for PBXNativeTarget "Archer RushTests" */ = {
+		A0EDE1F61D233F4A008B5371 /* Build configuration list for PBXNativeTarget "King of ArchersTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A0EDE1F71D233F4A008B5371 /* Debug */,
@@ -729,7 +745,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A0EDE1F91D233F4A008B5371 /* Build configuration list for PBXNativeTarget "Archer RushUITests" */ = {
+		A0EDE1F91D233F4A008B5371 /* Build configuration list for PBXNativeTarget "King of ArchersUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A0EDE1FA1D233F4A008B5371 /* Debug */,

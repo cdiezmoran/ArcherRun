@@ -34,31 +34,37 @@ class PlayingState: GKState {
         scene.score += 20 * CGFloat(seconds)
         
         var floorSpeed: CGFloat = 4
-        floorSpeed += 0.0005
-        if scene.score < 00 {
+        floorSpeed += 0.00075
+        if scene.score < 100 {
             floorSpeed = 4
         }
         
-        if floorSpeed > 9 {
-            floorSpeed = 9
+        if floorSpeed > 12 {
+            floorSpeed = 12
         }
         
         if floorSpeed >= 4 && floorSpeed < 6 {
             scene.intervalMin = 0.5
-            scene.intervalMax = 1.25
+            scene.intervalMax = 1
         }
         else if floorSpeed >= 6 && floorSpeed < 8 {
             scene.intervalMin = 0.8
+            scene.intervalMax = 1.25
+        }
+        else if floorSpeed >= 8 && floorSpeed < 10 {
+            scene.intervalMin = 1
             scene.intervalMax = 1.5
         }
-        else if floorSpeed >= 8 && floorSpeed <= 9 {
-            scene.intervalMin = 1.25
-            scene.intervalMax = 2
+        else if floorSpeed >= 10 && floorSpeed < 12 {
+            scene.intervalMin = 1
+            scene.intervalMax = 1.75
         }
         
         /*--------------------------------------------------------------------------------------*/
         
-        addRandomEntity()
+        if scene.score >= 50 {
+           addRandomEntity()
+        }
         
         /*--------------------------------------------------------------------------------------*/
         
@@ -94,16 +100,15 @@ class PlayingState: GKState {
         scene.enemyScrollLayerFast.position.x -= enemyScrollSpeedFast
         
         /*--------------------------------------------------------------------------------------*/
-        if ChallengeManager.sharedInstance.didCompleteChallenge {
+        if ChallengeManager.sharedInstance.notifyOnChallengeCompletion() {
             let changeText = SKAction.runBlock({
                 self.scene.challengeCompletedLabel.text = ChallengeManager.sharedInstance.challengeCompleted.description()
             })
             let showBanner = SKAction.moveToY(381.5, duration: 0.5)
             let wait = SKAction.waitForDuration(1)
             let hideBanner = SKAction.moveToY(446.5, duration: 1)
-            let setChallengeCompleted = SKAction.runBlock({ ChallengeManager.sharedInstance.didCompleteChallenge = false })
             
-            let bannerSequence = SKAction.sequence([changeText, showBanner, wait, hideBanner, setChallengeCompleted])
+            let bannerSequence = SKAction.sequence([changeText, showBanner, wait, hideBanner])
             
             scene.challengeCompletedBanner.runAction(bannerSequence)
         }
@@ -167,32 +172,41 @@ class PlayingState: GKState {
     }
     
     func addRandomEntity() {
-        if scene.score >= 100 {
-            if scene.timer >= Double(scene.randomInterval) {
-                let randomSelector = CGFloat.random(min: 0, max: 1)
-                
-                if randomSelector > 0 && randomSelector <= 0.3 {
-                    addSpriteToScene(MeleeOrc(), isEnemy: true)
-                }
-                else if randomSelector > 0.3 && randomSelector <= 0.6 {
-                    addSpriteToScene(Spike(), isEnemy: false)
-                }
-                else if randomSelector > 0.6 && randomSelector <= 0.9 {
-                    compoundObjects.generateCoinBlock()
-                }
-                else if randomSelector > 0.9 && scene.score >= 500 {
-                    compoundObjects.generateSpikesWithTarget()
-                    scene.intervalMin = 1
-                }
-                else if randomSelector > 0.9 && scene.score < 500 {
-                    compoundObjects.generateCoinBlock()
-                }
-                
-                scene.timer = 0
-                scene.randomInterval = CGFloat.random(min: scene.intervalMin, max: scene.intervalMax)
+        if scene.timer >= Double(scene.randomInterval) {
+            let randomSelector = CGFloat.random(min: 0, max: 1)
+            
+            if randomSelector > 0 && randomSelector <= 0.3 {
+                addSpriteToScene(MeleeOrc(), isEnemy: true)
+            }
+            else if randomSelector > 0.3 && randomSelector <= 0.6 {
+                addSpriteToScene(Spike(), isEnemy: false)
+            }
+            else if randomSelector > 0.6 && randomSelector <= 0.9 {
+                compoundObjects.generateCoinBlock()
+                changeIntervalForLargeObject()
+            }
+            else if randomSelector > 0.9 && scene.score >= 400 {
+                compoundObjects.generateSpikesWithTarget()
+                changeIntervalForLargeObject()
+            }
+            else if randomSelector > 0.9 && scene.score < 400 {
+                compoundObjects.generateCoinBlock()
+                changeIntervalForLargeObject()
             }
             
-            scene.timer += scene.fixedDelta
+            scene.timer = 0
+            scene.randomInterval = CGFloat.random(min: scene.intervalMin, max: scene.intervalMax)
+        }
+        
+        scene.timer += scene.fixedDelta
+    }
+    
+    func changeIntervalForLargeObject() {
+        if scene.intervalMin < 1 {
+            scene.intervalMin = 1
+            if scene.intervalMax <= 1 {
+                scene.intervalMax = 1.1
+            }
         }
     }
 }

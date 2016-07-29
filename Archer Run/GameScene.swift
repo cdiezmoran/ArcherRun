@@ -155,7 +155,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 skView.ignoresSiblingOrder = true
                 
                 /* Set the scale mode to scale to fit the window */
-                scene.scaleMode = .AspectFill
+                scene.scaleMode = .Fill
                 
                 skView.presentScene(scene)
             }
@@ -278,7 +278,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     addChild(arrow)
                     arrows.append(arrow)
                     arrow.position = archer.position + CGPoint(x: 10, y: -10)
-                    arrow.physicsBody?.applyImpulse(CGVector(dx: arrowDx * 4, dy: arrowDy * 4))
+                    arrow.physicsBody?.applyImpulse(CGVector(dx: arrowDx * 6.5, dy: arrowDy * 6.5))
                     if gameState.currentState is TutorialState { didTutShoot = true }
                     ChallengeManager.sharedInstance.shotArrow()
                 }
@@ -390,6 +390,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             spike.zPosition = -1
             spike.runAction(slideAndRemove)
         }
+        
+        target.gotHit()
         
         ChallengeManager.sharedInstance.hitTarget()
     }

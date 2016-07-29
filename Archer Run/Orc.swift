@@ -51,7 +51,7 @@ class Orc: SKSpriteNode {
     
 /*-------------------------------------------CREATE PHYSICS BODY-------------------------------------------------*/
     func createPhysicsBody() {
-        let orcPhysicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 36, height: 39), center: CGPoint(x: -4, y: -9))
+        let orcPhysicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 36, height: 48), center: CGPoint(x: -2.5, y: -4.5))
         
         orcPhysicsBody.affectedByGravity = true
         orcPhysicsBody.usesPreciseCollisionDetection = true

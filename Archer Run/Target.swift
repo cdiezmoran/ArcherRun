@@ -35,4 +35,9 @@ class Target: SKSpriteNode {
         
         physicsBody = body
     }
+    
+    func gotHit() {
+        physicsBody?.categoryBitMask = PhysicsCategory.None
+        physicsBody?.contactTestBitMask = PhysicsCategory.None
+    }
 }

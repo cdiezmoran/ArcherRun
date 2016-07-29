@@ -11,9 +11,10 @@ import SpriteKit
 class Arrow: SKSpriteNode {
     
     let defaultTexture = SKTexture(imageNamed: "arrow")
+    let defaultSize = CGSize(width: 34.0, height: 8)
     
     init() {
-        super.init(texture: defaultTexture, color: UIColor.clearColor(), size: defaultTexture.size())
+        super.init(texture: defaultTexture, color: UIColor.clearColor(), size: defaultSize)
         
         createPhysicsBody()
     }
@@ -23,10 +24,10 @@ class Arrow: SKSpriteNode {
     }
     
     func createPhysicsBody() {
-        let body = SKPhysicsBody(texture: defaultTexture, size: defaultTexture.size())
+        let body = SKPhysicsBody(texture: defaultTexture, size: defaultSize)
         
         body.categoryBitMask = PhysicsCategory.Arrow
-        body.collisionBitMask = PhysicsCategory.Obstacle | PhysicsCategory.Target
+        body.collisionBitMask = PhysicsCategory.Target
         body.contactTestBitMask = PhysicsCategory.Obstacle | PhysicsCategory.Target
         
         physicsBody = body

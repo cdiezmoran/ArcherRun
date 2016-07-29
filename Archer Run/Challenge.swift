@@ -29,13 +29,14 @@ enum GoalType: String {
 
 class Challenge {
     
+    var didCompleteChallenge: Bool = false
     var goal: Int
     var goalType: GoalType
     var progress: Int
     var state: ChallengeState
     var type: ChallengeType
     var times: Int
-    var timesFlag: Bool
+    var timesFlag: Bool = false
     var timesProgress: Int
     
     init(goal: Int, type: ChallengeType, goalType: GoalType) {
@@ -45,7 +46,6 @@ class Challenge {
         self.state = .Active
         self.type = type
         self.times = 1
-        self.timesFlag = false
         self.timesProgress = 0
     }
     
@@ -56,7 +56,6 @@ class Challenge {
         self.state = .Active
         self.type = type
         self.times = times
-        self.timesFlag = false
         self.timesProgress = 0
     }
     
@@ -67,7 +66,6 @@ class Challenge {
         self.state = state
         self.type = type
         self.times = times
-        self.timesFlag = false
         self.timesProgress = timesProgress
     }
     

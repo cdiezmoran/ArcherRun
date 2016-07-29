@@ -36,7 +36,7 @@ class Archer: SKSpriteNode {
         
     /*-------------------------------------JUMP ANIMATION-----------------------------------------------*/
         textures = getTextures("jump-", total: 8)
-        jumpAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)
+        jumpAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.075, resize: true, restore: false)
         
     /*-------------------------------------DEAD ANIMATION-----------------------------------------------*/
         textures = getTextures("dead-", total: 6)
