@@ -17,6 +17,7 @@ class Archer: SKSpriteNode {
     var deadAnimation: SKAction!
     var jumpAnimation: SKAction!
     var runAnimation: SKAction!
+    var shootAnimation: SKAction!
     var state:EntityState = .None
     
     init() {
@@ -41,6 +42,10 @@ class Archer: SKSpriteNode {
     /*-------------------------------------DEAD ANIMATION-----------------------------------------------*/
         textures = getTextures("dead-", total: 6)
         deadAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)
+        
+    /*-------------------------------------DEAD ANIMATION-----------------------------------------------*/
+        textures = getTextures("shoot_straight-", total: 5)
+        shootAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.025, resize: true, restore: false)
     }
     
     
@@ -113,6 +118,7 @@ class Archer: SKSpriteNode {
     }
     
     func shootArrowAnimation() {
+        runAction(shootAnimation)
     }
     
     func getTextures(prefix: String, total: Int) -> [SKTexture] {

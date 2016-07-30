@@ -27,7 +27,7 @@ class Target: SKSpriteNode {
         
         body.allowsRotation = false
         
-        body.mass *= 0.5
+        //body.mass *= 0.5
         
         body.categoryBitMask = PhysicsCategory.Target
         body.collisionBitMask = PhysicsCategory.Arrow

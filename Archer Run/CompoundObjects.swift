@@ -85,7 +85,7 @@ class CompoundObjects {
             
             chainLink.physicsBody = SKPhysicsBody(rectangleOfSize: texture.size())
             
-            chainLink.physicsBody?.mass *= 0.5
+            //chainLink.physicsBody?.mass *= 0.5
             
             chainLink.physicsBody?.categoryBitMask = PhysicsCategory.None
             chainLink.physicsBody?.collisionBitMask = PhysicsCategory.None

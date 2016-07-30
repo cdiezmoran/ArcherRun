@@ -15,9 +15,7 @@ class ChallengeManager {
     var userDefaults: NSUserDefaults!
     
     var activeChallenges = [String: Challenge]()
-    
     var lastGoals = [String: Int]()
-    
     var highestGoals = [String: Int]()
     
     init() {
@@ -356,7 +354,7 @@ class ChallengeManager {
         }
         else if newType == .Target {
             if newGoalType == .Overall {
-                newGoal = highestGoals["targetHighestOverall"]! + 5
+                newGoal = highestGoals["targetHighestOverall"]! + 3
             }
             else if newGoalType == .SingleGame {
                 newGoal = highestGoals["targetHighestSingleGame"]! + 2
@@ -368,14 +366,14 @@ class ChallengeManager {
         }
         else if newType == .Shoot {
             if newGoalType == .Overall {
-                newGoal = highestGoals["shootHighestOverall"]! + 50
+                newGoal = highestGoals["shootHighestOverall"]! + 25
             }
             else if newGoalType == .SingleGame {
-                newGoal = highestGoals["shootHighestSingleGame"]! + 25
+                newGoal = highestGoals["shootHighestSingleGame"]! + 10
             }
             else if newGoalType == .Times {
-                newGoal = highestGoals["shootHighestTimes"]! + 10
-                newTimes += newGoal / 10
+                newGoal = highestGoals["shootHighestTimes"]! + 5
+                newTimes += newGoal / 5
             }
         }
         

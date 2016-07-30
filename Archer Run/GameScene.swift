@@ -50,6 +50,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     var timer: CFTimeInterval = 0
+    var arrowTimer: CFTimeInterval = 0.4
+    var deltaTime: Double!
     
     var archer: Archer!
     var challengeCompletedBanner: SKSpriteNode!
@@ -269,6 +271,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         else {
+            if arrowTimer < 0.4 {
+                return
+            }
+            
             let touchLocation = touch!.locationInNode(self)
             
             let swipe = CGVector(dx: archer.position.x - touchLocation.x, dy: archer.position.y - touchLocation.y)
@@ -277,6 +283,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let arrowDx = -swipe.dx / mag
             let arrowDy = -swipe.dy / mag
             
+            archer.shootArrowAnimation()
+            
             let arrow = Arrow()
             addChild(arrow)
             arrows.append(arrow)
@@ -284,13 +292,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             arrow.physicsBody?.applyImpulse(CGVector(dx: arrowDx * 7.5, dy: arrowDy * 10))
             if gameState.currentState is TutorialState { didTutShoot = true }
             ChallengeManager.sharedInstance.shotArrow()
+            
+            arrowTimer = 0
         }
     }
    
     override func update(currentTime: NSTimeInterval) {
         
         /* Update states with deltaTime */
-        var deltaTime = currentTime - lastUpdateTime
+        deltaTime = currentTime - lastUpdateTime
         lastUpdateTime = currentTime
         if deltaTime > 1 {
             deltaTime = 1.0 / 60.0
@@ -305,6 +315,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         /* Manage active arrows on scene */
         checkForArrowOutOfBounds()
         
+        arrowTimer += deltaTime
     }
     
     func checkForArrowOutOfBounds() {

@@ -36,6 +36,7 @@ class LevelManager {
     func storeLevelData() {
         userDefaults.setValue(level, forKey: "userLevel")
         userDefaults.setValue(progress, forKey: "expProgress")
+        userDefaults.synchronize()
     }
     
     func gainExp() {
@@ -44,6 +45,7 @@ class LevelManager {
             levelUp()
             progress = 0
         }
+        storeLevelData()
     }
     
     func levelUp() {

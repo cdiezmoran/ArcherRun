@@ -90,6 +90,7 @@ class GameOverState: GKState {
     
     func challengeCompletedSequence() -> [SKAction] {
         var actionsArray = [SKAction]()
+        let particles = SKEmitterNode(fileNamed: "LevelUp")!
         
         let waitForGameOverSequence = SKAction.waitForDuration(gameOverSequence.duration)
         
@@ -131,15 +132,16 @@ class GameOverState: GKState {
         let updateLevelLabel = SKAction.runBlock({
             if LevelManager.sharedInstance.didLevelUp {
                 //do level up animation
+                particles.position = self.scene.levelLabel.position
+                self.scene.gameOverScreen.addChild(particles)
                 //update label
                 self.scene.levelLabel.text = String(Int(LevelManager.sharedInstance.level))
                 //set didLevelUp back to false
                 LevelManager.sharedInstance.didLevelUp = false
             }
-            
-            //Add to progressBar xScale
-            
         })
+        
+        let removeParticles = SKAction.runBlock({ particles.removeFromParent() })
         
         actionsArray.append(waitForGameOverSequence)
         actionsArray.append(showAction)
@@ -149,6 +151,7 @@ class GameOverState: GKState {
         actionsArray.append(wait)
         actionsArray.append(hideAction)
         actionsArray.append(updateLabels)
+        actionsArray.append(removeParticles)
         
         return actionsArray
     }

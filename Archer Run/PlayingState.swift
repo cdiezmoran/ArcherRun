@@ -35,13 +35,15 @@ class PlayingState: GKState {
     override func updateWithDeltaTime(seconds: NSTimeInterval) {
         scene.score += floorSpeed * CGFloat(seconds)
         
-        floorSpeed += 0.001
-        if scene.score < 20 {
+        floorSpeed += 0.00075
+        if scene.score < 15 {
             floorSpeed = 4
         }
         
-        if floorSpeed > 12 {
-            floorSpeed = 12
+        print(floorSpeed)
+        
+        if floorSpeed > 8 {
+            floorSpeed = 8
         }
         
         if floorSpeed >= 4 && floorSpeed < 6 {
@@ -52,18 +54,14 @@ class PlayingState: GKState {
             scene.intervalMin = 0.5
             scene.intervalMax = 1.05
         }
-        else if floorSpeed >= 8 && floorSpeed < 10 {
+        else if floorSpeed >= 8 {
             scene.intervalMin = 0.5
             scene.intervalMax = 1.1
-        }
-        else if floorSpeed >= 10 && floorSpeed < 12 {
-            scene.intervalMin = 0.5
-            scene.intervalMax = 1.15
         }
         
         /*--------------------------------------------------------------------------------------*/
         
-        if scene.score >= 20 {
+        if scene.score >= 15 {
            addRandomEntity()
         }
         
@@ -75,9 +73,9 @@ class PlayingState: GKState {
         let treesFrontSpeed = (2 * 60) * secondsFloat
         let treesBackSpeed = 60 * secondsFloat
         let mountainsSpeed = 30 * secondsFloat
-        let enemyScrollSpeedSlow = ((floorSpeed + 1) * 60) * secondsFloat
-        let enemyScrollSpeed = ((floorSpeed + 2) * 60) * secondsFloat
-        let enemyScrollSpeedFast = ((floorSpeed + 3) * 60) * secondsFloat
+        let enemyScrollSpeedSlow = ((floorSpeed + 3) * 60) * secondsFloat
+        let enemyScrollSpeed = ((floorSpeed + 4) * 60) * secondsFloat
+        let enemyScrollSpeedFast = ((floorSpeed + 5) * 60) * secondsFloat
         
         //Scroll rest of starting world
         scrollStartingWorldLayer(scene.startingScrollLayer, speed: scrollSpeed)
@@ -176,10 +174,10 @@ class PlayingState: GKState {
         if scene.timer >= Double(scene.randomInterval) {
             let randomSelector = CGFloat.random(min: 0, max: 1)
             
-            if randomSelector > 0 && randomSelector <= 0.35 {
+            if randomSelector > 0 && randomSelector <= 0.3 {
                 addSpriteToScene(MeleeOrc(), isEnemy: true)
             }
-            else if randomSelector > 0.35 && randomSelector <= 0.7 {
+            else if randomSelector > 0.3 && randomSelector <= 0.7 {
                 addSpriteToScene(Spike(), isEnemy: false)
             }
             else if randomSelector > 0.7 && randomSelector <= 0.9 {
@@ -199,7 +197,7 @@ class PlayingState: GKState {
             scene.randomInterval = CGFloat.random(min: scene.intervalMin, max: scene.intervalMax)
         }
         
-        scene.timer += scene.fixedDelta
+        scene.timer += scene.deltaTime
     }
     
     func changeIntervalForLargeObject() {
