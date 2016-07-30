@@ -86,6 +86,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var thirdChallengeLabel: SKLabelNode!
     var thirdCompletedSprite: SKSpriteNode!
     var thirdProgressLabel: SKLabelNode!
+    var totalCoinCountLabel: SKLabelNode!
     var treesBack1: SKSpriteNode!
     var treesBack2: SKSpriteNode!
     var treesFront1: SKSpriteNode!
@@ -135,6 +136,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         thirdChallengeLabel = self.childNodeWithName("//thirdChallengeLabel") as! SKLabelNode
         thirdCompletedSprite = self.childNodeWithName("//thirdCompletedSprite") as! SKSpriteNode
         thirdProgressLabel = self.childNodeWithName("//thirdProgressLabel") as! SKLabelNode
+        totalCoinCountLabel = self.childNodeWithName("//totalCoinCountLabel") as! SKLabelNode
         treesBack1 = self.childNodeWithName("treesBack1") as! SKSpriteNode
         treesBack2 = self.childNodeWithName("treesBack2") as! SKSpriteNode
         treesFront1 = self.childNodeWithName("treesFront1") as! SKSpriteNode
@@ -279,7 +281,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             addChild(arrow)
             arrows.append(arrow)
             arrow.position = archer.position + CGPoint(x: 10, y: -10)
-            arrow.physicsBody?.applyImpulse(CGVector(dx: arrowDx * 8, dy: arrowDy * 8))
+            arrow.physicsBody?.applyImpulse(CGVector(dx: arrowDx * 7.5, dy: arrowDy * 10))
             if gameState.currentState is TutorialState { didTutShoot = true }
             ChallengeManager.sharedInstance.shotArrow()
         }

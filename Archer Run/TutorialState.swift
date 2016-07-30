@@ -16,6 +16,12 @@ class TutorialState: GKState {
     var separator: SKSpriteNode!
     var tapLabel: SKLabelNode!
     var dragLabel: SKLabelNode!
+    var tapSideWidth: CGFloat!
+    var dragSideWidth: CGFloat!
+    
+    var correctBox: SKSpriteNode!
+    
+    var addedCorrectIndicator: Bool = false
     
     init(scene: GameScene) {
         self.scene = scene
@@ -27,8 +33,8 @@ class TutorialState: GKState {
          * (Yes i'm way too lazy)
          */
         
-        let tapSideWidth = (scene.size.width / 2) / 2
-        let dragSideWidth = scene.size.width - tapSideWidth
+        tapSideWidth = (scene.size.width / 2) / 2
+        dragSideWidth = scene.size.width - tapSideWidth
         
         let gray = UIColor.grayColor()
         let alphaGray = gray.colorWithAlphaComponent(0.3)
@@ -71,10 +77,21 @@ class TutorialState: GKState {
     
     override func updateWithDeltaTime(seconds: NSTimeInterval) {
         
+        if !addedCorrectIndicator {
+            if scene.didTutJump {
+                addCorrectIndicator(tapLabel, sideWidth: tapSideWidth)
+            }
+            
+            if scene.didTutShoot {
+                addCorrectIndicator(dragLabel, sideWidth: dragSideWidth)
+            }
+        }
+        
         if scene.didTutShoot && scene.didTutJump {
             separator.removeFromParent()
             tapLabel.removeFromParent()
             dragLabel.removeFromParent()
+            correctBox.removeFromParent()
             
             scene.gameState.enterState(PlayingState)
         }
@@ -137,5 +154,27 @@ class TutorialState: GKState {
                 scene.currentLevelHolder = sprite.name!
             }
         }
+    }
+    
+    func addCorrectIndicator(label: SKLabelNode, sideWidth: CGFloat) {
+        let greenColor = UIColor.greenColor()
+        let alphaGreen = greenColor.colorWithAlphaComponent(0.5)
+        
+        correctBox = SKSpriteNode(color: alphaGreen, size: CGSize(width: sideWidth, height: scene.size.height))
+        
+        let completedTexture = SKTexture(imageNamed: "completed")
+        let completedIcon = SKSpriteNode(texture: completedTexture, color: UIColor.clearColor(), size: completedTexture.size())
+        correctBox.addChild(completedIcon)
+        completedIcon.position.x = 0
+        completedIcon.position.y = 0
+        
+        scene.addChild(correctBox)
+        correctBox.position.x = label.position.x
+        correctBox.position.y = label.position.y
+        correctBox.zPosition = 10
+        
+        label.hidden = true
+        
+        addedCorrectIndicator = true
     }
 }

@@ -30,6 +30,7 @@ class GameOverState: GKState {
         
         let userDefaults = NSUserDefaults.standardUserDefaults()
         var highscore = userDefaults.integerForKey("highscore")
+        var totalCoinCount = userDefaults.integerForKey("totalCoins")
         let roundedScore = Int(round(scene.score))
         
         if roundedScore > highscore {
@@ -37,11 +38,14 @@ class GameOverState: GKState {
             highscore = roundedScore
         }
         
+        totalCoinCount += scene.coinCount
+        userDefaults.setValue(totalCoinCount, forKey: "totalCoins")
         userDefaults.setValue(scene.playedGames + 1, forKey: "playedGames")
         userDefaults.synchronize()
         
         scene.scoreLabelGO.text = "\(roundedScore)m"
         scene.highScoreLabel.text = "\(highscore)m"
+        scene.totalCoinCountLabel.text = String(totalCoinCount)
         
         ChallengeManager.sharedInstance.cleanUpOnGameOver()
         scene.setProgressLabels()

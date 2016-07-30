@@ -35,7 +35,7 @@ class PlayingState: GKState {
     override func updateWithDeltaTime(seconds: NSTimeInterval) {
         scene.score += floorSpeed * CGFloat(seconds)
         
-        floorSpeed += 0.00075
+        floorSpeed += 0.001
         if scene.score < 20 {
             floorSpeed = 4
         }
@@ -49,16 +49,16 @@ class PlayingState: GKState {
             scene.intervalMax = 1
         }
         else if floorSpeed >= 6 && floorSpeed < 8 {
-            scene.intervalMin = 0.6
-            scene.intervalMax = 1.1
+            scene.intervalMin = 0.5
+            scene.intervalMax = 1.05
         }
         else if floorSpeed >= 8 && floorSpeed < 10 {
-            scene.intervalMin = 0.8
-            scene.intervalMax = 1.2
+            scene.intervalMin = 0.5
+            scene.intervalMax = 1.1
         }
         else if floorSpeed >= 10 && floorSpeed < 12 {
-            scene.intervalMin = 1
-            scene.intervalMax = 1.5
+            scene.intervalMin = 0.5
+            scene.intervalMax = 1.15
         }
         
         /*--------------------------------------------------------------------------------------*/
@@ -176,21 +176,21 @@ class PlayingState: GKState {
         if scene.timer >= Double(scene.randomInterval) {
             let randomSelector = CGFloat.random(min: 0, max: 1)
             
-            if randomSelector > 0 && randomSelector <= 0.3 {
+            if randomSelector > 0 && randomSelector <= 0.35 {
                 addSpriteToScene(MeleeOrc(), isEnemy: true)
             }
-            else if randomSelector > 0.3 && randomSelector <= 0.6 {
+            else if randomSelector > 0.35 && randomSelector <= 0.7 {
                 addSpriteToScene(Spike(), isEnemy: false)
             }
-            else if randomSelector > 0.6 && randomSelector <= 0.9 {
+            else if randomSelector > 0.7 && randomSelector <= 0.9 {
                 compoundObjects.generateCoinBlock()
                 changeIntervalForLargeObject()
             }
-            else if randomSelector > 0.9 && scene.score >= 100 {
+            else if randomSelector > 0.9 && scene.score >= 60 {
                 compoundObjects.generateSpikesWithTarget()
                 changeIntervalForLargeObject()
             }
-            else if randomSelector > 0.9 && scene.score < 100 {
+            else if randomSelector > 0.9 && scene.score < 60 {
                 compoundObjects.generateCoinBlock()
                 changeIntervalForLargeObject()
             }
