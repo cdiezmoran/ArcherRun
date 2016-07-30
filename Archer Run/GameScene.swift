@@ -253,7 +253,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let touch = touches.first
         let location = touch?.locationInNode(self)
-        if location?.x < (frame.width / 2)/2 {
+        if location?.x < (frame.width / 2) / 2 {
             // make the hero jump
             if archer.state == .DoubleJumping { return }
             
@@ -267,43 +267,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         else {
-            firstTouchLocation = touch!.locationInNode(self)
+            let touchLocation = touch!.locationInNode(self)
+            
+            let swipe = CGVector(dx: archer.position.x - touchLocation.x, dy: archer.position.y - touchLocation.y)
+            let mag = sqrt(pow(swipe.dx, 2) + pow(swipe.dy, 2))
+            
+            let arrowDx = -swipe.dx / mag
+            let arrowDy = -swipe.dy / mag
+            
+            let arrow = Arrow()
+            addChild(arrow)
+            arrows.append(arrow)
+            arrow.position = archer.position + CGPoint(x: 10, y: -10)
+            arrow.physicsBody?.applyImpulse(CGVector(dx: arrowDx * 8, dy: arrowDy * 8))
+            if gameState.currentState is TutorialState { didTutShoot = true }
+            ChallengeManager.sharedInstance.shotArrow()
         }
-    }
-    
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if gameState.currentState is GameOverState || gameState.currentState is StartingState { return }
-        
-        let TouchDistanceThreshold: CGFloat = 4
-        
-        if let touch = touches.first {
-            let location = touch.locationInNode(self)
-            if location.x > (frame.width / 2)/2 {
-                let swipe = CGVector(dx: location.x - firstTouchLocation.x, dy: location.y - firstTouchLocation.y)
-                let swipeLength = sqrt(swipe.dx * swipe.dx + swipe.dy * swipe.dy)
-                if swipeLength > TouchDistanceThreshold {
-                    
-                    let mag = sqrt(pow(swipe.dx, 2) + pow(swipe.dy, 2))
-                    
-                    var arrowDx = -swipe.dx / mag
-                    var arrowDy = -swipe.dy / mag
-                    
-                    //Block shooting backwards
-                    if arrowDx < 0 {
-                        arrowDx *= -1
-                        arrowDy *= -1
-                    }
-                    let arrow = Arrow()
-                    addChild(arrow)
-                    arrows.append(arrow)
-                    arrow.position = archer.position + CGPoint(x: 10, y: -10)
-                    arrow.physicsBody?.applyImpulse(CGVector(dx: arrowDx * 6.5, dy: arrowDy * 6.5))
-                    if gameState.currentState is TutorialState { didTutShoot = true }
-                    ChallengeManager.sharedInstance.shotArrow()
-                }
-            }
-        }
-        
     }
    
     override func update(currentTime: NSTimeInterval) {

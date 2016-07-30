@@ -22,6 +22,11 @@ class TutorialState: GKState {
     }
     
     override func didEnterWithPreviousState(previousState: GKState?) {
+        /*
+         * Drag functionality was changed to tap have not changed var names yet
+         * (Yes i'm way too lazy)
+         */
+        
         let tapSideWidth = (scene.size.width / 2) / 2
         let dragSideWidth = scene.size.width - tapSideWidth
         
@@ -38,7 +43,7 @@ class TutorialState: GKState {
         dragLabel = SKLabelNode(fontNamed: "Arial")
         
         tapLabel.text = "Tap to Jump"
-        dragLabel.text = "Drag to shoot"
+        dragLabel.text = "Tap to shoot"
         
         tapLabel.position.x = tapSideWidth / 2
         tapLabel.position.y = scene.size.height / 2

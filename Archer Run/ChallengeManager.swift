@@ -89,7 +89,7 @@ class ChallengeManager {
         }
         else {
             //Create initial challenges
-            activeChallenges["firstChallenge"] = Challenge(goal: 100, type: .Run, goalType: .SingleGame)
+            activeChallenges["firstChallenge"] = Challenge(goal: 20, type: .Run, goalType: .SingleGame)
             activeChallenges["secondChallenge"] = Challenge(goal: 3, type: .Orc, goalType: .Overall)
             activeChallenges["thirdChallenge"] = Challenge(goal: 10, type: .Shoot, goalType: .SingleGame)
         }
