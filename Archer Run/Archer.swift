@@ -9,7 +9,7 @@
 import SpriteKit
 
 enum EntityState {
-    case None, Jumping, Running, Dead
+    case None, Jumping, Running, Dead, DoubleJumping
 }
 
 class Archer: SKSpriteNode {
@@ -84,6 +84,14 @@ class Archer: SKSpriteNode {
         state = .Jumping
     }
     
+    func doubleJump() {
+        physicsBody?.applyImpulse(CGVector(dx: 0, dy: 30))
+        
+        let doubleJumpAction = SKAction.rotateByAngle(-6.2830, duration: 0.25)
+        runAction(doubleJumpAction)
+        
+        state = .DoubleJumping
+    }
     
     func run() {
         runAction(runAnimation, withKey: "runForever")

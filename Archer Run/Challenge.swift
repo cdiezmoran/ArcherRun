@@ -110,6 +110,10 @@ class Challenge {
         var progressString: String
         
         if goalType == .Times {
+            if times - timesProgress <= 0 {
+                return "Complete"
+            }
+            
             let timesToGo =  times - timesProgress
             if timesToGo == 1 {
                 progressString = "\(timesToGo) time to go"
@@ -119,6 +123,10 @@ class Challenge {
             }
         }
         else {
+            if goal - progress <= 0 {
+                return "Complete"
+            }
+            
             let toGo = goal - progress
             switch type {
             case .Orc:

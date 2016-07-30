@@ -13,6 +13,8 @@ class PlayingState: GKState {
     
     unowned let scene: GameScene
     
+    var floorSpeed: CGFloat = 4
+    
     var compoundObjects: CompoundObjects!
     
     init(scene: GameScene) {
@@ -31,11 +33,10 @@ class PlayingState: GKState {
     }
     
     override func updateWithDeltaTime(seconds: NSTimeInterval) {
-        scene.score += 20 * CGFloat(seconds)
+        scene.score += floorSpeed * CGFloat(seconds)
         
-        var floorSpeed: CGFloat = 4
         floorSpeed += 0.00075
-        if scene.score < 100 {
+        if scene.score < 20 {
             floorSpeed = 4
         }
         
@@ -48,21 +49,21 @@ class PlayingState: GKState {
             scene.intervalMax = 1
         }
         else if floorSpeed >= 6 && floorSpeed < 8 {
-            scene.intervalMin = 0.8
-            scene.intervalMax = 1.25
+            scene.intervalMin = 0.6
+            scene.intervalMax = 1.1
         }
         else if floorSpeed >= 8 && floorSpeed < 10 {
-            scene.intervalMin = 1
-            scene.intervalMax = 1.5
+            scene.intervalMin = 0.8
+            scene.intervalMax = 1.2
         }
         else if floorSpeed >= 10 && floorSpeed < 12 {
             scene.intervalMin = 1
-            scene.intervalMax = 1.75
+            scene.intervalMax = 1.5
         }
         
         /*--------------------------------------------------------------------------------------*/
         
-        if scene.score >= 50 {
+        if scene.score >= 20 {
            addRandomEntity()
         }
         
@@ -185,11 +186,11 @@ class PlayingState: GKState {
                 compoundObjects.generateCoinBlock()
                 changeIntervalForLargeObject()
             }
-            else if randomSelector > 0.9 && scene.score >= 400 {
+            else if randomSelector > 0.9 && scene.score >= 100 {
                 compoundObjects.generateSpikesWithTarget()
                 changeIntervalForLargeObject()
             }
-            else if randomSelector > 0.9 && scene.score < 400 {
+            else if randomSelector > 0.9 && scene.score < 100 {
                 compoundObjects.generateCoinBlock()
                 changeIntervalForLargeObject()
             }

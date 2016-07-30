@@ -60,12 +60,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var enemyScrollLayerFast: SKNode!
     var enemyScrollLayerSlow: SKNode!
     var firstChallengeLabel: SKLabelNode!
+    var firstCompletedSprite: SKSpriteNode!
     var firstProgressLabel: SKLabelNode!
     var gameOverScreen: SKSpriteNode!
     var highScoreLabel: SKLabelNode!
     var invisibleGround: SKSpriteNode!
     var levelHolder1: SKSpriteNode!
     var levelHolder2: SKSpriteNode!
+    var levelLabel: SKLabelNode!
+    var levelProgressBar: SKSpriteNode!
     var mountains1: SKSpriteNode!
     var mountains2: SKSpriteNode!
     var obstacleScrollLayer: SKNode!
@@ -74,12 +77,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scoreLabel: SKLabelNode!
     var scoreLabelGO: SKLabelNode!
     var secondChallengeLabel: SKLabelNode!
+    var secondCompletedSprite: SKSpriteNode!
     var secondProgressLabel: SKLabelNode!
     var startMountains: SKSpriteNode!
     var startingScrollLayer: SKNode!
     var startTreesBack: SKSpriteNode!
     var startTreesFront: SKSpriteNode!
     var thirdChallengeLabel: SKLabelNode!
+    var thirdCompletedSprite: SKSpriteNode!
     var thirdProgressLabel: SKLabelNode!
     var treesBack1: SKSpriteNode!
     var treesBack2: SKSpriteNode!
@@ -104,12 +109,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemyScrollLayerFast = self.childNodeWithName("enemyScrollLayerFast")
         enemyScrollLayerSlow = self.childNodeWithName("enemyScrollLayerSlow")
         firstChallengeLabel = self.childNodeWithName("//firstChallengeLabel") as! SKLabelNode
+        firstCompletedSprite = self.childNodeWithName("//firstCompletedSprite") as! SKSpriteNode
         firstProgressLabel = self.childNodeWithName("//firstProgressLabel") as! SKLabelNode
         gameOverScreen = self.childNodeWithName("gameOverScreen") as! SKSpriteNode
         highScoreLabel = self.childNodeWithName("//highScoreLabel") as! SKLabelNode
         invisibleGround = self.childNodeWithName("//invisibleGround") as! SKSpriteNode
         levelHolder1 = self.childNodeWithName("levelHolder1") as! SKSpriteNode
         levelHolder2 = self.childNodeWithName("levelHolder2") as! SKSpriteNode
+        levelLabel = self.childNodeWithName("//levelLabel") as! SKLabelNode
+        levelProgressBar = self.childNodeWithName("//levelProgressBar") as! SKSpriteNode
         mountains1 = self.childNodeWithName("mountains1") as! SKSpriteNode
         mountains2 = self.childNodeWithName("mountains2") as! SKSpriteNode
         obstacleScrollLayer = self.childNodeWithName("obstacleScrollLayer")
@@ -118,12 +126,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel = self.childNodeWithName("scoreLabel") as! SKLabelNode
         scoreLabelGO = self.childNodeWithName("//scoreLabelGO") as! SKLabelNode
         secondChallengeLabel = self.childNodeWithName("//secondChallengeLabel") as! SKLabelNode
+        secondCompletedSprite = self.childNodeWithName("//secondCompletedSprite") as! SKSpriteNode
         secondProgressLabel = self.childNodeWithName("//secondProgressLabel") as! SKLabelNode
         startMountains = self.childNodeWithName("startMountains") as! SKSpriteNode
         startingScrollLayer = self.childNodeWithName("startingScrollLayer")
         startTreesBack = self.childNodeWithName("startTreesBack") as! SKSpriteNode
         startTreesFront = self.childNodeWithName("startTreesFront") as! SKSpriteNode
         thirdChallengeLabel = self.childNodeWithName("//thirdChallengeLabel") as! SKLabelNode
+        thirdCompletedSprite = self.childNodeWithName("//thirdCompletedSprite") as! SKSpriteNode
         thirdProgressLabel = self.childNodeWithName("//thirdProgressLabel") as! SKLabelNode
         treesBack1 = self.childNodeWithName("treesBack1") as! SKSpriteNode
         treesBack2 = self.childNodeWithName("treesBack2") as! SKSpriteNode
@@ -166,6 +176,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         setChallengeLabels()
         setProgressLabels()
+        levelLabel.text = String(Int(LevelManager.sharedInstance.level))
+        levelProgressBar.xScale = LevelManager.sharedInstance.getProgressBarXScale()
         
         gameState.enterState(StartingState)
     }
@@ -243,9 +255,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let location = touch?.locationInNode(self)
         if location?.x < (frame.width / 2)/2 {
             // make the hero jump
-            if archer.state == .Jumping { return }
+            if archer.state == .DoubleJumping { return }
+            
             if gameState.currentState is TutorialState { didTutJump = true }
-            archer.jump()
+            
+            if archer.state == .Jumping {
+                archer.doubleJump()
+            }
+            else {
+                archer.jump()
+            }
         }
         else {
             firstTouchLocation = touch!.locationInNode(self)

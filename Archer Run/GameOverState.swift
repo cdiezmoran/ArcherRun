@@ -13,6 +13,8 @@ class GameOverState: GKState {
     
     unowned let scene: GameScene
     
+    var gameOverSequence: SKAction!
+    
     init(scene: GameScene) {
         self.scene = scene
     }
@@ -20,7 +22,7 @@ class GameOverState: GKState {
     override func didEnterWithPreviousState(previousState: GKState?) {
         let displayGameOverScreen = SKAction(named: "DisplayGameOver")!
         let waitForDeadAnimation = SKAction.waitForDuration(0.8)
-        let gameOverSequence = SKAction.sequence([waitForDeadAnimation, displayGameOverScreen])
+        gameOverSequence = SKAction.sequence([waitForDeadAnimation, displayGameOverScreen])
         
         scene.archer.die()
         
@@ -42,12 +44,30 @@ class GameOverState: GKState {
         scene.highScoreLabel.text = "\(highscore)m"
         
         ChallengeManager.sharedInstance.cleanUpOnGameOver()
-        ChallengeManager.sharedInstance.checkForCompletedChallenges()
-        
-        scene.setChallengeLabels()
         scene.setProgressLabels()
+        let completedKeys = ChallengeManager.sharedInstance.checkForCompletedChallenges()
+        
+        for key in completedKeys {
+            switch key {
+            case "firstChallenge":
+                let sequence = SKAction.sequence(challengeCompletedSequence())
+                scene.firstCompletedSprite.runAction(sequence)
+                break
+            case "secondChallenge":
+                let sequence = SKAction.sequence(challengeCompletedSequence())
+                scene.secondCompletedSprite.runAction(sequence)
+                break
+            case "thirdChallenge":
+                let sequence = SKAction.sequence(challengeCompletedSequence())
+                scene.thirdCompletedSprite.runAction(sequence)
+                break
+            default:
+                break
+            }
+        }
         
         ChallengeManager.sharedInstance.storeChallengesData()
+        LevelManager.sharedInstance.storeLevelData()
     }
     
     override func isValidNextState(stateClass: AnyClass) -> Bool {
@@ -62,5 +82,70 @@ class GameOverState: GKState {
         scene.enemyScrollLayer.position.x -= 4
         scene.enemyScrollLayerSlow.position.x -= 4
         scene.enemyScrollLayerFast.position.x -= 4
+    }
+    
+    func challengeCompletedSequence() -> [SKAction] {
+        var actionsArray = [SKAction]()
+        
+        let waitForGameOverSequence = SKAction.waitForDuration(gameOverSequence.duration)
+        
+        //Show completed sprite (using xScale)
+        let showAction = SKAction.customActionWithDuration(0.5, actionBlock: { (node: SKNode!, elapsedTime: CGFloat) in
+            node.xScale += elapsedTime / 0.5
+            if node.xScale >= 1 {
+                node.xScale = 1
+                node.zPosition = 10
+            }
+        })
+        //Give exp
+        let giveExp = SKAction.runBlock({ LevelManager.sharedInstance.gainExp() })
+        //Wait for a second
+        let wait = SKAction.waitForDuration(1)
+        //Hide completed sprite
+        let hideAction = SKAction.customActionWithDuration(0.5, actionBlock: { (node: SKNode!, elapsedTime: CGFloat) in
+            node.xScale -= elapsedTime / 0.5
+            if node.xScale <= 0 {
+                node.xScale = 0
+            }
+        })
+        //Update labels
+        let updateLabels = SKAction.runBlock({
+            self.scene.setChallengeLabels()
+            self.scene.setProgressLabels()
+        })
+        
+        let updateProgressBar = SKAction.customActionWithDuration(0.5, actionBlock: { (node: SKNode!, elapsedTime: CGFloat) in
+            self.scene.levelProgressBar.xScale = (LevelManager.sharedInstance.getProgressBarXScale() * elapsedTime) / 0.5
+            if self.scene.levelProgressBar.xScale >= 1 {
+                self.scene.levelProgressBar.xScale = 1
+            }
+            else if self.scene.levelProgressBar.xScale <= 0 {
+                self.scene.levelProgressBar.xScale = 0
+            }
+        })
+        
+        let updateLevelLabel = SKAction.runBlock({
+            if LevelManager.sharedInstance.didLevelUp {
+                //do level up animation
+                //update label
+                self.scene.levelLabel.text = String(Int(LevelManager.sharedInstance.level))
+                //set didLevelUp back to false
+                LevelManager.sharedInstance.didLevelUp = false
+            }
+            
+            //Add to progressBar xScale
+            
+        })
+        
+        actionsArray.append(waitForGameOverSequence)
+        actionsArray.append(showAction)
+        actionsArray.append(giveExp)
+        actionsArray.append(updateProgressBar)
+        actionsArray.append(updateLevelLabel)
+        actionsArray.append(wait)
+        actionsArray.append(hideAction)
+        actionsArray.append(updateLabels)
+        
+        return actionsArray
     }
 }

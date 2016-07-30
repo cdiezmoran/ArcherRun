@@ -332,14 +332,14 @@ class ChallengeManager {
         }
         else if newType == .Run {
             if newGoalType == .Overall {
-              newGoal = highestGoals["runHighestOverall"]! + 250
+              newGoal = highestGoals["runHighestOverall"]! + 100
             }
             else if newGoalType == .SingleGame {
-                newGoal = highestGoals["runHighestSingleGame"]! + 150
+                newGoal = highestGoals["runHighestSingleGame"]! + 50
             }
             else if newGoalType == .Times {
-                newGoal = highestGoals["runHighestTimes"]! + 100
-                newTimes += newGoal / 100
+                newGoal = highestGoals["runHighestTimes"]! + 20
+                newTimes += newGoal / 20
             }
         }
         else if newType == .Coin {
@@ -398,12 +398,16 @@ class ChallengeManager {
         return false
     }
     
-    func checkForCompletedChallenges() {
+    func checkForCompletedChallenges() -> [String] {
+        var completedKeys = [String]()
         for (key, challenge) in activeChallenges {
             if challenge.state == .Completed {
                 replaceChallengeForKey(key)
+                completedKeys.append(key)
             }
         }
+        
+        return completedKeys
     }
     
     func notifyOnChallengeCompletion() -> Bool {

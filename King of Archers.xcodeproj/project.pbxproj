@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A02266C11D4BD1F9000D1818 /* LevelUp.sks in Resources */ = {isa = PBXBuildFile; fileRef = A02266C01D4BD1F9000D1818 /* LevelUp.sks */; };
 		A024BFFC1D3EDDFA00164646 /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = A024BFFB1D3EDDFA00164646 /* Target.swift */; };
 		A03C1B941D38146200973F27 /* LongRangeOrc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03C1B931D38146200973F27 /* LongRangeOrc.swift */; };
 		A03C1B961D38371700973F27 /* MeleeOrc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03C1B951D38371700973F27 /* MeleeOrc.swift */; };
@@ -78,6 +79,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A02266C01D4BD1F9000D1818 /* LevelUp.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelUp.sks; sourceTree = "<group>"; };
 		A024BFFB1D3EDDFA00164646 /* Target.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Target.swift; sourceTree = "<group>"; };
 		A03C1B931D38146200973F27 /* LongRangeOrc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LongRangeOrc.swift; sourceTree = "<group>"; };
 		A03C1B951D38371700973F27 /* MeleeOrc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeleeOrc.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				A046D67D1D25B98C007608A1 /* cloud2.png */,
 				A0DF62EB1D3D89CC005926A5 /* CoinGrab.sks */,
 				A0DF62EF1D3D97E4005926A5 /* spark2.png */,
+				A02266C01D4BD1F9000D1818 /* LevelUp.sks */,
 			);
 			name = Particles;
 			sourceTree = "<group>";
@@ -430,6 +433,7 @@
 				A0DF62F01D3D97E4005926A5 /* spark2.png in Resources */,
 				A0A2660E1D36EE1900054ECE /* Orc.atlas in Resources */,
 				A0ADEC861D359CE200E21CE0 /* Animations.sks in Resources */,
+				A02266C11D4BD1F9000D1818 /* LevelUp.sks in Resources */,
 				A0EDE1CD1D233F4A008B5371 /* GameScene.sks in Resources */,
 				A092E1F61D4A8261008F3663 /* Undead.atlas in Resources */,
 				A046D67E1D25B98C007608A1 /* cloud2.png in Resources */,
