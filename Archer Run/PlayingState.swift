@@ -39,9 +39,7 @@ class PlayingState: GKState {
         if scene.score < 15 {
             floorSpeed = 4
         }
-        
-        print(floorSpeed)
-        
+                
         if floorSpeed > 8 {
             floorSpeed = 8
         }

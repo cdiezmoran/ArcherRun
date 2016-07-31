@@ -289,7 +289,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             addChild(arrow)
             arrows.append(arrow)
             arrow.position = archer.position + CGPoint(x: 10, y: -10)
-            arrow.physicsBody?.applyImpulse(CGVector(dx: arrowDx * 7.5, dy: arrowDy * 10))
+            arrow.physicsBody?.applyImpulse(CGVector(dx: arrowDx * 6.5, dy: arrowDy * 10))
             if gameState.currentState is TutorialState { didTutShoot = true }
             ChallengeManager.sharedInstance.shotArrow()
             
@@ -388,6 +388,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         ChallengeManager.sharedInstance.killedOrc()
     }
+    
+    /*func killUndead(nodeUndead: SKNode, nodeArrow: SKNode) {
+        let undead = nodeUndead as! Undead
+        let arrow = nodeArrow as! Arrow
+        
+        
+    }*/
     
     func hitTargetWithSpikes(node: SKNode) {
         let target = node as! Target

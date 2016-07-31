@@ -312,7 +312,7 @@ class ChallengeManager {
         
         //Get new goal
         var newGoal: Int!
-        var newTimes: Int = 1
+        var newTimes: CGFloat = 1
         
         /*---------------------------CHALLENGE GOAL GENERATION LOGIC-----------------------------*/
         
@@ -325,7 +325,7 @@ class ChallengeManager {
             }
             else if newGoalType == .Times {
                 newGoal = highestGoals["orcHighestTimes"]! + 2
-                newTimes += newGoal / 2
+                newTimes += CGFloat(newGoal / 2) * 0.2
             }
         }
         else if newType == .Run {
@@ -337,7 +337,7 @@ class ChallengeManager {
             }
             else if newGoalType == .Times {
                 newGoal = highestGoals["runHighestTimes"]! + 20
-                newTimes += newGoal / 20
+                newTimes += CGFloat(newGoal / 20) * 0.2
             }
         }
         else if newType == .Coin {
@@ -349,7 +349,7 @@ class ChallengeManager {
             }
             else if newGoalType == .Times {
                 newGoal = highestGoals["coinHighestTimes"]! + 50
-                newTimes += newGoal / 50
+                newTimes += CGFloat(newGoal / 50) * 0.2
             }
         }
         else if newType == .Target {
@@ -361,7 +361,7 @@ class ChallengeManager {
             }
             else if newGoalType == .Times {
                 newGoal = highestGoals["targetHighestTimes"]! + 1
-                newTimes += newGoal
+                newTimes += CGFloat(newGoal) * 0.2
             }
         }
         else if newType == .Shoot {
@@ -373,14 +373,18 @@ class ChallengeManager {
             }
             else if newGoalType == .Times {
                 newGoal = highestGoals["shootHighestTimes"]! + 5
-                newTimes += newGoal / 5
+                newTimes += CGFloat(newGoal / 5) * 0.2
             }
         }
         
         /*------------------------END OF CHALLENGE GOAL GENERATION LOGIC--------------------------*/
         
         if newGoalType == .Times {
-            activeChallenges[key] = Challenge(withTimes: newTimes, goal: newGoal, type: newType)
+            var roundedTimes = Int(round(newTimes))
+            if roundedTimes < 1 {
+                roundedTimes = 1
+            }
+            activeChallenges[key] = Challenge(withTimes: roundedTimes, goal: newGoal, type: newType)
         }
         else {
             activeChallenges[key] = Challenge(goal: newGoal, type: newType, goalType: newGoalType)

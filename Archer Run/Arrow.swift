@@ -8,13 +8,55 @@
 
 import SpriteKit
 
+enum ArrowType: String {
+    case Regular = "regular"
+    case Explosive = "explosive"
+    case Fire = "fire"
+    case Ice = "ice"
+}
+
 class Arrow: SKSpriteNode {
     
-    let defaultTexture = SKTexture(imageNamed: "arrow")
+    var type: ArrowType = .Ice
+    
+    var defaultTexture: SKTexture!
     let defaultSize = CGSize(width: 34.0, height: 8)
     
     init() {
+        /*let userDefaults = NSUserDefaults.standardUserDefaults()
+        let arrowRaw = userDefaults.stringForKey("arrowRawValue")!
+        type = ArrowType(rawValue: arrowRaw)!*/
+        
+        switch type {
+        case .Regular:
+            //Use regular sprite
+            defaultTexture = SKTexture(imageNamed: "arrow")
+            break
+        case .Explosive:
+            //Use explosive sprite
+            defaultTexture = SKTexture(imageNamed: "arrowExplosive")
+            break
+        case .Fire:
+            //Use fire sprite
+            defaultTexture = SKTexture(imageNamed: "arrowFire")
+            break
+        case .Ice:
+            //Use ice sprite
+            defaultTexture = SKTexture(imageNamed: "arrowIce")
+            break
+        }
+        
         super.init(texture: defaultTexture, color: UIColor.clearColor(), size: defaultSize)
+        
+        if type == .Ice {
+            addArrowParticles("IceTrail", advanceByTime: 0.6)
+        }
+        else if type == .Fire {
+            addArrowParticles("FireTrail", advanceByTime: 0.6)
+        }
+        else if type == .Explosive {
+            addArrowParticles("DynamiteTrail", advanceByTime: 0.2)
+        }
         
         createPhysicsBody()
     }
@@ -31,5 +73,11 @@ class Arrow: SKSpriteNode {
         body.contactTestBitMask = PhysicsCategory.Obstacle | PhysicsCategory.Target
         
         physicsBody = body
+    }
+    
+    func addArrowParticles(fileName: String, advanceByTime time: NSTimeInterval) {
+        let particles = SKEmitterNode(fileNamed: fileName)!
+        particles.advanceSimulationTime(time)
+        addChild(particles)
     }
 }

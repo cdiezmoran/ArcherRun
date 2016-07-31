@@ -59,6 +59,10 @@
 		A0EDE21B1D23432F008B5371 /* SKTEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EDE20D1D23432F008B5371 /* SKTEffects.swift */; };
 		A0EDE21C1D23432F008B5371 /* SKTTimingFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EDE20E1D23432F008B5371 /* SKTTimingFunctions.swift */; };
 		A0EDE21D1D23432F008B5371 /* Vector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EDE20F1D23432F008B5371 /* Vector3.swift */; };
+		A0F42DD61D4DA2DE0081D2BD /* IceTrail.sks in Resources */ = {isa = PBXBuildFile; fileRef = A0F42DD51D4DA2DE0081D2BD /* IceTrail.sks */; };
+		A0F42DDD1D4DA7590081D2BD /* FireTrail.sks in Resources */ = {isa = PBXBuildFile; fileRef = A0F42DDB1D4DA7590081D2BD /* FireTrail.sks */; };
+		A0F42DDE1D4DA7590081D2BD /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F42DDC1D4DA7590081D2BD /* spark.png */; };
+		A0F42DE41D4DA9EB0081D2BD /* DynamiteTrail.sks in Resources */ = {isa = PBXBuildFile; fileRef = A0F42DE31D4DA9EB0081D2BD /* DynamiteTrail.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,6 +141,10 @@
 		A0EDE20D1D23432F008B5371 /* SKTEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTEffects.swift; sourceTree = "<group>"; };
 		A0EDE20E1D23432F008B5371 /* SKTTimingFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTTimingFunctions.swift; sourceTree = "<group>"; };
 		A0EDE20F1D23432F008B5371 /* Vector3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3.swift; sourceTree = "<group>"; };
+		A0F42DD51D4DA2DE0081D2BD /* IceTrail.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = IceTrail.sks; sourceTree = "<group>"; };
+		A0F42DDB1D4DA7590081D2BD /* FireTrail.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = FireTrail.sks; sourceTree = "<group>"; };
+		A0F42DDC1D4DA7590081D2BD /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		A0F42DE31D4DA9EB0081D2BD /* DynamiteTrail.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = DynamiteTrail.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,6 +222,10 @@
 				A0DF62EB1D3D89CC005926A5 /* CoinGrab.sks */,
 				A0DF62EF1D3D97E4005926A5 /* spark2.png */,
 				A02266C01D4BD1F9000D1818 /* LevelUp.sks */,
+				A0F42DD51D4DA2DE0081D2BD /* IceTrail.sks */,
+				A0F42DDB1D4DA7590081D2BD /* FireTrail.sks */,
+				A0F42DE31D4DA9EB0081D2BD /* DynamiteTrail.sks */,
+				A0F42DDC1D4DA7590081D2BD /* spark.png */,
 			);
 			name = Particles;
 			sourceTree = "<group>";
@@ -432,16 +444,20 @@
 			files = (
 				A0DF62F01D3D97E4005926A5 /* spark2.png in Resources */,
 				A0A2660E1D36EE1900054ECE /* Orc.atlas in Resources */,
+				A0F42DDD1D4DA7590081D2BD /* FireTrail.sks in Resources */,
 				A0ADEC861D359CE200E21CE0 /* Animations.sks in Resources */,
 				A02266C11D4BD1F9000D1818 /* LevelUp.sks in Resources */,
 				A0EDE1CD1D233F4A008B5371 /* GameScene.sks in Resources */,
+				A0F42DDE1D4DA7590081D2BD /* spark.png in Resources */,
 				A092E1F61D4A8261008F3663 /* Undead.atlas in Resources */,
 				A046D67E1D25B98C007608A1 /* cloud2.png in Resources */,
 				A05B41AA1D4ACA7A00D229C0 /* splashScreen.png in Resources */,
+				A0F42DD61D4DA2DE0081D2BD /* IceTrail.sks in Resources */,
 				A0A266081D36C09200054ECE /* Archer.atlas in Resources */,
 				A0EDE1D91D233F4A008B5371 /* LaunchScreen.storyboard in Resources */,
 				A0EDE1D61D233F4A008B5371 /* Assets.xcassets in Resources */,
 				A0DF62ED1D3D89CC005926A5 /* CoinGrab.sks in Resources */,
+				A0F42DE41D4DA9EB0081D2BD /* DynamiteTrail.sks in Resources */,
 				A0EDE1FD1D23406E008B5371 /* StartScene.sks in Resources */,
 				A0EDE1D41D233F4A008B5371 /* Main.storyboard in Resources */,
 				A046D67B1D25B8A7007608A1 /* Clouds.sks in Resources */,
