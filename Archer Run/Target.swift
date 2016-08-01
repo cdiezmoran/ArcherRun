@@ -40,4 +40,11 @@ class Target: SKSpriteNode {
         physicsBody?.categoryBitMask = PhysicsCategory.None
         physicsBody?.contactTestBitMask = PhysicsCategory.None
     }
+    
+    func freeze() {
+        let iceBlock = SKSpriteNode(texture: SKTexture(imageNamed: "iceBlockAlt"), color: UIColor.clearColor(), size: defaultTexture.size())
+        iceBlock.alpha = 0.5
+        iceBlock.zPosition = self.zPosition + 1
+        addChild(iceBlock)
+    }
 }

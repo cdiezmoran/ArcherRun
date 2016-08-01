@@ -10,6 +10,8 @@ import SpriteKit
 
 class MeleeOrc: Orc {
     
+    var runAnimation: SKAction!
+    
     override init() {
         super.init()
         
@@ -19,12 +21,22 @@ class MeleeOrc: Orc {
         
         let animate = SKAction.animateWithTextures(textures, timePerFrame: 0.05, resize: true, restore: false)
         
-        let runAnimation = SKAction.repeatActionForever(animate)
+        runAnimation = SKAction.repeatActionForever(animate)
         
         runAction(runAnimation)        
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    func hitArcher() {
+        removeAllActions()
+        
+        let wait = SKAction.waitForDuration(throwAnimation.duration)
+        
+        let sequence = SKAction.sequence([throwAnimation, wait, runAnimation])
+        
+        runAction(sequence)
     }
 }

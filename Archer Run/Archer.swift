@@ -9,15 +9,18 @@
 import SpriteKit
 
 enum EntityState {
-    case None, Jumping, Running, Dead, DoubleJumping
+    case None, Jumping, Running, Dead, DoubleJumping, Hurt
 }
 
 class Archer: SKSpriteNode {
     
     var deadAnimation: SKAction!
+    var hurtAnimation: SKAction!
     var jumpAnimation: SKAction!
     var runAnimation: SKAction!
     var shootAnimation: SKAction!
+    
+    var lives: Int = 2
     var state:EntityState = .None
     
     init() {
@@ -43,9 +46,13 @@ class Archer: SKSpriteNode {
         textures = getTextures("dead-", total: 6)
         deadAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)
         
-    /*-------------------------------------DEAD ANIMATION-----------------------------------------------*/
+    /*-------------------------------------SHOOT ANIMATION-----------------------------------------------*/
         textures = getTextures("shoot_straight-", total: 5)
         shootAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.025, resize: true, restore: false)
+        
+    /*-------------------------------------HURT ANIMATION-----------------------------------------------*/
+        textures = getTextures("hurt-", total: 3)
+        hurtAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)
     }
     
     
@@ -73,7 +80,7 @@ class Archer: SKSpriteNode {
         
         archerPhysicsBody.categoryBitMask = PhysicsCategory.Player
         archerPhysicsBody.collisionBitMask = PhysicsCategory.Floor
-        archerPhysicsBody.contactTestBitMask = PhysicsCategory.Obstacle | PhysicsCategory.Coin
+        archerPhysicsBody.contactTestBitMask = PhysicsCategory.Obstacle | PhysicsCategory.Coin | PhysicsCategory.IceBlock | PhysicsCategory.Heart
         
         self.physicsBody = archerPhysicsBody
     }
@@ -101,6 +108,15 @@ class Archer: SKSpriteNode {
     func run() {
         runAction(runAnimation, withKey: "runForever")
         state = .Running
+    }
+    
+    func hurt() {
+        removeAllActions()
+        let waitForAnim = SKAction.waitForDuration(hurtAnimation.duration)
+        
+        let sequenceAnims = SKAction.sequence([hurtAnimation, waitForAnim, runAnimation])
+        
+        runAction(sequenceAnims)
     }
     
     func die() {

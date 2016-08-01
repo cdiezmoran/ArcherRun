@@ -11,7 +11,10 @@ import SpriteKit
 class Orc: SKSpriteNode {
     
     var deadAnimation: SKAction!
+    var throwAnimation: SKAction!
     var state: EntityState = .None
+    var bodySize = CGSize(width: 36, height: 48)
+    var bodyPosition = CGPoint(x: -2.5, y: -4.5)
     
 /*-----------------------------------------------INIT-------------------------------------------------------------*/
     init() {
@@ -27,6 +30,11 @@ class Orc: SKSpriteNode {
         textures = getTextures("deadOrc-", total: 6)
         
         deadAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)
+        
+        //THROW ANIMATION
+        textures = getTextures("throw_left-", total: 8)
+        
+        throwAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.01, resize: true, restore: false)
     }
     
     
@@ -58,16 +66,12 @@ class Orc: SKSpriteNode {
         orcPhysicsBody.allowsRotation = false
         orcPhysicsBody.dynamic = true
         
-        orcPhysicsBody.restitution = 0
-        
         orcPhysicsBody.categoryBitMask = PhysicsCategory.Obstacle
         orcPhysicsBody.collisionBitMask = PhysicsCategory.Floor
         orcPhysicsBody.contactTestBitMask = PhysicsCategory.Arrow
         
         physicsBody = orcPhysicsBody
     }
-
-    
     
 /*-----------------------------------------------DEAD-----------------------------------------------------------*/
     func die() {
@@ -76,5 +80,24 @@ class Orc: SKSpriteNode {
         self.physicsBody?.categoryBitMask = PhysicsCategory.None
         
         runAction(deadAnimation)
+    }
+    
+    func freeze() {
+        removeAllActions()
+        
+        self.physicsBody?.categoryBitMask = PhysicsCategory.IceBlock
+        
+        let iceBlock = SKSpriteNode(texture: SKTexture(imageNamed: "iceBlockAlt"), color: UIColor.clearColor(), size: bodySize)
+        iceBlock.alpha = 0.5
+        iceBlock.zPosition = self.zPosition + 1
+        addChild(iceBlock)
+        iceBlock.position = bodyPosition
+    }
+    
+    func burn() {
+        let fire = SKEmitterNode(fileNamed: "Fire")!
+        fire.zPosition = self.zPosition + 1
+        addChild(fire)
+        fire.position.y -= self.size.height / 2
     }
 }

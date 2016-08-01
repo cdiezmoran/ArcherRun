@@ -30,7 +30,7 @@ class Spike: SKSpriteNode {
         self.physicsBody?.affectedByGravity = false
         self.physicsBody?.dynamic = false
         self.physicsBody?.categoryBitMask = PhysicsCategory.Obstacle
-        self.physicsBody?.contactTestBitMask = PhysicsCategory.Player
+        self.physicsBody?.contactTestBitMask = PhysicsCategory.None
         self.physicsBody?.collisionBitMask = PhysicsCategory.None
     }
 }

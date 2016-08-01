@@ -16,7 +16,9 @@ struct PhysicsCategory {
     static let Coin:        UInt32 = 0b100      // 0100
     static let Floor:       UInt32 = 0b1000     // 1000
     static let Arrow:       UInt32 = 0b10000    // 10000
-    static let Target:      UInt32 = 0b100000   
+    static let Target:      UInt32 = 0b100000
+    static let IceBlock:    UInt32 = 0b1000000
+    static let Heart:       UInt32 = 0b10000000
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
@@ -36,7 +38,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var didTutJump: Bool = false
     var didTutShoot: Bool = false
     var firstTouchLocation = CGPointZero
-    var fixedDelta: CFTimeInterval = 1.0/60.0
+    var hearts = [SKSpriteNode]()
     var intervalMin: CGFloat = 0.5
     var intervalMax:CGFloat = 1.5
     var lastUpdateTime: CFTimeInterval = 0
@@ -51,6 +53,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     var timer: CFTimeInterval = 0
     var arrowTimer: CFTimeInterval = 0.4
+    var hurtTimer: CFTimeInterval = 0
     var deltaTime: Double!
     
     var archer: Archer!
@@ -183,6 +186,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         levelLabel.text = String(Int(LevelManager.sharedInstance.level))
         levelProgressBar.xScale = LevelManager.sharedInstance.getProgressBarXScale()
         
+        addHeart()
+        addHeart()
+        
         gameState.enterState(StartingState)
     }
     
@@ -201,7 +207,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Player contact with floor
         if  (categoryA == PhysicsCategory.Floor && categoryB == PhysicsCategory.Player) || (categoryA == PhysicsCategory.Player && categoryB == PhysicsCategory.Floor) {
             
-            if archer.state == .Dead { return }
+            if archer.state == .Dead || archer.state == .Running { return }
             
             archer.run()
             
@@ -217,16 +223,61 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //Player contacts obstacle
         if (categoryA == PhysicsCategory.Obstacle && categoryB == PhysicsCategory.Player) || (categoryA == PhysicsCategory.Player && categoryB == PhysicsCategory.Obstacle) {
-            gameState.enterState(GameOverState)
+            if archer.state == .Hurt { return }
+            
+            archer.lives -= 1
+            hearts.last!.removeFromParent()
+            hearts.removeLast()
+
+            if archer.lives <= 0 {
+                gameState.enterState(GameOverState)
+            }
+            else {
+                archer.hurt()
+                archer.state = .Hurt
+                archer.runAction(SKAction(named: "HurtFade")!)
+            }
+            
+            //check if player got hit by melee orc
+            if nodeA.isKindOfClass(MeleeOrc) {
+                let orc = nodeA as! MeleeOrc
+                orc.hitArcher()
+            }
+            else if nodeB.isKindOfClass(MeleeOrc) {
+                let orc = nodeB as! MeleeOrc
+                orc.hitArcher()
+            }
+        }
+        
+        if categoryA == PhysicsCategory.Heart && categoryB == PhysicsCategory.Player {
+            if nodeA.isKindOfClass(Heart) {
+                grabHeart(nodeA)
+            }
+        }
+        else if categoryA == PhysicsCategory.Player && categoryB == PhysicsCategory.Heart {
+            if nodeB.isKindOfClass(Heart) {
+                grabHeart(nodeB)
+            }
+        }
+        
+        if categoryA == PhysicsCategory.IceBlock && categoryB == PhysicsCategory.Player {
+            if nodeA.isKindOfClass(Orc) {
+                breakiceBlock(nodeA)
+            }
+        }
+        else if categoryA == PhysicsCategory.Player && categoryB == PhysicsCategory.IceBlock {
+            if nodeB.isKindOfClass(Orc) {
+                breakiceBlock(nodeB)
+            }
         }
         
         if categoryA == PhysicsCategory.Obstacle && categoryB == PhysicsCategory.Arrow {
-            if nodeA.isKindOfClass(Orc) {
+            if nodeA.isKindOfClass(MeleeOrc) {
                 killOrc(nodeA, nodeArrow: nodeB)
             }
         }
         else if categoryA == PhysicsCategory.Arrow && categoryB == PhysicsCategory.Obstacle {
-            if nodeB.isKindOfClass(Orc) {
+            if nodeB.isKindOfClass(MeleeOrc) {
                 killOrc(nodeB, nodeArrow: nodeA)
             }
         }
@@ -241,12 +292,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        if categoryA == PhysicsCategory.Target || categoryB == PhysicsCategory.Target {
+        if categoryA == PhysicsCategory.Target && categoryB == PhysicsCategory.Arrow {
             if nodeA.isKindOfClass(Target) {
-                hitTargetWithSpikes(nodeA)
+                hitTargetWithSpikes(nodeA, nodeArrow: nodeB)
             }
-            else if nodeB.isKindOfClass(Target) {
-                hitTargetWithSpikes(nodeB)
+        }
+        else if categoryA == PhysicsCategory.Arrow && categoryB == PhysicsCategory.Target {
+            if nodeB.isKindOfClass(Target) {
+                hitTargetWithSpikes(nodeB, nodeArrow: nodeA)
             }
         }
     }
@@ -315,6 +368,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         /* Manage active arrows on scene */
         checkForArrowOutOfBounds()
         
+        if archer.state == .Hurt {
+            if timer >= 0.8 {
+                archer.state == .Running
+                archer.removeActionForKey("HurtFade")
+            }
+            hurtTimer += deltaTime
+        }
+        
         arrowTimer += deltaTime
     }
     
@@ -338,23 +399,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func grabCoin(node: SKNode) {
         let coin = node as! Coin
-        /*let particles = SKEmitterNode(fileNamed: "CoinGrab")!
-        // Look into position
-        particles.position = obstacleScrollLayer.convertPoint(coin.position, fromNode: coin)
-        particles.advanceSimulationTime(0.15)
-        obstacleScrollLayer.addChild(particles)*/
         
         coin.removeFromParent()
-        
-        /*let removeParticlesAction = SKAction.runBlock({
-            particles.removeFromParent()
-        })
-        
-        let waitAction = SKAction.waitForDuration(0.15)
-        
-        let removeParticlesSequence = SKAction.sequence([waitAction, removeParticlesAction])
-        
-        obstacleScrollLayer.runAction(removeParticlesSequence)*/
         
         coinCount += 1
         
@@ -362,8 +408,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func killOrc(nodeOrc: SKNode, nodeArrow: SKNode) {
-        let orc = nodeOrc as! Orc
+        let orc = nodeOrc as! MeleeOrc
         let arrow = nodeArrow as! Arrow
+        
+        if arrow.type == .Ice {
+            orc.freeze()
+        }
+        else if arrow.type == .Fire {
+            orc.die()
+            orc.burn()
+        }
+        else if arrow.type == .Explosive {
+            orc.physicsBody!.applyImpulse(CGVector(dx: 30, dy: 30))
+
+            
+            let explosion = SKEmitterNode(fileNamed: "Explosion")!
+            explosion.zPosition = orc.zPosition + 1
+            explosion.position = orc.parent!.convertPoint(orc.position, toNode: obstacleScrollLayer)
+            obstacleScrollLayer.addChild(explosion)
+
+            let wait = SKAction.waitForDuration(0.8)
+            let removeExplosion = SKAction.runBlock({ explosion.removeFromParent() })
+            
+            let sequence = SKAction.sequence([wait, removeExplosion])
+            
+            runAction(sequence)
+            
+            orc.die()
+        }
+        else {
+            orc.die()
+        }
         
         //Remove arrow from parent
         let removeArrow = SKAction.runBlock({
@@ -374,10 +449,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         arrows.removeAtIndex(arrows.indexOf(arrow)!)
         
-        orc.physicsBody?.applyImpulse(CGVector(dx: 5, dy: 0))
-        
-        orc.die()
-        
         let removeAndAddOrc = SKAction.runBlock({
             orc.position = orc.parent!.convertPoint(orc.position, toNode: self.obstacleScrollLayer)
             orc.removeFromParent()
@@ -385,6 +456,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         })
         
         self.runAction(removeAndAddOrc)
+        
         
         ChallengeManager.sharedInstance.killedOrc()
     }
@@ -396,8 +468,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }*/
     
-    func hitTargetWithSpikes(node: SKNode) {
+    func hitTargetWithSpikes(node: SKNode, nodeArrow: SKNode) {
         let target = node as! Target
+        let arrow = nodeArrow as! Arrow
+        
+        let removeArrow = SKAction.runBlock({
+            arrow.removeFromParent()
+        })
+        
+        if arrow.type == .Ice {
+            target.freeze()
+            self.runAction(removeArrow)
+        }
         
         for case let spike as Spike in target.children {
             let slideDown = SKAction.moveBy(CGVector(dx: 0, dy: -spike.size.height), duration: 0.25)
@@ -457,5 +539,59 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         firstProgressLabel.text = ChallengeManager.sharedInstance.activeChallenges["firstChallenge"]!.progressDescription()
         secondProgressLabel.text = ChallengeManager.sharedInstance.activeChallenges["secondChallenge"]!.progressDescription()
         thirdProgressLabel.text = ChallengeManager.sharedInstance.activeChallenges["thirdChallenge"]!.progressDescription()
+    }
+    
+    func breakiceBlock(orcNode: SKNode) {
+        let orc = orcNode as! Orc
+        
+        let particles = SKEmitterNode(fileNamed: "IceExplosion")!
+        particles.position = orc.position
+        
+        let removeOrc = SKAction.runBlock({ orc.removeFromParent() })
+        let addParticles = SKAction.runBlock({ self.obstacleScrollLayer.addChild(particles) })
+        let wait = SKAction.waitForDuration(2.5)
+        let removeParticles = SKAction.runBlock({ particles.removeFromParent() })
+        
+        let sequence = SKAction.sequence([removeOrc, addParticles, wait, removeParticles])
+        
+        runAction(sequence)
+    }
+    
+    func addHeart() {
+        let heartTexture = SKTexture(imageNamed: "heartFinal")
+        let newHeart = SKSpriteNode(texture: heartTexture, color: UIColor.clearColor(), size: CGSize(width: 32, height: 32))
+        if hearts.isEmpty {
+            newHeart.position = CGPointMake(622, 380)
+            hearts.append(newHeart)
+            addChild(newHeart)
+        }
+        else {
+            newHeart.position = hearts.last!.position + CGPoint(x: 38, y: 0)
+            hearts.append(newHeart)
+            addChild(newHeart)
+        }
+    }
+    
+    func grabHeart(heartNode: SKNode) {
+        let heart = heartNode as! Heart
+        
+        let heartExplosion = SKEmitterNode(fileNamed: "HeartExplosion")!
+        heartExplosion.position = heart.position
+        
+        let removeHeart = SKAction.runBlock({ heart.removeFromParent() })
+        let addParticles = SKAction.runBlock({ self.obstacleScrollLayer.addChild(heartExplosion) })
+        let wait = SKAction.waitForDuration(1.5)
+        let removeParticles = SKAction.runBlock({ heartExplosion.removeFromParent() })
+        
+        let sequence = SKAction.sequence([removeHeart, addParticles, wait, removeParticles])
+        
+        runAction(sequence)
+        
+        if archer.lives >= 2 {
+            return
+        }
+        
+        archer.lives += 1
+        addHeart()
     }
 }

@@ -381,8 +381,8 @@ class ChallengeManager {
         
         if newGoalType == .Times {
             var roundedTimes = Int(round(newTimes))
-            if roundedTimes < 1 {
-                roundedTimes = 1
+            if roundedTimes < 2 {
+                roundedTimes = 2
             }
             activeChallenges[key] = Challenge(withTimes: roundedTimes, goal: newGoal, type: newType)
         }

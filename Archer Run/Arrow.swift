@@ -17,7 +17,7 @@ enum ArrowType: String {
 
 class Arrow: SKSpriteNode {
     
-    var type: ArrowType = .Ice
+    var type: ArrowType = .Regular
     
     var defaultTexture: SKTexture!
     let defaultSize = CGSize(width: 34.0, height: 8)
@@ -67,6 +67,8 @@ class Arrow: SKSpriteNode {
     
     func createPhysicsBody() {
         let body = SKPhysicsBody(texture: defaultTexture, size: defaultSize)
+        
+        body.mass = 0.0037
         
         body.categoryBitMask = PhysicsCategory.Arrow
         body.collisionBitMask = PhysicsCategory.Target
