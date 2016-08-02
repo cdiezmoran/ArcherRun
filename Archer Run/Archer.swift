@@ -112,6 +112,7 @@ class Archer: SKSpriteNode {
     
     func hurt() {
         removeAllActions()
+        
         let waitForAnim = SKAction.waitForDuration(hurtAnimation.duration)
         
         let sequenceAnims = SKAction.sequence([hurtAnimation, waitForAnim, runAnimation])

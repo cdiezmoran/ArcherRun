@@ -23,9 +23,15 @@ class Arrow: SKSpriteNode {
     let defaultSize = CGSize(width: 34.0, height: 8)
     
     init() {
-        /*let userDefaults = NSUserDefaults.standardUserDefaults()
-        let arrowRaw = userDefaults.stringForKey("arrowRawValue")!
-        type = ArrowType(rawValue: arrowRaw)!*/
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        if let arrowRaw = userDefaults.stringForKey("arrowRawValue") {
+            self.type = ArrowType(rawValue: arrowRaw)!
+        }
+        else {
+            type = .Regular
+            userDefaults.setObject(type.rawValue, forKey: "arrowRawValue")
+            userDefaults.synchronize()
+        }
         
         switch type {
         case .Regular:
@@ -81,5 +87,18 @@ class Arrow: SKSpriteNode {
         let particles = SKEmitterNode(fileNamed: fileName)!
         particles.advanceSimulationTime(time)
         addChild(particles)
+    }
+    
+    static func setEquippedTypeFromRawValue(rawValue: String) {
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        userDefaults.setObject(rawValue, forKey: "arrowRawValue")
+        userDefaults.synchronize()
+    }
+    
+    static func isEquipped(rawValue: String) -> Bool {
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let arrowRaw = userDefaults.stringForKey("arrowRawValue")!
+        
+        return arrowRaw == rawValue
     }
 }

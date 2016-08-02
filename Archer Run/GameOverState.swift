@@ -128,7 +128,7 @@ class GameOverState: GKState {
                 self.scene.levelProgressBar.xScale = 0
             }
         })
-        
+         
         let updateLevelLabel = SKAction.runBlock({
             if LevelManager.sharedInstance.didLevelUp {
                 //do level up animation

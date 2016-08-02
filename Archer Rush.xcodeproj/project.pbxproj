@@ -16,6 +16,7 @@
 		A03C1B941D38146200973F27 /* LongRangeOrc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03C1B931D38146200973F27 /* LongRangeOrc.swift */; };
 		A03C1B961D38371700973F27 /* MeleeOrc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03C1B951D38371700973F27 /* MeleeOrc.swift */; };
 		A03C1B981D385A1900973F27 /* Arrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03C1B971D385A1900973F27 /* Arrow.swift */; };
+		A03D2B7E1D5104E0008C0B39 /* ScrollingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03D2B7D1D5104E0008C0B39 /* ScrollingList.swift */; };
 		A03F3EA11D287CFD00E177F9 /* Archer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03F3EA01D287CFD00E177F9 /* Archer.swift */; };
 		A046D67B1D25B8A7007608A1 /* Clouds.sks in Resources */ = {isa = PBXBuildFile; fileRef = A046D6791D25B8A7007608A1 /* Clouds.sks */; };
 		A046D67E1D25B98C007608A1 /* cloud2.png in Resources */ = {isa = PBXBuildFile; fileRef = A046D67D1D25B98C007608A1 /* cloud2.png */; };
@@ -98,6 +99,7 @@
 		A03C1B931D38146200973F27 /* LongRangeOrc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LongRangeOrc.swift; sourceTree = "<group>"; };
 		A03C1B951D38371700973F27 /* MeleeOrc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeleeOrc.swift; sourceTree = "<group>"; };
 		A03C1B971D385A1900973F27 /* Arrow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arrow.swift; sourceTree = "<group>"; };
+		A03D2B7D1D5104E0008C0B39 /* ScrollingList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollingList.swift; sourceTree = "<group>"; };
 		A03F3EA01D287CFD00E177F9 /* Archer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Archer.swift; sourceTree = "<group>"; };
 		A046D6791D25B8A7007608A1 /* Clouds.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Clouds.sks; sourceTree = "<group>"; };
 		A046D67D1D25B98C007608A1 /* cloud2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud2.png; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 				A0B486681D468E74004F8EB8 /* ChallengeManager.swift */,
 				A0B4866C1D4691E8004F8EB8 /* Challenge.swift */,
 				A05B41A71D4A9B6F00D229C0 /* LevelManager.swift */,
+				A03D2B7D1D5104E0008C0B39 /* ScrollingList.swift */,
 			);
 			name = "Archer Rush";
 			path = "Archer Run";
@@ -517,6 +520,7 @@
 				A0EDE2131D23432F008B5371 /* CGPoint+Extensions.swift in Sources */,
 				A0DF62E21D3D4799005926A5 /* Coin.swift in Sources */,
 				A0EDE2121D23432F008B5371 /* CGFloat+Extensions.swift in Sources */,
+				A03D2B7E1D5104E0008C0B39 /* ScrollingList.swift in Sources */,
 				A0EDE1CB1D233F4A008B5371 /* AppDelegate.swift in Sources */,
 				A0EDE21A1D23432F008B5371 /* SKTAudio.swift in Sources */,
 				A0ADEC841D35987900E21CE0 /* Orc.swift in Sources */,
@@ -694,6 +698,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.King-of-Archers";
 				PRODUCT_NAME = "Archer Rush";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -708,6 +713,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.King-of-Archers";
 				PRODUCT_NAME = "Archer Rush";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

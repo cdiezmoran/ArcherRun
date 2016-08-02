@@ -9,22 +9,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Archer Run/StartingState.swift"
-            timestampString = "490643445.269821"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "didEnterWithPreviousState(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Archer Run/Archer.swift"
             timestampString = "491776912.2461"
             startingColumnNumber = "9223372036854775807"
@@ -74,12 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Archer Run/GameScene.swift"
-            timestampString = "491785499.889291"
+            timestampString = "491865358.743869"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "226"
-            endingLineNumber = "226"
-            landmarkName = "didBeginContact(_:)"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
+            landmarkName = "didMoveToView(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -90,28 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Archer Run/GameScene.swift"
-            timestampString = "491785371.212392"
+            timestampString = "491866691.855745"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
-            landmarkName = "didBeginContact(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Archer Run/GameScene.swift"
-            timestampString = "491785514.820797"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "195"
-            endingLineNumber = "195"
-            landmarkName = "didBeginContact(_:)"
+            startingLineNumber = "648"
+            endingLineNumber = "648"
+            landmarkName = "selectedRowNode(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

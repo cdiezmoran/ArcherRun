@@ -21,7 +21,7 @@ struct PhysicsCategory {
     static let Heart:       UInt32 = 0b10000000
 }
 
-class GameScene: SKScene, SKPhysicsContactDelegate {
+class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
     var gameState: GKStateMachine!
     var gameOverState: GKState!
     var playingState: GKState!
@@ -29,6 +29,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var tutorialState: GKState!
     
     var arrows: [Arrow] = []
+    var availableArrows = [String:Bool]()
     var coinCount: Int = 0 {
         didSet {
             coinCountLabel.text = String(coinCount)
@@ -42,6 +43,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var intervalMin: CGFloat = 0.5
     var intervalMax:CGFloat = 1.5
     var lastUpdateTime: CFTimeInterval = 0
+    var list: ScrollingList!
     var playedGames: Int = 0
     var randomInterval: CGFloat!
     var score: CGFloat = 0 {
@@ -55,6 +57,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var arrowTimer: CFTimeInterval = 0.4
     var hurtTimer: CFTimeInterval = 0
     var deltaTime: Double!
+    var userDefaults: NSUserDefaults!
     
     var archer: Archer!
     var challengeCompletedBanner: SKSpriteNode!
@@ -84,6 +87,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var secondChallengeLabel: SKLabelNode!
     var secondCompletedSprite: SKSpriteNode!
     var secondProgressLabel: SKLabelNode!
+    var shopButton: MSButtonNode!
     var startMountains: SKSpriteNode!
     var startingScrollLayer: SKNode!
     var startTreesBack: SKSpriteNode!
@@ -134,6 +138,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         secondChallengeLabel = self.childNodeWithName("//secondChallengeLabel") as! SKLabelNode
         secondCompletedSprite = self.childNodeWithName("//secondCompletedSprite") as! SKSpriteNode
         secondProgressLabel = self.childNodeWithName("//secondProgressLabel") as! SKLabelNode
+        shopButton = self.childNodeWithName("//shopButton") as! MSButtonNode
         startMountains = self.childNodeWithName("startMountains") as! SKSpriteNode
         startingScrollLayer = self.childNodeWithName("startingScrollLayer")
         startTreesBack = self.childNodeWithName("startTreesBack") as! SKSpriteNode
@@ -160,7 +165,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         gameState = GKStateMachine(states: [startingState, playingState, gameOverState, tutorialState])
         
-        randomInterval = CGFloat.random(min: 0.3, max: 1.5)
+        randomInterval = CGFloat.random(min: 0.3, max: 1)
         
         playAgainButton.selectedHandler = {
             if let scene = GameScene(fileNamed:"GameScene") {
@@ -177,9 +182,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 skView.presentScene(scene)
             }
         }
+        shopButton.selectedHandler = {
+            self.list = ScrollingList(size: CGSize(width: self.size.width * 0.9, height: self.size.height * 0.9))
+            self.list.horizontalAlignmentMode = .Left
+            self.list.zPosition = self.gameOverScreen.zPosition + 50
+            self.list.color = UIColor(red: 125/255, green: 82/255, blue: 48/255, alpha: 1)
+            self.setupList()
+        }
         
-        let userDefaults = NSUserDefaults.standardUserDefaults()
+        userDefaults = NSUserDefaults.standardUserDefaults()
         playedGames = userDefaults.integerForKey("playedGames")
+        
+        if let dict = userDefaults.dictionaryForKey("availableArrows") {
+            availableArrows = dict as! [String:Bool]
+        }
+        else {
+            availableArrows["regular"] = true
+            availableArrows["ice"] = false
+            availableArrows["fire"] = false
+            availableArrows["explosive"] = false
+            userDefaults.setObject(availableArrows, forKey: "availableArrows")
+            userDefaults.synchronize()
+        }
         
         setChallengeLabels()
         setProgressLabels()
@@ -204,7 +228,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let categoryA = nodeA.physicsBody?.categoryBitMask
         let categoryB = nodeB.physicsBody?.categoryBitMask
         
-        //Player contact with floor
+        /* Player contact with floor */
         if  (categoryA == PhysicsCategory.Floor && categoryB == PhysicsCategory.Player) || (categoryA == PhysicsCategory.Player && categoryB == PhysicsCategory.Floor) {
             
             if archer.state == .Dead || archer.state == .Running { return }
@@ -221,7 +245,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        //Player contacts obstacle
+        /* Player contact with obstacle */
         if (categoryA == PhysicsCategory.Obstacle && categoryB == PhysicsCategory.Player) || (categoryA == PhysicsCategory.Player && categoryB == PhysicsCategory.Obstacle) {
             if archer.state == .Hurt { return }
             
@@ -238,17 +262,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 archer.runAction(SKAction(named: "HurtFade")!)
             }
             
-            //check if player got hit by melee orc
+            /* Check what kind of object the player made contact with */
             if nodeA.isKindOfClass(MeleeOrc) {
                 let orc = nodeA as! MeleeOrc
                 orc.hitArcher()
+                orc.physicsBody?.categoryBitMask = PhysicsCategory.None
+
             }
             else if nodeB.isKindOfClass(MeleeOrc) {
                 let orc = nodeB as! MeleeOrc
                 orc.hitArcher()
+                self.physicsBody?.categoryBitMask = PhysicsCategory.None
+            }
+            else if nodeA.isKindOfClass(Spike) {
+                let spike = nodeA as! Spike
+                spike.physicsBody?.categoryBitMask = PhysicsCategory.None
+            }
+            else if nodeB.isKindOfClass(Spike) {
+                let spike = nodeB as! Spike
+                spike.physicsBody?.categoryBitMask = PhysicsCategory.None
             }
         }
         
+        /* Heart - Player contact */
         if categoryA == PhysicsCategory.Heart && categoryB == PhysicsCategory.Player {
             if nodeA.isKindOfClass(Heart) {
                 grabHeart(nodeA)
@@ -260,6 +296,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
+        /* IceBlock - Player contact */
         if categoryA == PhysicsCategory.IceBlock && categoryB == PhysicsCategory.Player {
             if nodeA.isKindOfClass(Orc) {
                 breakiceBlock(nodeA)
@@ -271,6 +308,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
+        /* Obstacle - Arrow contact */
         if categoryA == PhysicsCategory.Obstacle && categoryB == PhysicsCategory.Arrow {
             if nodeA.isKindOfClass(MeleeOrc) {
                 killOrc(nodeA, nodeArrow: nodeB)
@@ -282,7 +320,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        
+        /* Coin - Player contact */
         if categoryA == PhysicsCategory.Coin || categoryB == PhysicsCategory.Coin {
             if nodeA.isKindOfClass(Coin) {
                 grabCoin(nodeA)
@@ -292,6 +330,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
+        /* Target - Arrow contact */
         if categoryA == PhysicsCategory.Target && categoryB == PhysicsCategory.Arrow {
             if nodeA.isKindOfClass(Target) {
                 hitTargetWithSpikes(nodeA, nodeArrow: nodeB)
@@ -369,9 +408,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         checkForArrowOutOfBounds()
         
         if archer.state == .Hurt {
-            if timer >= 0.8 {
+            if timer >= 1.25 {
                 archer.state == .Running
                 archer.removeActionForKey("HurtFade")
+                hurtTimer = 0
             }
             hurtTimer += deltaTime
         }
@@ -460,13 +500,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         ChallengeManager.sharedInstance.killedOrc()
     }
-    
-    /*func killUndead(nodeUndead: SKNode, nodeArrow: SKNode) {
-        let undead = nodeUndead as! Undead
-        let arrow = nodeArrow as! Arrow
-        
-        
-    }*/
     
     func hitTargetWithSpikes(node: SKNode, nodeArrow: SKNode) {
         let target = node as! Target
@@ -593,5 +626,169 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         archer.lives += 1
         addHeart()
+    }
+    
+    func selectedRowNode(node: SKSpriteNode) {
+        // Check the node name to decide what to do here...
+        if let name = node.name {
+            if name == "close" {
+                list.removeFromParent()
+                return
+            }
+            
+            let isEquipped = Arrow.isEquipped(name)
+            let isBought: Bool = availableArrows[name]!
+            let parent = node.parent!
+            
+            if !isBought {
+                //get player's money count
+                var totalCoinCount = userDefaults.integerForKey("totalCoins")
+                //get cost of arrow
+                let coinLabel = parent.childNodeWithName("coinLabel") as! SKLabelNode
+                let coinCost = Int(coinLabel.text!)!
+                //check if player can buy arrow
+                if totalCoinCount > coinCost {
+                    //remove cost of arrow from player money
+                    totalCoinCount -= coinCost
+                    //save totalCoinCount
+                    userDefaults.setValue(totalCoinCount, forKey: "totalCoins")
+                    //update coin count label
+                    totalCoinCountLabel.text = String(totalCoinCount)
+                    //update availableArrows dict
+                    availableArrows[name] = true
+                    userDefaults.setObject(availableArrows, forKey: "availableArrows")
+                    userDefaults.synchronize()
+                    //get node elements
+                    let coinSprite = parent.childNodeWithName("coinSprite") as! SKSpriteNode
+                    let buyLabel = parent.childNodeWithName("buyLabel") as! SKLabelNode
+                    //modify node elements
+                    coinLabel.removeFromParent()
+                    coinSprite.removeFromParent()
+                    buyLabel.text = "EQUIP"
+                }
+                else {
+                    //fade or change color animation in buy label
+                }
+            }
+            else {
+                if !isEquipped {
+                    Arrow.setEquippedTypeFromRawValue(name)
+                }
+                list.removeFromParent()
+                return
+            }
+        }
+    }
+    
+    func setupList() {
+        list.delegate = self
+        // Add the list to this scene
+        addChild(list)
+        // Position the list. THe reference point is in the center.
+        list.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        
+        for (key, value) in availableArrows {
+            if value {
+                let isEquipped = Arrow.isEquipped(key)
+                createArrowRow(key, cost: 1000, isBought: value, isEquipped: isEquipped)
+            }
+            else {
+                createArrowRow(key, cost: 1000, isBought: false, isEquipped: false)
+            }
+        }
+        
+        let row = SKSpriteNode(color: UIColor.clearColor(), size: CGSize(width: list.size.width, height: 60))
+        row.name = "close"
+        
+        let rowOverlay = SKSpriteNode(color: UIColor.clearColor(), size: row.size)
+        rowOverlay.name = "close"
+        rowOverlay.zPosition = 151
+        row.addChild(rowOverlay)
+        
+        let closeLabel = SKLabelNode(fontNamed: "Helvetica Neue")
+        closeLabel.text = "CLOSE"
+        closeLabel.fontColor = UIColor(red: 231/255, green: 76/255, blue: 60/255, alpha: 1)
+        row.addChild(closeLabel)
+        closeLabel.position = CGPoint(x: 0, y: 0)
+        
+        list.addNode(row)
+    }
+    
+    func createArrowRow(name: String, cost: Int, isBought: Bool, isEquipped: Bool) {
+        let rowColor = UIColor(red: 163/255, green: 134/255, blue: 113/255, alpha: 1)
+        let row = SKSpriteNode(color: rowColor, size: CGSize(width: list.size.width, height: 60))
+        row.name = name
+        
+        let rowOverlay = SKSpriteNode(color: UIColor.clearColor(), size: row.size)
+        rowOverlay.name = name
+        rowOverlay.zPosition = 151
+        row.addChild(rowOverlay)
+        
+        var arrowTexture: SKTexture!
+        var titleText: String!
+        
+        if name == "regular" {
+            arrowTexture = SKTexture(imageNamed: "arrow")
+            titleText = "Regular Arrow"
+        }
+        else if name == "ice" {
+            arrowTexture = SKTexture(imageNamed: "arrowIce")
+            titleText = "Ice Arrow"
+        }
+        else if name == "fire" {
+            arrowTexture = SKTexture(imageNamed: "arrowFire")
+            titleText = "Fire Arrow"
+        }
+        else if name == "explosive" {
+            arrowTexture = SKTexture(imageNamed: "arrowExplosive")
+            titleText = "Explosive Arrow"
+        }
+        
+        let arrowSprite = SKSpriteNode(texture: arrowTexture, color: UIColor.clearColor(), size: CGSize(width: 62, height: 10))
+        row.addChild(arrowSprite)
+        arrowSprite.position = CGPoint(x: -290, y: -4)
+        
+        let titleLabel = SKLabelNode(fontNamed: "Helvetica Neue")
+        titleLabel.text = titleText
+        titleLabel.fontSize = 32
+        titleLabel.horizontalAlignmentMode = .Left
+        row.addChild(titleLabel)
+        titleLabel.position.x = arrowSprite.position.x + 50
+        titleLabel.position.y = -2
+        
+        if !isBought {
+            let coinSprite = SKSpriteNode(texture: SKTexture(imageNamed: "coinGold"), color: UIColor.clearColor(), size: CGSize(width: 21, height: 21))
+            coinSprite.name = "coinSprite"
+            row.addChild(coinSprite)
+            coinSprite.position = CGPoint(x: -230, y: -18.5)
+            
+            let coinLabel = SKLabelNode(fontNamed: "Courier New")
+            coinLabel.name = "coinLabel"
+            coinLabel.text = String(cost)
+            coinLabel.fontSize = 24
+            coinLabel.horizontalAlignmentMode = .Left
+            row.addChild(coinLabel)
+            coinLabel.position = CGPoint(x: -220, y: -27)
+        }
+        
+        let buyLabel = SKLabelNode(fontNamed: "Helvetica Neue")
+        buyLabel.name = "buyLabel"
+        buyLabel.fontSize = 24
+        row.addChild(buyLabel)
+        buyLabel.position = CGPoint(x: 196, y: -5)
+        
+        if !isBought {
+            buyLabel.text = "TAP TO BUY"
+        }
+        else {
+            if isEquipped {
+                buyLabel.text = "EQUIPPED"
+            }
+            else {
+                buyLabel.text = "EQUIP"
+            }
+        }
+        
+        list.addNode(row)
     }
 }
