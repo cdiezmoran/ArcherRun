@@ -42,6 +42,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
     var hearts = [SKSpriteNode]()
     var intervalMin: CGFloat = 0.5
     var intervalMax:CGFloat = 1.5
+    var lastRoundedScore: Int = 0
     var lastUpdateTime: CFTimeInterval = 0
     var list: ScrollingList!
     var playedGames: Int = 0
@@ -50,7 +51,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
         didSet {
             let roundedScore = Int(round(score))
             scoreLabel.text = "\(roundedScore)m"
-            ChallengeManager.sharedInstance.ranMeters(roundedScore)
+            if lastRoundedScore != roundedScore {
+                ChallengeManager.sharedInstance.ranMeter()
+            }
+            lastRoundedScore = roundedScore
         }
     }
     var timer: CFTimeInterval = 0
@@ -64,6 +68,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
     var challengeCompletedLabel: SKLabelNode!
     var clouds: SKEmitterNode!
     var coinCountLabel: SKLabelNode!
+    var coinRewardLabel: SKLabelNode!
     var enemyScrollLayer: SKNode!
     var enemyScrollLayerFast: SKNode!
     var enemyScrollLayerSlow: SKNode!
@@ -115,6 +120,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
         challengeCompletedLabel = self.childNodeWithName("//challengeCompletedLabel") as! SKLabelNode
         clouds = self.childNodeWithName("clouds") as! SKEmitterNode
         coinCountLabel = self.childNodeWithName("coinCountLabel") as! SKLabelNode
+        coinRewardLabel = self.childNodeWithName("//coinRewardLabel") as! SKLabelNode
         enemyScrollLayer = self.childNodeWithName("enemyScrollLayer")
         enemyScrollLayerFast = self.childNodeWithName("enemyScrollLayerFast")
         enemyScrollLayerSlow = self.childNodeWithName("enemyScrollLayerSlow")
@@ -155,6 +161,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
         water2 = self.childNodeWithName("//water2") as! SKSpriteNode
         
         clouds.advanceSimulationTime(320)
+        
+        coinRewardLabel.hidden = true
         
         setupGroundPhysics()
         
@@ -231,7 +239,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
         /* Player contact with floor */
         if  (categoryA == PhysicsCategory.Floor && categoryB == PhysicsCategory.Player) || (categoryA == PhysicsCategory.Player && categoryB == PhysicsCategory.Floor) {
             
-            if archer.state == .Dead || archer.state == .Running { return }
+            if archer.state == .HurtJump || archer.state == .HurtDoubleJump {
+                archer.state = .Hurt
+            }
+            
+            if archer.state == .Dead || archer.state == .Running || archer.state == .Hurt { return }
             
             archer.run()
             
@@ -247,7 +259,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
         
         /* Player contact with obstacle */
         if (categoryA == PhysicsCategory.Obstacle && categoryB == PhysicsCategory.Player) || (categoryA == PhysicsCategory.Player && categoryB == PhysicsCategory.Obstacle) {
-            if archer.state == .Hurt { return }
+            if archer.state == .Hurt || archer.state == .HurtJump || archer.state == .HurtDoubleJump { return }
             
             archer.lives -= 1
             hearts.last!.removeFromParent()
@@ -259,6 +271,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
             else {
                 archer.hurt()
                 archer.state = .Hurt
+                archer.physicsBody?.contactTestBitMask = PhysicsCategory.Coin | PhysicsCategory.Heart | PhysicsCategory.IceBlock
                 archer.runAction(SKAction(named: "HurtFade")!)
             }
             
@@ -351,11 +364,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
         let location = touch?.locationInNode(self)
         if location?.x < (frame.width / 2) / 2 {
             // make the hero jump
-            if archer.state == .DoubleJumping { return }
+            if archer.state == .DoubleJumping || archer.state == .HurtDoubleJump { return }
             
             if gameState.currentState is TutorialState { didTutJump = true }
             
-            if archer.state == .Jumping {
+            if archer.state == .Jumping || archer.state == .HurtJump {
                 archer.doubleJump()
             }
             else {
@@ -390,7 +403,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
     }
    
     override func update(currentTime: NSTimeInterval) {
-        
         /* Update states with deltaTime */
         deltaTime = currentTime - lastUpdateTime
         lastUpdateTime = currentTime
@@ -407,13 +419,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
         /* Manage active arrows on scene */
         checkForArrowOutOfBounds()
         
-        if archer.state == .Hurt {
-            if timer >= 1.25 {
-                archer.state == .Running
-                archer.removeActionForKey("HurtFade")
-                hurtTimer = 0
-            }
+        if archer.state == .Hurt || archer.state == .HurtJump || archer.state == .HurtDoubleJump {
             hurtTimer += deltaTime
+            if hurtTimer >= 1.25 {
+                archer.run()
+                archer.physicsBody?.contactTestBitMask = PhysicsCategory.Obstacle | PhysicsCategory.Coin | PhysicsCategory.Heart | PhysicsCategory.IceBlock
+                hurtTimer = 0
+                archer.removeActionForKey("HurtFade")
+            }
         }
         
         arrowTimer += deltaTime

@@ -13,6 +13,7 @@
 		A02054611D5001CD005C7C13 /* heart-empty.png in Resources */ = {isa = PBXBuildFile; fileRef = A02054601D5001CD005C7C13 /* heart-empty.png */; };
 		A02266C11D4BD1F9000D1818 /* LevelUp.sks in Resources */ = {isa = PBXBuildFile; fileRef = A02266C01D4BD1F9000D1818 /* LevelUp.sks */; };
 		A024BFFC1D3EDDFA00164646 /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = A024BFFB1D3EDDFA00164646 /* Target.swift */; };
+		A029AB4E1D52AB8300A4F970 /* snowflake.png in Resources */ = {isa = PBXBuildFile; fileRef = A029AB4D1D52AB8300A4F970 /* snowflake.png */; };
 		A03C1B941D38146200973F27 /* LongRangeOrc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03C1B931D38146200973F27 /* LongRangeOrc.swift */; };
 		A03C1B961D38371700973F27 /* MeleeOrc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03C1B951D38371700973F27 /* MeleeOrc.swift */; };
 		A03C1B981D385A1900973F27 /* Arrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03C1B971D385A1900973F27 /* Arrow.swift */; };
@@ -96,6 +97,7 @@
 		A02054601D5001CD005C7C13 /* heart-empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-empty.png"; sourceTree = "<group>"; };
 		A02266C01D4BD1F9000D1818 /* LevelUp.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelUp.sks; sourceTree = "<group>"; };
 		A024BFFB1D3EDDFA00164646 /* Target.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Target.swift; sourceTree = "<group>"; };
+		A029AB4D1D52AB8300A4F970 /* snowflake.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = snowflake.png; sourceTree = "<group>"; };
 		A03C1B931D38146200973F27 /* LongRangeOrc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LongRangeOrc.swift; sourceTree = "<group>"; };
 		A03C1B951D38371700973F27 /* MeleeOrc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeleeOrc.swift; sourceTree = "<group>"; };
 		A03C1B971D385A1900973F27 /* Arrow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arrow.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 				A0F42DDB1D4DA7590081D2BD /* FireTrail.sks */,
 				A0F42DE31D4DA9EB0081D2BD /* DynamiteTrail.sks */,
 				A0F42DDC1D4DA7590081D2BD /* spark.png */,
+				A029AB4D1D52AB8300A4F970 /* snowflake.png */,
 				A04F9C171D4E8FAD0031A494 /* Fire.sks */,
 				A020545A1D4FB29E005C7C13 /* Explosion.sks */,
 				A020545E1D5001A0005C7C13 /* HeartExplosion.sks */,
@@ -463,6 +466,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A029AB4E1D52AB8300A4F970 /* snowflake.png in Resources */,
 				A04F9C181D4E8FAD0031A494 /* Fire.sks in Resources */,
 				A0DF62F01D3D97E4005926A5 /* spark2.png in Resources */,
 				A02054611D5001CD005C7C13 /* heart-empty.png in Resources */,
@@ -695,7 +699,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Archer Run/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.King-of-Archers";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.Rush-Archer";
 				PRODUCT_NAME = "Archer Rush";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -710,7 +714,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Archer Run/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.King-of-Archers";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.Rush-Archer";
 				PRODUCT_NAME = "Archer Rush";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;

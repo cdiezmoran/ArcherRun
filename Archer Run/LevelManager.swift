@@ -15,6 +15,7 @@ class LevelManager {
     var didLevelUp: Bool = false
     var level: Double = 1.0
     var expRequired: Int!
+    var lastExpRequired: Int!
     var progress: Int = 0
     
     var userDefaults: NSUserDefaults!
@@ -23,6 +24,7 @@ class LevelManager {
         userDefaults = NSUserDefaults.standardUserDefaults()
         retrieveLevelData()
         expRequired = findExpRequired(level)
+        lastExpRequired = expRequired
     }
     
     func retrieveLevelData() {
@@ -51,6 +53,7 @@ class LevelManager {
     func levelUp() {
         level += 1
         didLevelUp = true
+        lastExpRequired = expRequired
         expRequired = findExpRequired(level)
     }
     

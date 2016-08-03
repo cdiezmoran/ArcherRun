@@ -172,10 +172,10 @@ class PlayingState: GKState {
         if scene.timer >= Double(scene.randomInterval) {
             let randomSelector = CGFloat.random(min: 0, max: 1)
             
-            if randomSelector > 0 && randomSelector <= 0.03 {
+            if randomSelector > 0 && randomSelector <= 0.025 {
                 addSpriteToScene(Heart(), isEnemy: false)
             }
-            else if randomSelector > 0.03 && randomSelector <= 0.33 {
+            else if randomSelector > 0.025 && randomSelector <= 0.33 {
                 addSpriteToScene(MeleeOrc(), isEnemy: true)
             }
             else if randomSelector > 0.33 && randomSelector <= 0.7 {

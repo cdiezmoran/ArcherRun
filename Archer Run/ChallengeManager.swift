@@ -24,23 +24,23 @@ class ChallengeManager {
     }
     
     func killedOrc() {
-        addToProgressOfType(.Orc, progress: nil)
+        addToProgressOfType(.Orc)
     }
     
-    func ranMeters(meters: Int) {
-        addToProgressOfType(.Run, progress: meters)
+    func ranMeter() {
+        addToProgressOfType(.Run)
     }
     
     func hitTarget() {
-        addToProgressOfType(.Target, progress: nil)
+        addToProgressOfType(.Target)
     }
     
     func collectedCoin() {
-        addToProgressOfType(.Coin, progress: nil)
+        addToProgressOfType(.Coin)
     }
     
     func shotArrow() {
-        addToProgressOfType(.Shoot, progress: nil)
+        addToProgressOfType(.Shoot)
     }
     
     
@@ -137,16 +137,11 @@ class ChallengeManager {
         return newChallenge
     }
     
-    func addToProgressOfType(type: ChallengeType, progress: Int?) {
+    func addToProgressOfType(type: ChallengeType) {
         for (_, challenge) in activeChallenges {
             if challenge.state != .Completed {
                 if challenge.type == type {
-                    if let progress = progress {
-                        challenge.progress = progress
-                    }
-                    else {
-                        challenge.progress += 1
-                    }
+                    challenge.progress += 1
                     
                     if challenge.goalType == .Times {
                         if !(challenge.timesFlag) {

@@ -136,12 +136,27 @@ class GameOverState: GKState {
                 self.scene.gameOverScreen.addChild(particles)
                 //update label
                 self.scene.levelLabel.text = String(Int(LevelManager.sharedInstance.level))
+                
+                let userDefaults = NSUserDefaults.standardUserDefaults()
+                var totalCoins = userDefaults.integerForKey("totalCoins")
+                let reward = LevelManager.sharedInstance.lastExpRequired / 2
+                totalCoins += reward
+                userDefaults.setValue(totalCoins, forKey: "totalCoins")
+                userDefaults.synchronize()
+                
+                self.scene.coinRewardLabel.hidden = false
+                self.scene.coinRewardLabel.text = "+\(reward)"
+                self.scene.totalCoinCountLabel.text = String(totalCoins)
+                
                 //set didLevelUp back to false
                 LevelManager.sharedInstance.didLevelUp = false
             }
         })
         
-        let removeParticles = SKAction.runBlock({ particles.removeFromParent() })
+        let removeParticles = SKAction.runBlock({
+            particles.removeFromParent()
+            self.scene.coinRewardLabel.hidden = true
+        })
         
         actionsArray.append(waitForGameOverSequence)
         actionsArray.append(showAction)

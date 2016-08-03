@@ -9,7 +9,7 @@
 import SpriteKit
 
 enum EntityState {
-    case None, Jumping, Running, Dead, DoubleJumping, Hurt
+    case None, Jumping, Running, Dead, DoubleJumping, Hurt, HurtJump, HurtDoubleJump
 }
 
 class Archer: SKSpriteNode {
@@ -21,7 +21,7 @@ class Archer: SKSpriteNode {
     var shootAnimation: SKAction!
     
     var lives: Int = 2
-    var state:EntityState = .None
+    var state: EntityState = .None
     
     init() {
         let defaulTexture = SKTexture(imageNamed: "idle-1")
@@ -90,10 +90,15 @@ class Archer: SKSpriteNode {
         removeActionForKey("runForever")
         
         physicsBody?.applyImpulse(CGVector(dx: 0, dy: 30)) //Phone
-        //physicsBody?.applyImpulse(CGVector(dx: 0, dy: 60)) //Emulator
         
         runAction(jumpAnimation)
-        state = .Jumping
+        
+        if state != .Hurt {
+            state = .Jumping
+        }
+        else {
+            state = .HurtJump
+        }
     }
     
     func doubleJump() {
@@ -102,7 +107,12 @@ class Archer: SKSpriteNode {
         let doubleJumpAction = SKAction.rotateByAngle(-6.2830, duration: 0.25)
         runAction(doubleJumpAction)
         
-        state = .DoubleJumping
+        if state != .HurtJump {
+            state = .DoubleJumping
+        }
+        else {
+            state = .HurtDoubleJump
+        }
     }
     
     func run() {
@@ -111,7 +121,7 @@ class Archer: SKSpriteNode {
     }
     
     func hurt() {
-        removeAllActions()
+        removeActionForKey("runForever")
         
         let waitForAnim = SKAction.waitForDuration(hurtAnimation.duration)
         
