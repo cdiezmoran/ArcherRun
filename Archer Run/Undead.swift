@@ -14,6 +14,8 @@ class Undead: SKSpriteNode {
     var shootAnimation: SKAction!
     var deadAnimation: SKAction!
     
+    var state: EntityState = .None
+    
     init() {
         let defaultTexture = SKTexture(imageNamed: "unIdle-1")
         let size = CGSize(width: 50, height: 50)
@@ -70,7 +72,7 @@ class Undead: SKSpriteNode {
     
     func shoot() {
         removeAllActions()
-        let waitAction = SKAction.waitForDuration(5*0.075)
+        let waitAction = SKAction.waitForDuration(shootAnimation.duration)
         let sequence = SKAction.sequence([shootAnimation, waitAction, idleAnimation])
         runAction(sequence)
     }

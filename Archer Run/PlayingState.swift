@@ -13,8 +13,6 @@ class PlayingState: GKState {
     
     unowned let scene: GameScene
     
-    var floorSpeed: CGFloat = 4
-    
     var compoundObjects: CompoundObjects!
     
     init(scene: GameScene) {
@@ -33,26 +31,26 @@ class PlayingState: GKState {
     }
     
     override func updateWithDeltaTime(seconds: NSTimeInterval) {
-        scene.score += floorSpeed * CGFloat(seconds)
+        scene.score += scene.floorSpeed * CGFloat(seconds)
         
-        floorSpeed += 0.00075
+        scene.floorSpeed += 0.00075
         if scene.score < 10 {
-            floorSpeed = 4
+            scene.floorSpeed = 4
         }
                 
-        if floorSpeed > 8 {
-            floorSpeed = 8
+        if scene.floorSpeed > 8 {
+            scene.floorSpeed = 8
         }
         
-        if floorSpeed >= 4 && floorSpeed < 6 {
+        if scene.floorSpeed >= 4 && scene.floorSpeed < 6 {
             scene.intervalMin = 0.5
             scene.intervalMax = 1
         }
-        else if floorSpeed >= 6 && floorSpeed < 8 {
+        else if scene.floorSpeed >= 6 && scene.floorSpeed < 8 {
             scene.intervalMin = 0.5
             scene.intervalMax = 1.05
         }
-        else if floorSpeed >= 8 {
+        else if scene.floorSpeed >= 8 {
             scene.intervalMin = 0.5
             scene.intervalMax = 1.1
         }
@@ -65,36 +63,7 @@ class PlayingState: GKState {
         
         /*--------------------------------------------------------------------------------------*/
         
-        let secondsFloat = CGFloat(seconds)
-        
-        let scrollSpeed = (floorSpeed * 60) * secondsFloat
-        let treesFrontSpeed = (2 * 60) * secondsFloat
-        let treesBackSpeed = 60 * secondsFloat
-        let mountainsSpeed = 30 * secondsFloat
-        let enemyScrollSpeedSlow = ((floorSpeed + 3) * 60) * secondsFloat
-        let enemyScrollSpeed = ((floorSpeed + 4) * 60) * secondsFloat
-        let enemyScrollSpeedFast = ((floorSpeed + 5) * 60) * secondsFloat
-        
-        //Scroll rest of starting world
-        scrollStartingWorldLayer(scene.startingScrollLayer, speed: scrollSpeed)
-        scrollStartingWorldElement(scene.startTreesFront, speed: treesFrontSpeed)
-        scrollStartingWorldElement(scene.startTreesBack, speed: treesBackSpeed)
-        scrollStartingWorldElement(scene.startMountains, speed: mountainsSpeed)
-        
-        //Infinite Scroll
-        scrollSprite(scene.levelHolder1, speed: scrollSpeed)
-        scrollSprite(scene.levelHolder2, speed: scrollSpeed)
-        scrollSprite(scene.mountains1, speed: mountainsSpeed)
-        scrollSprite(scene.mountains2, speed: mountainsSpeed)
-        scrollSprite(scene.treesBack1, speed: treesBackSpeed)
-        scrollSprite(scene.treesBack2, speed: treesBackSpeed)
-        scrollSprite(scene.treesFront1, speed: treesFrontSpeed)
-        scrollSprite(scene.treesFront2, speed: treesFrontSpeed)
-        
-        scene.obstacleScrollLayer.position.x -= scrollSpeed
-        scene.enemyScrollLayer.position.x -= enemyScrollSpeed
-        scene.enemyScrollLayerSlow.position.x -= enemyScrollSpeedSlow
-        scene.enemyScrollLayerFast.position.x -= enemyScrollSpeedFast
+        scene.scrollWorld(seconds)
         
         /*--------------------------------------------------------------------------------------*/
         if ChallengeManager.sharedInstance.notifyOnChallengeCompletion() {
@@ -111,43 +80,12 @@ class PlayingState: GKState {
         }
     }
     
-    func scrollStartingWorldElement(sprite: SKSpriteNode, speed: CGFloat) {
-        sprite.position.x -= speed
-        
-        if sprite.position.x <= -scene.frame.size.width {
-            sprite.removeFromParent()
-        }
-    }
-    
-    func scrollStartingWorldLayer(sprite: SKNode, speed: CGFloat) {
-        sprite.position.x -= speed
-        
-        if scene.startingScrollLayer.position.x <= -scene.frame.size.width {
-            sprite.removeFromParent()
-        }
-    }
-    
-    func scrollSprite(sprite: SKSpriteNode, speed: CGFloat) {
-        sprite.position.x -= speed
-        
-        if sprite.position.x <= -(sprite.size.width / 2) {
-            sprite.position.x += sprite.size.width * 2
-        }
-        
-        if sprite.name == "levelHolder1" || sprite.name == "levelHolder2" {
-            if sprite.position.x <= sprite.size.width + sprite.size.width/2 {
-                scene.currentLevelHolder = sprite.name!
-            }
-        }
-    }
-    
-    func addSpriteToScene(sprite: SKSpriteNode, isEnemy: Bool) {
-        var newPosition: CGPoint!
+    func addSpriteToScene(sprite: SKSpriteNode) {
         let x = scene.size.width + 10
         let y = scene.levelHolder1.size.height + sprite.size.height / 2
-        newPosition = CGPointMake(x, y)
+        let newPosition = CGPointMake(x, y)
         
-        if isEnemy {
+        if sprite.isKindOfClass(MeleeOrc) {
             let randomSelector = CGFloat.random(min: 0, max: 1)
             if randomSelector <= 0.4 {
                 sprite.position = scene.convertPoint(newPosition, toNode: scene.enemyScrollLayer)
@@ -162,6 +100,11 @@ class PlayingState: GKState {
                 scene.enemyScrollLayerFast.addChild(sprite)
             }
         }
+        else if sprite.isKindOfClass(Heart) {
+            sprite.position = scene.convertPoint(newPosition, toNode: scene.obstacleScrollLayer)
+            scene.obstacleScrollLayer.addChild(sprite)
+            sprite.position.y += sprite.size.height
+        }
         else {
             sprite.position = scene.convertPoint(newPosition, toNode: scene.obstacleScrollLayer)
             scene.obstacleScrollLayer.addChild(sprite)
@@ -172,26 +115,36 @@ class PlayingState: GKState {
         if scene.timer >= Double(scene.randomInterval) {
             let randomSelector = CGFloat.random(min: 0, max: 1)
             
-            if randomSelector > 0 && randomSelector <= 0.025 {
-                addSpriteToScene(Heart(), isEnemy: false)
+            if randomSelector > 0 && randomSelector <= 0.5 {
+                //Orc or Spike
+                generateOrcOrSpike()
             }
-            else if randomSelector > 0.025 && randomSelector <= 0.33 {
-                addSpriteToScene(MeleeOrc(), isEnemy: true)
-            }
-            else if randomSelector > 0.33 && randomSelector <= 0.7 {
-                addSpriteToScene(Spike(), isEnemy: false)
-            }
-            else if randomSelector > 0.7 && randomSelector <= 0.9 {
+            else if randomSelector > 0.5 && randomSelector <= 0.75 {
+                //Coin block
                 compoundObjects.generateCoinBlock()
                 changeIntervalForLargeObject()
             }
-            else if randomSelector > 0.9 && scene.score >= 60 {
+            else if randomSelector > 0.75 && randomSelector <= 0.9 && scene.score >= 60 {
+                //Target
                 compoundObjects.generateSpikesWithTarget()
                 changeIntervalForLargeObject()
             }
-            else if randomSelector > 0.9 && scene.score < 60 {
+            else if randomSelector > 0.75 && randomSelector <= 0.9 && scene.score < 60 {
+                //Coin Block
                 compoundObjects.generateCoinBlock()
                 changeIntervalForLargeObject()
+            }
+            else if randomSelector > 0.9 && randomSelector <= 0.975 && scene.score >= 40 {
+                //Undead
+                scene.gameState.enterState(UndeadState)
+            }
+            else if randomSelector > 0.9 && randomSelector <= 0.975 && scene.score < 40 {
+                //Orc or Spike
+                generateOrcOrSpike()
+            }
+            else if randomSelector > 0.975 {
+                //heart
+                addSpriteToScene(Heart())
             }
             
             scene.timer = 0
@@ -199,6 +152,16 @@ class PlayingState: GKState {
         }
         
         scene.timer += scene.deltaTime
+    }
+    
+    func generateOrcOrSpike() {
+        let random = CGFloat.random(min: 0, max: 1)
+        if random > 0 && random <= 0.65 {
+            addSpriteToScene(Spike())
+        }
+        else if random > 0.65 {
+            addSpriteToScene(MeleeOrc())
+        }
     }
     
     func changeIntervalForLargeObject() {

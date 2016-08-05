@@ -36,10 +36,10 @@ class TutorialState: GKState {
         tapSideWidth = (scene.size.width / 2) / 2
         dragSideWidth = scene.size.width - tapSideWidth
         
-        let gray = UIColor.grayColor()
-        let alphaGray = gray.colorWithAlphaComponent(0.3)
+        let white = UIColor.whiteColor()
+        let alphaWhite = white.colorWithAlphaComponent(0.3)
         
-        separator = SKSpriteNode(color: alphaGray, size: CGSize(width: 1.5, height: scene.size.height))
+        separator = SKSpriteNode(color: alphaWhite, size: CGSize(width: 1.5, height: scene.size.height))
         separator.position.x = tapSideWidth
         separator.position.y = scene.size.height / 2
         separator.zPosition = 20
@@ -104,56 +104,22 @@ class TutorialState: GKState {
         let treesFrontSpeed = (2 * 60) * secondsFloat
         let treesBackSpeed = 60 * secondsFloat
         let mountainsSpeed = 30 * secondsFloat
-        let enemyScrollSpeed = ((floorSpeed + 2) * 60) * secondsFloat
         
         //Scroll rest of starting world
-        scrollStartingWorldLayer(scene.startingScrollLayer, speed: scrollSpeed)
-        scrollStartingWorldElement(scene.startTreesFront, speed: treesFrontSpeed)
-        scrollStartingWorldElement(scene.startTreesBack, speed: treesBackSpeed)
-        scrollStartingWorldElement(scene.startMountains, speed: mountainsSpeed)
+        scene.scrollStartingWorldLayer(scene.startingScrollLayer, speed: scrollSpeed)
+        scene.scrollStartingWorldElement(scene.startTreesFront, speed: treesFrontSpeed)
+        scene.scrollStartingWorldElement(scene.startTreesBack, speed: treesBackSpeed)
+        scene.scrollStartingWorldElement(scene.startMountains, speed: mountainsSpeed)
         
         //Infinite Scroll
-        scrollSprite(scene.levelHolder1, speed: scrollSpeed)
-        scrollSprite(scene.levelHolder2, speed: scrollSpeed)
-        scrollSprite(scene.mountains1, speed: mountainsSpeed)
-        scrollSprite(scene.mountains2, speed: mountainsSpeed)
-        scrollSprite(scene.treesBack1, speed: treesBackSpeed)
-        scrollSprite(scene.treesBack2, speed: treesBackSpeed)
-        scrollSprite(scene.treesFront1, speed: treesFrontSpeed)
-        scrollSprite(scene.treesFront2, speed: treesFrontSpeed)
-        
-        scene.obstacleScrollLayer.position.x -= scrollSpeed
-        scene.enemyScrollLayer.position.x -= enemyScrollSpeed
-    }
-    
-    func scrollStartingWorldElement(sprite: SKSpriteNode, speed: CGFloat) {
-        sprite.position.x -= speed
-        
-        if sprite.position.x <= -scene.frame.size.width {
-            sprite.removeFromParent()
-        }
-    }
-    
-    func scrollStartingWorldLayer(sprite: SKNode, speed: CGFloat) {
-        sprite.position.x -= speed
-        
-        if scene.startingScrollLayer.position.x <= -scene.frame.size.width {
-            sprite.removeFromParent()
-        }
-    }
-    
-    func scrollSprite(sprite: SKSpriteNode, speed: CGFloat) {
-        sprite.position.x -= speed
-        
-        if sprite.position.x <= -(sprite.size.width / 2) {
-            sprite.position.x += sprite.size.width * 2
-        }
-        
-        if sprite.name == "levelHolder1" || sprite.name == "levelHolder2" {
-            if sprite.position.x <= sprite.size.width + sprite.size.width/2 {
-                scene.currentLevelHolder = sprite.name!
-            }
-        }
+        scene.scrollSpriteInState(scene.levelHolder1, speed: scrollSpeed)
+        scene.scrollSpriteInState(scene.levelHolder2, speed: scrollSpeed)
+        scene.scrollSpriteInState(scene.mountains1, speed: mountainsSpeed)
+        scene.scrollSpriteInState(scene.mountains2, speed: mountainsSpeed)
+        scene.scrollSpriteInState(scene.treesBack1, speed: treesBackSpeed)
+        scene.scrollSpriteInState(scene.treesBack2, speed: treesBackSpeed)
+        scene.scrollSpriteInState(scene.treesFront1, speed: treesFrontSpeed)
+        scene.scrollSpriteInState(scene.treesFront2, speed: treesFrontSpeed)
     }
     
     func addCorrectIndicator(label: SKLabelNode, sideWidth: CGFloat) {

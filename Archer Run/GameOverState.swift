@@ -139,7 +139,7 @@ class GameOverState: GKState {
                 
                 let userDefaults = NSUserDefaults.standardUserDefaults()
                 var totalCoins = userDefaults.integerForKey("totalCoins")
-                let reward = LevelManager.sharedInstance.lastExpRequired / 2
+                let reward = LevelManager.sharedInstance.lastExpRequired / 4
                 totalCoins += reward
                 userDefaults.setValue(totalCoins, forKey: "totalCoins")
                 userDefaults.synchronize()

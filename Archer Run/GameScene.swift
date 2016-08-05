@@ -27,8 +27,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
     var playingState: GKState!
     var startingState: GKState!
     var tutorialState: GKState!
+    var undeadState: GKState!
     
     var arrows: [Arrow] = []
+    var arrowTimer: CFTimeInterval = 0.4
     var availableArrows = [String:Bool]()
     var coinCount: Int = 0 {
         didSet {
@@ -36,10 +38,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
         }
     }
     var currentLevelHolder: String = "levelHolder1"
+    var deltaTime: Double!
     var didTutJump: Bool = false
     var didTutShoot: Bool = false
     var firstTouchLocation = CGPointZero
+    var floorSpeed: CGFloat = 4
     var hearts = [SKSpriteNode]()
+    var hurtTimer: CFTimeInterval = 0
     var intervalMin: CGFloat = 0.5
     var intervalMax:CGFloat = 1.5
     var lastRoundedScore: Int = 0
@@ -58,9 +63,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
         }
     }
     var timer: CFTimeInterval = 0
-    var arrowTimer: CFTimeInterval = 0.4
-    var hurtTimer: CFTimeInterval = 0
-    var deltaTime: Double!
     var userDefaults: NSUserDefaults!
     
     var archer: Archer!
@@ -170,8 +172,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
         playingState = PlayingState(scene: self)
         startingState = StartingState(scene: self)
         tutorialState = TutorialState(scene: self)
+        undeadState = UndeadState(scene: self)
         
-        gameState = GKStateMachine(states: [startingState, playingState, gameOverState, tutorialState])
+        gameState = GKStateMachine(states: [startingState, playingState, gameOverState, tutorialState, undeadState])
         
         randomInterval = CGFloat.random(min: 0.3, max: 1)
         
@@ -429,6 +432,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
             }
         }
         
+        removeObstacles()
+        
         arrowTimer += deltaTime
     }
     
@@ -439,14 +444,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
                 arrows.removeAtIndex(index)
                 arrow.removeFromParent()
             }
-        }
-    }
-    
-    func scrollSprite(sprite: SKSpriteNode, speed: CGFloat) {
-        sprite.position.x -= speed
-        
-        if sprite.position.x <= sprite.size.width {
-            sprite.position.x += sprite.size.width * 2
         }
     }
     
