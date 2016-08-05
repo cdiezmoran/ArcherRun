@@ -64,6 +64,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
     }
     var timer: CFTimeInterval = 0
     var userDefaults: NSUserDefaults!
+    var undead: Undead!
     
     var archer: Archer!
     var challengeCompletedBanner: SKSpriteNode!
@@ -248,6 +249,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
             
             if archer.state == .Dead || archer.state == .Running || archer.state == .Hurt { return }
             
+            if archer.state == .DoubleJumping || archer.state == .HurtDoubleJump {
+                archer.zRotation = 0
+            }
+            
             archer.run()
             
             if gameState.currentState is StartingState {
@@ -329,10 +334,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
             if nodeA.isKindOfClass(MeleeOrc) {
                 killOrc(nodeA, nodeArrow: nodeB)
             }
+            else if nodeA.isKindOfClass(Undead) {
+                hitUndead(nodeB)
+            }
         }
         else if categoryA == PhysicsCategory.Arrow && categoryB == PhysicsCategory.Obstacle {
             if nodeB.isKindOfClass(MeleeOrc) {
                 killOrc(nodeB, nodeArrow: nodeA)
+            }
+            else if nodeB.isKindOfClass(Undead) {
+                hitUndead(nodeA)
             }
         }
         
@@ -425,10 +436,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
         if archer.state == .Hurt || archer.state == .HurtJump || archer.state == .HurtDoubleJump {
             hurtTimer += deltaTime
             if hurtTimer >= 1.25 {
+                archer.removeAllActions()
+                archer.alpha = 1
                 archer.run()
                 archer.physicsBody?.contactTestBitMask = PhysicsCategory.Obstacle | PhysicsCategory.Coin | PhysicsCategory.Heart | PhysicsCategory.IceBlock
                 hurtTimer = 0
-                archer.removeActionForKey("HurtFade")
             }
         }
         
@@ -800,5 +812,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
         }
         
         list.addNode(row)
+    }
+    
+    func hitUndead(arrowNode: SKNode) {
+        let arrow = arrowNode as! Arrow
+        undead.lives -= 1
+        
+        arrow.physicsBody?.categoryBitMask = PhysicsCategory.None
+        
+        if undead.lives <= 0 {
+            undead.die()
+        }
+        else {
+            //add hit anim
+            let hitAnim = SKAction(named: "HurtFadeOnce")!
+            undead.runAction(hitAnim)
+        }
+        
+        let removeArrow = SKAction.runBlock({
+            arrow.removeFromParent()
+        })
+        
+        self.runAction(removeArrow)
     }
 }

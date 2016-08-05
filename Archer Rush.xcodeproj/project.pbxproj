@@ -28,8 +28,9 @@
 		A05B41A81D4A9B6F00D229C0 /* LevelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05B41A71D4A9B6F00D229C0 /* LevelManager.swift */; };
 		A05B41AA1D4ACA7A00D229C0 /* splashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = A05B41A91D4ACA7A00D229C0 /* splashScreen.png */; };
 		A06081C61D3457EE00596B59 /* Spike.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06081C51D3457EE00596B59 /* Spike.swift */; };
+		A08ED7AB1D543946002ED820 /* Undead.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A08ED7AA1D543946002ED820 /* Undead.atlas */; };
+		A08ED7AD1D546F63002ED820 /* MagicPlatformTrail.sks in Resources */ = {isa = PBXBuildFile; fileRef = A08ED7AC1D546F63002ED820 /* MagicPlatformTrail.sks */; };
 		A092E1F41D4A7DE0008F3663 /* Undead.swift in Sources */ = {isa = PBXBuildFile; fileRef = A092E1F31D4A7DE0008F3663 /* Undead.swift */; };
-		A092E1F61D4A8261008F3663 /* Undead.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A092E1F51D4A8261008F3663 /* Undead.atlas */; };
 		A0A266081D36C09200054ECE /* Archer.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A0A266071D36C09200054ECE /* Archer.atlas */; };
 		A0A2660E1D36EE1900054ECE /* Orc.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A0A2660D1D36EE1900054ECE /* Orc.atlas */; };
 		A0ADEC841D35987900E21CE0 /* Orc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADEC831D35987900E21CE0 /* Orc.swift */; };
@@ -114,8 +115,9 @@
 		A05B41A71D4A9B6F00D229C0 /* LevelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelManager.swift; sourceTree = "<group>"; };
 		A05B41A91D4ACA7A00D229C0 /* splashScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splashScreen.png; sourceTree = "<group>"; };
 		A06081C51D3457EE00596B59 /* Spike.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spike.swift; sourceTree = "<group>"; };
+		A08ED7AA1D543946002ED820 /* Undead.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Undead.atlas; sourceTree = "<group>"; };
+		A08ED7AC1D546F63002ED820 /* MagicPlatformTrail.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MagicPlatformTrail.sks; sourceTree = "<group>"; };
 		A092E1F31D4A7DE0008F3663 /* Undead.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Undead.swift; sourceTree = "<group>"; };
-		A092E1F51D4A8261008F3663 /* Undead.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Undead.atlas; sourceTree = "<group>"; };
 		A0A266071D36C09200054ECE /* Archer.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Archer.atlas; sourceTree = "<group>"; };
 		A0A2660D1D36EE1900054ECE /* Orc.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Orc.atlas; sourceTree = "<group>"; };
 		A0ADEC831D35987900E21CE0 /* Orc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Orc.swift; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 				A020545A1D4FB29E005C7C13 /* Explosion.sks */,
 				A020545E1D5001A0005C7C13 /* HeartExplosion.sks */,
 				A02054601D5001CD005C7C13 /* heart-empty.png */,
+				A08ED7AC1D546F63002ED820 /* MagicPlatformTrail.sks */,
 			);
 			name = Particles;
 			sourceTree = "<group>";
@@ -308,7 +311,7 @@
 				A024BFF81D3EC99A00164646 /* States */,
 				A0EDE2001D23432F008B5371 /* Utils */,
 				A0EDE1D51D233F4A008B5371 /* Assets.xcassets */,
-				A092E1F51D4A8261008F3663 /* Undead.atlas */,
+				A08ED7AA1D543946002ED820 /* Undead.atlas */,
 				A0A2660D1D36EE1900054ECE /* Orc.atlas */,
 				A0A266071D36C09200054ECE /* Archer.atlas */,
 				A0B486681D468E74004F8EB8 /* ChallengeManager.swift */,
@@ -484,9 +487,10 @@
 				A04F9C161D4E886B0031A494 /* IceExplosion.sks in Resources */,
 				A0EDE1CD1D233F4A008B5371 /* GameScene.sks in Resources */,
 				A0F42DDE1D4DA7590081D2BD /* spark.png in Resources */,
-				A092E1F61D4A8261008F3663 /* Undead.atlas in Resources */,
 				A046D67E1D25B98C007608A1 /* cloud2.png in Resources */,
+				A08ED7AD1D546F63002ED820 /* MagicPlatformTrail.sks in Resources */,
 				A05B41AA1D4ACA7A00D229C0 /* splashScreen.png in Resources */,
+				A08ED7AB1D543946002ED820 /* Undead.atlas in Resources */,
 				A0F42DD61D4DA2DE0081D2BD /* IceTrail.sks in Resources */,
 				A0A266081D36C09200054ECE /* Archer.atlas in Resources */,
 				A0EDE1D91D233F4A008B5371 /* LaunchScreen.storyboard in Resources */,

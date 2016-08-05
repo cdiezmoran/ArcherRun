@@ -14,20 +14,22 @@ class UndeadState: GKState {
     unowned let scene: GameScene
     
     var checkPosition: CGPoint!
-    var undeadIsPositioned: Bool = false
-    var undeadIsMoving: Bool = false
-    var undead: Undead!
+    var undeadArrowTimer: NSTimeInterval = 0
+    var arrowCount: Int = 0
     
     init(scene: GameScene) {
         self.scene = scene
     }
 
     override func didEnterWithPreviousState(previousState: GKState?) {
-        undead = Undead()
+        scene.undead = Undead()
         let x = scene.size.width + 10
-        let y = scene.levelHolder1.size.height + undead.size.height / 2
-        undead.position = CGPointMake(x, y)
-        checkPosition = undead.position
+        let minY = scene.levelHolder1.size.height + scene.undead.size.height
+        let maxY = scene.size.height - scene.undead.size.height
+        let y = CGFloat.random(min: minY, max: maxY)
+        scene.undead.position = CGPointMake(x, y)
+        createMagicPlatform()
+        checkPosition = scene.undead.position
     }
     
     override func isValidNextState(stateClass: AnyClass) -> Bool {
@@ -35,33 +37,79 @@ class UndeadState: GKState {
     }
     
     override func willExitWithNextState(nextState: GKState) {
+        let moveToAction = SKAction.moveToY(scene.size.height * 2, duration: 0.5)
+        let removeFromParent = SKAction.runBlock({ self.scene.undead.removeFromParent() })
         
+        let sequence = SKAction.sequence([moveToAction, removeFromParent])
+        
+        undeadArrowTimer = 0
+        arrowCount = 0
+        
+        scene.undead.runAction(sequence)
     }
     
     override func updateWithDeltaTime(seconds: NSTimeInterval) {
-        if !undeadIsPositioned {
+        scene.score += scene.floorSpeed * CGFloat(seconds)
+        
+        if scene.undead.state == .Dead || arrowCount >= 2 {
+            scene.gameState.enterState(PlayingState)
+        }
+        
+        if !scene.undead.isPositioned {
             if scene.obstacleScrollLayer.children.count == 0 {
-                undead.position = scene.convertPoint(undead.position, toNode: scene.obstacleScrollLayer)
-                scene.obstacleScrollLayer.addChild(undead)
-                undeadIsMoving = true
+                scene.undead.position = scene.convertPoint(scene.undead.position, toNode: scene.obstacleScrollLayer)
+                scene.obstacleScrollLayer.addChild(scene.undead)
+                scene.undead.isMoving = true
             }
         }
         
-        if undeadIsMoving {
-            checkPosition = scene.convertPoint(undead.position, fromNode: scene.obstacleScrollLayer)
+        if scene.undead.isMoving {
+            checkPosition = scene.convertPoint(scene.undead.position, fromNode: scene.obstacleScrollLayer)
         }
         
-        if !undeadIsPositioned {
+        if !scene.undead.isPositioned {
             if checkPosition.x <= (scene.size.width * 7) / 8 {
-                undead.position = scene.convertPoint(undead.position, fromNode: scene.obstacleScrollLayer)
-                undead.removeFromParent()
-                scene.addChild(undead)
+                scene.undead.position = scene.convertPoint(scene.undead.position, fromNode: scene.obstacleScrollLayer)
+                scene.undead.removeFromParent()
+                scene.addChild(scene.undead)
                 
-                undeadIsMoving = false
-                undeadIsPositioned = true
+                scene.undead.isMoving = false
+                scene.undead.isPositioned = true
             }
         }
         
         scene.scrollWorld(seconds)
+        
+        if scene.undead.isPositioned {
+            undeadArrowTimer += scene.deltaTime
+            if undeadArrowTimer >= 0.8 {
+                //undead shoot arrow
+                let swipe = CGVector(dx: scene.undead.position.x - scene.archer.position.x, dy: scene.undead.position.y - scene.archer.position.y)
+                let mag = sqrt(pow(swipe.dx, 2) + pow(swipe.dy, 2))
+                
+                let arrowDx = -swipe.dx / mag
+                let arrowDy = -swipe.dy / mag
+                
+                scene.undead.shoot()
+                
+                let arrow = Arrow(isObstacle: true)
+                scene.addChild(arrow)
+                arrow.position = scene.undead.position //+ CGPoint(x: 10, y: -10)
+                arrow.physicsBody?.applyImpulse(CGVector(dx: arrowDx * 8, dy: arrowDy * 5.5))
+                arrowCount += 1
+                
+                undeadArrowTimer = 0
+            }
+        }
+    }
+    
+    func createMagicPlatform() {
+        let platformTexture = SKTexture(imageNamed: "magicPlatform")
+        let platform = SKSpriteNode(texture: platformTexture, color: UIColor.clearColor(), size: CGSize(width: 100, height: 30))
+        scene.undead.addChild(platform)
+        platform.position = CGPoint(x: -10, y: -40)
+        
+        let particles = SKEmitterNode(fileNamed: "MagicPlatformTrail")!
+        platform.addChild(particles)
     }
 }

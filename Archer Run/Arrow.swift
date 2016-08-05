@@ -67,6 +67,15 @@ class Arrow: SKSpriteNode {
         createPhysicsBody()
     }
     
+    init(isObstacle uselessBool: Bool) {
+        super.init(texture: SKTexture(imageNamed: "arrow"), color: UIColor.clearColor(), size: defaultSize)
+        
+        self.type = .Regular
+        xScale = -1
+        
+        createPhysicsBodyForObstacle()
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -79,6 +88,18 @@ class Arrow: SKSpriteNode {
         body.categoryBitMask = PhysicsCategory.Arrow
         body.collisionBitMask = PhysicsCategory.Target
         body.contactTestBitMask = PhysicsCategory.Obstacle | PhysicsCategory.Target
+        
+        physicsBody = body
+    }
+    
+    func createPhysicsBodyForObstacle() {
+        let body = SKPhysicsBody(texture: SKTexture(imageNamed: "arrow"), size: defaultSize)
+        
+        body.mass = 0.0037
+        
+        body.categoryBitMask = PhysicsCategory.Obstacle
+        body.collisionBitMask = PhysicsCategory.Arrow
+        body.contactTestBitMask = PhysicsCategory.None
         
         physicsBody = body
     }

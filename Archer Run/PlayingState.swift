@@ -47,11 +47,11 @@ class PlayingState: GKState {
             scene.intervalMax = 1
         }
         else if scene.floorSpeed >= 6 && scene.floorSpeed < 8 {
-            scene.intervalMin = 0.5
+            scene.intervalMin = 0.4
             scene.intervalMax = 1.05
         }
         else if scene.floorSpeed >= 8 {
-            scene.intervalMin = 0.5
+            scene.intervalMin = 0.3
             scene.intervalMax = 1.1
         }
         
@@ -115,26 +115,26 @@ class PlayingState: GKState {
         if scene.timer >= Double(scene.randomInterval) {
             let randomSelector = CGFloat.random(min: 0, max: 1)
             
-            if randomSelector > 0 && randomSelector <= 0.5 {
+            if randomSelector > 0 && randomSelector <= 0.55 {
                 //Orc or Spike
                 generateOrcOrSpike()
             }
-            else if randomSelector > 0.5 && randomSelector <= 0.75 {
+            else if randomSelector > 0.55 && randomSelector <= 0.8 {
                 //Coin block
                 compoundObjects.generateCoinBlock()
                 changeIntervalForLargeObject()
             }
-            else if randomSelector > 0.75 && randomSelector <= 0.9 && scene.score >= 60 {
+            else if randomSelector > 0.8 && randomSelector <= 0.95 && scene.score >= 60 {
                 //Target
                 compoundObjects.generateSpikesWithTarget()
                 changeIntervalForLargeObject()
             }
-            else if randomSelector > 0.75 && randomSelector <= 0.9 && scene.score < 60 {
+            else if randomSelector > 0.8 && randomSelector <= 0.95 && scene.score < 60 {
                 //Coin Block
                 compoundObjects.generateCoinBlock()
                 changeIntervalForLargeObject()
             }
-            else if randomSelector > 0.9 && randomSelector <= 0.975 && scene.score >= 40 {
+            else if randomSelector > 0.95 && randomSelector <= 0.975 && scene.score >= 40 {
                 //Undead
                 scene.gameState.enterState(UndeadState)
             }
@@ -146,7 +146,7 @@ class PlayingState: GKState {
                 //heart
                 addSpriteToScene(Heart())
             }
-            
+                        
             scene.timer = 0
             scene.randomInterval = CGFloat.random(min: scene.intervalMin, max: scene.intervalMax)
         }

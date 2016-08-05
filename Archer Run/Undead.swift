@@ -14,12 +14,14 @@ class Undead: SKSpriteNode {
     var shootAnimation: SKAction!
     var deadAnimation: SKAction!
     
+    var isMoving: Bool = false
+    var isPositioned: Bool = false
+    var lives: Int = 2
     var state: EntityState = .None
     
     init() {
         let defaultTexture = SKTexture(imageNamed: "unIdle-1")
-        let size = CGSize(width: 50, height: 50)
-        super.init(texture: defaultTexture, color: UIColor.clearColor(), size: size)
+        super.init(texture: defaultTexture, color: UIColor.clearColor(), size: defaultTexture.size())
         
         xScale = -1
         createPhysicsBody()
@@ -29,18 +31,18 @@ class Undead: SKSpriteNode {
         //IDLE ANIMATION
         textures = getTextures("unIdle-", total: 6)
         
-        let animate = SKAction.animateWithTextures(textures, timePerFrame: 0.05, resize: true, restore: false)
+        let animate = SKAction.animateWithTextures(textures, timePerFrame: 0.25, resize: true, restore: false)
         
         idleAnimation = SKAction.repeatActionForever(animate)
         runAction(idleAnimation)
         
         //SHOOT ANIMATION
         textures = getTextures("unShoot-", total: 5)
-        shootAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.075, resize: true, restore: false)
+        shootAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.025, resize: true, restore: false)
         
         //DEAD ANIMATION
         textures = getTextures("unDead-", total: 5)
-        deadAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.075, resize: true, restore: false)
+        deadAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.0075, resize: true, restore: false)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -48,12 +50,12 @@ class Undead: SKSpriteNode {
     }
     
     func createPhysicsBody() {
-        let body = SKPhysicsBody(rectangleOfSize: CGSize(width: 26, height: 47), center: CGPoint(x: -5.5, y: 0.15))
+        let body = SKPhysicsBody(rectangleOfSize: CGSize(width: 34, height: 62), center: CGPoint(x: 7.5, y: 0.4))
         
-        body.affectedByGravity = true
+        body.affectedByGravity = false
         body.usesPreciseCollisionDetection = true
         body.allowsRotation = false
-        body.dynamic = true
+        body.dynamic = false
         
         body.restitution = 0
         
@@ -68,6 +70,8 @@ class Undead: SKSpriteNode {
         removeAllActions()
         
         runAction(deadAnimation)
+        
+        state = .Dead
     }
     
     func shoot() {
