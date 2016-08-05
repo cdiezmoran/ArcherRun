@@ -81,7 +81,7 @@ class PlayingState: GKState {
     }
     
     func addSpriteToScene(sprite: SKSpriteNode) {
-        let x = scene.size.width + 10
+        let x = scene.size.width + sprite.size.width
         let y = scene.levelHolder1.size.height + sprite.size.height / 2
         let newPosition = CGPointMake(x, y)
         
