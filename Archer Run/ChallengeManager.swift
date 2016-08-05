@@ -43,6 +43,10 @@ class ChallengeManager {
         addToProgressOfType(.Shoot)
     }
     
+    func killedUndead() {
+        addToProgressOfType(.Undead)
+    }
+    
     
     func retreiveChallengesData() {
         //Retreive challenges from local storage
@@ -55,6 +59,7 @@ class ChallengeManager {
             lastGoals["targetGoal"] = 0
             lastGoals["coinGoal"] = 0
             lastGoals["shootGoal"] = 0
+            lastGoals["undeadGoal"] = 0
         }
         
         if let dictionary = userDefaults.dictionaryForKey("highestGoals") {
@@ -76,6 +81,9 @@ class ChallengeManager {
             highestGoals["shootHighestOverall"] = 0
             highestGoals["shootHighestSingleGame"] = 0
             highestGoals["shootHighestTimes"] = 0
+            highestGoals["undeadHighestOverall"] = 0
+            highestGoals["undeadHighestSingleGame"] = 0
+            highestGoals["undeadHighestTimes"] = 0
         }
         
         let challengesExist = userDefaults.boolForKey("challengesExist")
@@ -88,7 +96,7 @@ class ChallengeManager {
         else {
             //Create initial challenges
             activeChallenges["firstChallenge"] = Challenge(goal: 20, type: .Run, goalType: .SingleGame)
-            activeChallenges["secondChallenge"] = Challenge(goal: 3, type: .Orc, goalType: .Overall)
+            activeChallenges["secondChallenge"] = Challenge(goal: 2, type: .Orc, goalType: .Overall)
             activeChallenges["thirdChallenge"] = Challenge(goal: 10, type: .Shoot, goalType: .SingleGame)
         }
     }
@@ -253,6 +261,17 @@ class ChallengeManager {
                 highestGoals["shootHighestTimes"] = lastGoal
             }
         }
+        else if lastType == .Undead {
+            if lastGoalType == .Overall {
+                highestGoals["undeadHighestOverall"] = lastGoal
+            }
+            else if lastGoalType == .SingleGame {
+                highestGoals["undeadHighestSingleGame"] = lastGoal
+            }
+            else if lastGoalType == .Times {
+                highestGoals["undeadHighestTimes"] = lastGoal
+            }
+        }
         
         //Get new type
         var newType: ChallengeType!
@@ -286,7 +305,18 @@ class ChallengeManager {
                 }
             }
             else if randomSelector >= 0.9 {
-                newType = .Target
+                let randomNumber = Int(arc4random_uniform(2))
+                switch randomNumber {
+                case 0:
+                    newType = .Target
+                    break
+                case 1:
+                    newType = .Undead
+                    break
+                default:
+                    newType = lastType
+                    break
+                }
             }
         } while newType == lastType
         
@@ -313,19 +343,19 @@ class ChallengeManager {
         
         if newType == .Orc {
             if newGoalType == .Overall {
-                newGoal = highestGoals["orcHighestOverall"]! + 6
+                newGoal = highestGoals["orcHighestOverall"]! + 4
             }
             else if newGoalType == .SingleGame {
-                newGoal = highestGoals["orcHighestSingleGame"]! + 3
+                newGoal = highestGoals["orcHighestSingleGame"]! + 2
             }
             else if newGoalType == .Times {
-                newGoal = highestGoals["orcHighestTimes"]! + 2
-                newTimes += CGFloat(newGoal / 2) * 0.2
+                newGoal = highestGoals["orcHighestTimes"]! + 1
+                newTimes += CGFloat(newGoal) * 0.2
             }
         }
         else if newType == .Run {
             if newGoalType == .Overall {
-              newGoal = highestGoals["runHighestOverall"]! + 100
+              newGoal = highestGoals["runHighestOverall"]! + 75
             }
             else if newGoalType == .SingleGame {
                 newGoal = highestGoals["runHighestSingleGame"]! + 50
@@ -337,14 +367,14 @@ class ChallengeManager {
         }
         else if newType == .Coin {
             if newGoalType == .Overall {
-                newGoal = highestGoals["coinHighestOverall"]! + 100
+                newGoal = highestGoals["coinHighestOverall"]! + 75
             }
             else if newGoalType == .SingleGame {
-                newGoal = highestGoals["coinHighestSingleGame"]! + 75
+                newGoal = highestGoals["coinHighestSingleGame"]! + 50
             }
             else if newGoalType == .Times {
-                newGoal = highestGoals["coinHighestTimes"]! + 50
-                newTimes += CGFloat(newGoal / 50) * 0.2
+                newGoal = highestGoals["coinHighestTimes"]! + 25
+                newTimes += CGFloat(newGoal / 25) * 0.2
             }
         }
         else if newType == .Target {
@@ -369,6 +399,18 @@ class ChallengeManager {
             else if newGoalType == .Times {
                 newGoal = highestGoals["shootHighestTimes"]! + 5
                 newTimes += CGFloat(newGoal / 5) * 0.2
+            }
+        }
+        else if newType == .Undead {
+            if newGoalType == .Overall {
+                newGoal = highestGoals["undeadHighestOverall"]! + 3
+            }
+            else if newGoalType == .SingleGame {
+                newGoal = highestGoals["undeadHighestSingleGame"]! + 2
+            }
+            else if newGoalType == .Times {
+                newGoal = highestGoals["undeadHighestTimes"]! + 1
+                newTimes += CGFloat(newGoal) * 0.2
             }
         }
         

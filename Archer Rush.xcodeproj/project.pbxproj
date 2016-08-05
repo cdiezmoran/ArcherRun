@@ -30,6 +30,14 @@
 		A06081C61D3457EE00596B59 /* Spike.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06081C51D3457EE00596B59 /* Spike.swift */; };
 		A08ED7AB1D543946002ED820 /* Undead.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A08ED7AA1D543946002ED820 /* Undead.atlas */; };
 		A08ED7AD1D546F63002ED820 /* MagicPlatformTrail.sks in Resources */ = {isa = PBXBuildFile; fileRef = A08ED7AC1D546F63002ED820 /* MagicPlatformTrail.sks */; };
+		A08ED7B01D548EEF002ED820 /* EntitiesExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08ED7AF1D548EEF002ED820 /* EntitiesExtension.swift */; };
+		A08ED7B21D548F75002ED820 /* ShopExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08ED7B11D548F75002ED820 /* ShopExtension.swift */; };
+		A08ED7B91D549CD1002ED820 /* arrow-hitting.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A08ED7B31D549CD1002ED820 /* arrow-hitting.mp3 */; };
+		A08ED7BA1D549CD1002ED820 /* arrow-shoot.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A08ED7B41D549CD1002ED820 /* arrow-shoot.mp3 */; };
+		A08ED7BB1D549CD1002ED820 /* bg-music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A08ED7B51D549CD1002ED820 /* bg-music.mp3 */; };
+		A08ED7BD1D549CD1002ED820 /* challenge-complete.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A08ED7B71D549CD1002ED820 /* challenge-complete.mp3 */; };
+		A08ED7BE1D549CD1002ED820 /* coin-grab.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A08ED7B81D549CD1002ED820 /* coin-grab.mp3 */; };
+		A08ED7C01D549F73002ED820 /* SoundExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08ED7BF1D549F73002ED820 /* SoundExtension.swift */; };
 		A092E1F41D4A7DE0008F3663 /* Undead.swift in Sources */ = {isa = PBXBuildFile; fileRef = A092E1F31D4A7DE0008F3663 /* Undead.swift */; };
 		A0A266081D36C09200054ECE /* Archer.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A0A266071D36C09200054ECE /* Archer.atlas */; };
 		A0A2660E1D36EE1900054ECE /* Orc.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A0A2660D1D36EE1900054ECE /* Orc.atlas */; };
@@ -117,6 +125,14 @@
 		A06081C51D3457EE00596B59 /* Spike.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spike.swift; sourceTree = "<group>"; };
 		A08ED7AA1D543946002ED820 /* Undead.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Undead.atlas; sourceTree = "<group>"; };
 		A08ED7AC1D546F63002ED820 /* MagicPlatformTrail.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MagicPlatformTrail.sks; sourceTree = "<group>"; };
+		A08ED7AF1D548EEF002ED820 /* EntitiesExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntitiesExtension.swift; sourceTree = "<group>"; };
+		A08ED7B11D548F75002ED820 /* ShopExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopExtension.swift; sourceTree = "<group>"; };
+		A08ED7B31D549CD1002ED820 /* arrow-hitting.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "arrow-hitting.mp3"; sourceTree = "<group>"; };
+		A08ED7B41D549CD1002ED820 /* arrow-shoot.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "arrow-shoot.mp3"; sourceTree = "<group>"; };
+		A08ED7B51D549CD1002ED820 /* bg-music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "bg-music.mp3"; sourceTree = "<group>"; };
+		A08ED7B71D549CD1002ED820 /* challenge-complete.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "challenge-complete.mp3"; sourceTree = "<group>"; };
+		A08ED7B81D549CD1002ED820 /* coin-grab.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "coin-grab.mp3"; sourceTree = "<group>"; };
+		A08ED7BF1D549F73002ED820 /* SoundExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundExtension.swift; sourceTree = "<group>"; };
 		A092E1F31D4A7DE0008F3663 /* Undead.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Undead.swift; sourceTree = "<group>"; };
 		A0A266071D36C09200054ECE /* Archer.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Archer.atlas; sourceTree = "<group>"; };
 		A0A2660D1D36EE1900054ECE /* Orc.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Orc.atlas; sourceTree = "<group>"; };
@@ -197,6 +213,11 @@
 		A024BFF31D3E91B700164646 /* SFX */ = {
 			isa = PBXGroup;
 			children = (
+				A08ED7B31D549CD1002ED820 /* arrow-hitting.mp3 */,
+				A08ED7B41D549CD1002ED820 /* arrow-shoot.mp3 */,
+				A08ED7B51D549CD1002ED820 /* bg-music.mp3 */,
+				A08ED7B71D549CD1002ED820 /* challenge-complete.mp3 */,
+				A08ED7B81D549CD1002ED820 /* coin-grab.mp3 */,
 			);
 			name = SFX;
 			sourceTree = "<group>";
@@ -231,7 +252,7 @@
 			children = (
 				A0EDE1CC1D233F4A008B5371 /* GameScene.sks */,
 				A0EDE1CE1D233F4A008B5371 /* GameScene.swift */,
-				A005DC501D53E86E001D5244 /* WorldScrollExtension.swift */,
+				A08ED7AE1D54888C002ED820 /* GSExtensions */,
 				A0EDE1FC1D23406E008B5371 /* StartScene.sks */,
 				A0EDE1FE1D234080008B5371 /* StartScene.swift */,
 			);
@@ -277,6 +298,17 @@
 				A092E1F31D4A7DE0008F3663 /* Undead.swift */,
 			);
 			name = Entities;
+			sourceTree = "<group>";
+		};
+		A08ED7AE1D54888C002ED820 /* GSExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				A005DC501D53E86E001D5244 /* WorldScrollExtension.swift */,
+				A08ED7AF1D548EEF002ED820 /* EntitiesExtension.swift */,
+				A08ED7B11D548F75002ED820 /* ShopExtension.swift */,
+				A08ED7BF1D549F73002ED820 /* SoundExtension.swift */,
+			);
+			name = GSExtensions;
 			sourceTree = "<group>";
 		};
 		A0EDE1BE1D233F49008B5371 = {
@@ -478,6 +510,7 @@
 				A029AB4E1D52AB8300A4F970 /* snowflake.png in Resources */,
 				A04F9C181D4E8FAD0031A494 /* Fire.sks in Resources */,
 				A0DF62F01D3D97E4005926A5 /* spark2.png in Resources */,
+				A08ED7B91D549CD1002ED820 /* arrow-hitting.mp3 in Resources */,
 				A02054611D5001CD005C7C13 /* heart-empty.png in Resources */,
 				A0A2660E1D36EE1900054ECE /* Orc.atlas in Resources */,
 				A0F42DDD1D4DA7590081D2BD /* FireTrail.sks in Resources */,
@@ -487,6 +520,7 @@
 				A04F9C161D4E886B0031A494 /* IceExplosion.sks in Resources */,
 				A0EDE1CD1D233F4A008B5371 /* GameScene.sks in Resources */,
 				A0F42DDE1D4DA7590081D2BD /* spark.png in Resources */,
+				A08ED7BD1D549CD1002ED820 /* challenge-complete.mp3 in Resources */,
 				A046D67E1D25B98C007608A1 /* cloud2.png in Resources */,
 				A08ED7AD1D546F63002ED820 /* MagicPlatformTrail.sks in Resources */,
 				A05B41AA1D4ACA7A00D229C0 /* splashScreen.png in Resources */,
@@ -500,7 +534,10 @@
 				A0EDE1FD1D23406E008B5371 /* StartScene.sks in Resources */,
 				A020545F1D5001A0005C7C13 /* HeartExplosion.sks in Resources */,
 				A0EDE1D41D233F4A008B5371 /* Main.storyboard in Resources */,
+				A08ED7BA1D549CD1002ED820 /* arrow-shoot.mp3 in Resources */,
+				A08ED7BE1D549CD1002ED820 /* coin-grab.mp3 in Resources */,
 				A046D67B1D25B8A7007608A1 /* Clouds.sks in Resources */,
+				A08ED7BB1D549CD1002ED820 /* bg-music.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +566,7 @@
 				A0EDE21C1D23432F008B5371 /* SKTTimingFunctions.swift in Sources */,
 				A0EDE1D11D233F4A008B5371 /* GameViewController.swift in Sources */,
 				A03C1B941D38146200973F27 /* LongRangeOrc.swift in Sources */,
+				A08ED7B21D548F75002ED820 /* ShopExtension.swift in Sources */,
 				A029AB501D52B13F00A4F970 /* UndeadState.swift in Sources */,
 				A0B4866D1D4691E8004F8EB8 /* Challenge.swift in Sources */,
 				A0EDE2141D23432F008B5371 /* CGVector+Extensions.swift in Sources */,
@@ -545,6 +583,7 @@
 				A0EDE1FF1D234080008B5371 /* StartScene.swift in Sources */,
 				A0EDE2191D23432F008B5371 /* SKNode+Extensions.swift in Sources */,
 				A0EDE2161D23432F008B5371 /* SKAction+Extensions.swift in Sources */,
+				A08ED7B01D548EEF002ED820 /* EntitiesExtension.swift in Sources */,
 				A0B486691D468E74004F8EB8 /* ChallengeManager.swift in Sources */,
 				A020545D1D4FFE73005C7C13 /* Heart.swift in Sources */,
 				A05B41A81D4A9B6F00D229C0 /* LevelManager.swift in Sources */,
@@ -564,6 +603,7 @@
 				A0E4CD871D26EAC20091FD5F /* PlayingState.swift in Sources */,
 				A0EDE2181D23432F008B5371 /* SKColor+Extensions.swift in Sources */,
 				A03C1B961D38371700973F27 /* MeleeOrc.swift in Sources */,
+				A08ED7C01D549F73002ED820 /* SoundExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

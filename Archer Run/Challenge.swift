@@ -14,6 +14,7 @@ enum ChallengeType: String {
     case Target = "target"
     case Coin = "coin"
     case Shoot = "shoot"
+    case Undead = "undead"
 }
 
 enum ChallengeState: String {
@@ -93,6 +94,10 @@ class Challenge {
             if self.goal == 1 { descriptionString = "Shoot \(self.goal) arrow" }
             else { descriptionString = "Shoot \(self.goal) arrows" }
             break
+        case .Undead:
+            if self.goal == 1 { descriptionString = "Kill \(self.goal) Undead" }
+            else { descriptionString = "Kill \(self.goal) Undeads" }
+            break
         }
         
         if  goalType == .Times {
@@ -148,6 +153,10 @@ class Challenge {
             case .Shoot:
                 if toGo == 1 { progressString = "\(toGo) arrow to go" }
                 else { progressString = "\(toGo) arrows to go" }
+                break
+            case .Undead:
+                if toGo == 1 { progressString = "\(toGo) undead to go" }
+                else { progressString = "\(toGo) undeads to go" }
                 break
             }
         }
