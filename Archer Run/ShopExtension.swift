@@ -71,11 +71,11 @@ extension GameScene {
         for (key, value) in availableArrows {
             var costOfArrow: Int = 0
             
-            if key == "fire" {
-                costOfArrow = 7500
+            if key == "fire" || key == "ice" {
+                costOfArrow = 5000
             }
-            else if key == "ice" || key == "explosive"{
-                costOfArrow = 10000
+            else if key == "explosive"{
+                costOfArrow = 7500
             }
             
             if value {
@@ -105,7 +105,7 @@ extension GameScene {
     }
     
     func createArrowRow(name: String, cost: Int, isBought: Bool, isEquipped: Bool) {
-        let rowColor = UIColor(red: 163/255, green: 134/255, blue: 113/255, alpha: 1)
+        let rowColor = UIColor.flatCoffeeColor()
         let row = SKSpriteNode(color: rowColor, size: CGSize(width: list.size.width, height: 60))
         row.name = name
         

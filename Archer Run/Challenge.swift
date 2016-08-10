@@ -101,7 +101,7 @@ class Challenge {
         }
         
         if  goalType == .Times {
-            descriptionString += " \(times) times in a row"
+            descriptionString += " \(times)x in a row"
         }
         
         if goalType == .SingleGame {
@@ -162,5 +162,45 @@ class Challenge {
         }
         
         return progressString
+    }
+    
+    func getTexture() -> SKTexture {
+        switch type {
+        case .Orc:
+            return SKTexture(imageNamed: "challengeOrc")
+        case .Run:
+            return SKTexture(imageNamed: "challengeRun")
+        case .Target:
+            return SKTexture(imageNamed: "challengeTarget")
+        case .Coin:
+            return SKTexture(imageNamed: "challengeCoin")
+        case .Shoot:
+            return SKTexture(imageNamed: "challengeArrows")
+        case .Undead:
+            return SKTexture(imageNamed: "challengeUndead")
+        }
+    }
+    
+    func getBGColor() -> UIColor {
+        switch type {
+        case .Orc:
+            //Red
+            return UIColor.flatRedColor()
+        case .Run:
+            //Green
+            return UIColor.flatGreenColor()
+        case .Target:
+            //Orange
+            return UIColor.flatOrangeColor()
+        case .Coin:
+            //Yellow
+            return UIColor.flatYellowColor()
+        case .Shoot:
+            //Blue
+            return UIColor.flatSkyBlueColor()
+        case .Undead:
+            //Purple
+            return UIColor.flatPurpleColor()
+        }
     }
 }

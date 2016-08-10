@@ -18,6 +18,7 @@ class Archer: SKSpriteNode {
     var hurtAnimation: SKAction!
     var jumpAnimation: SKAction!
     var runAnimation: SKAction!
+    var runAnimationOnce: SKAction!
     var shootAnimation: SKAction!
     
     var lives: Int = 2
@@ -34,9 +35,9 @@ class Archer: SKSpriteNode {
         var textures = [SKTexture]()
         textures = getTextures("run-", total: 14)
         
-        let animate = SKAction.animateWithTextures(textures, timePerFrame: 0.05, resize: true, restore: false)
+        runAnimationOnce = SKAction.animateWithTextures(textures, timePerFrame: 0.05, resize: true, restore: false)
         
-        runAnimation = SKAction.repeatActionForever(animate)
+        runAnimation = SKAction.repeatActionForever(runAnimationOnce)
         
     /*-------------------------------------JUMP ANIMATION-----------------------------------------------*/
         textures = getTextures("jump-", total: 8)
@@ -105,7 +106,7 @@ class Archer: SKSpriteNode {
         physicsBody?.applyImpulse(CGVector(dx: 0, dy: 30))
         
         let doubleJumpAction = SKAction.rotateByAngle(-6.2830, duration: 0.25)
-        runAction(doubleJumpAction)
+        runAction(doubleJumpAction, withKey: "doubleJump")
         
         if state != .HurtJump {
             state = .DoubleJumping
@@ -125,7 +126,7 @@ class Archer: SKSpriteNode {
         
         let waitForAnim = SKAction.waitForDuration(hurtAnimation.duration)
         
-        let sequenceAnims = SKAction.sequence([hurtAnimation, waitForAnim, runAnimation])
+        let sequenceAnims = SKAction.sequence([hurtAnimation, waitForAnim, runAnimationOnce])
         
         runAction(sequenceAnims)
     }

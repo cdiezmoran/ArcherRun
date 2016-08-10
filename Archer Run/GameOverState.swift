@@ -117,6 +117,7 @@ class GameOverState: GKState {
         let updateLabels = SKAction.runBlock({
             self.scene.setChallengeLabels()
             self.scene.setProgressLabels()
+            self.scene.createChallengeIcons(ChallengeManager.sharedInstance.activeChallenges)
         })
         
         let updateProgressBar = SKAction.customActionWithDuration(0.5, actionBlock: { (node: SKNode!, elapsedTime: CGFloat) in

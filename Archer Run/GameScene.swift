@@ -33,6 +33,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
     var arrowTimer: CFTimeInterval = 0.4
     var availableArrows = [String:Bool]()
     var backgroundMusic: SKAudioNode!
+    var challengeIcons = [SKSpriteNode]()
     var coinCount: Int = 0 {
         didSet {
             coinCountLabel.text = String(coinCount)
@@ -69,14 +70,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
     var undead: Undead!
     
     var archer: Archer!
+    var challengeActiveBanner: SKSpriteNode!
+    var challengeActiveLabel: SKLabelNode!
+    var challengeActiveProgress: SKLabelNode!
     var challengeCompletedBanner: SKSpriteNode!
     var challengeCompletedLabel: SKLabelNode!
+    var challengeIcon: SKSpriteNode!
+    var challengeIconBG: SKSpriteNode!
     var clouds: SKEmitterNode!
     var coinCountLabel: SKLabelNode!
     var coinRewardLabel: SKLabelNode!
     var enemyScrollLayer: SKNode!
     var enemyScrollLayerFast: SKNode!
     var enemyScrollLayerSlow: SKNode!
+    var firstChallengeHolder: SKSpriteNode!
     var firstChallengeLabel: SKLabelNode!
     var firstCompletedSprite: SKSpriteNode!
     var firstProgressLabel: SKLabelNode!
@@ -96,6 +103,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
     var startGroundLarge: SKSpriteNode!
     var scoreLabel: SKLabelNode!
     var scoreLabelGO: SKLabelNode!
+    var secondChallengeHolder: SKSpriteNode!
     var secondChallengeLabel: SKLabelNode!
     var secondCompletedSprite: SKSpriteNode!
     var secondProgressLabel: SKLabelNode!
@@ -106,6 +114,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
     var startingScrollLayer: SKNode!
     var startTreesBack: SKSpriteNode!
     var startTreesFront: SKSpriteNode!
+    var thirdChallengeHolder: SKSpriteNode!
     var thirdChallengeLabel: SKLabelNode!
     var thirdCompletedSprite: SKSpriteNode!
     var thirdProgressLabel: SKLabelNode!
@@ -125,14 +134,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
         archer = Archer()
         addChild(archer)
         
+        challengeActiveBanner = self.childNodeWithName("challengeActiveBanner") as! SKSpriteNode
+        challengeActiveLabel = self.childNodeWithName("//challengeActiveLabel") as! SKLabelNode
+        challengeActiveProgress = self.childNodeWithName("//challengeActiveProgress") as! SKLabelNode
         challengeCompletedBanner = self.childNodeWithName("challengeCompletedBanner") as! SKSpriteNode
         challengeCompletedLabel = self.childNodeWithName("//challengeCompletedLabel") as! SKLabelNode
+        challengeIcon = self.childNodeWithName("//challengeIcon") as! SKSpriteNode
+        challengeIconBG = self.childNodeWithName("//challengeIconBG") as! SKSpriteNode
         clouds = self.childNodeWithName("clouds") as! SKEmitterNode
         coinCountLabel = self.childNodeWithName("coinCountLabel") as! SKLabelNode
         coinRewardLabel = self.childNodeWithName("//coinRewardLabel") as! SKLabelNode
         enemyScrollLayer = self.childNodeWithName("enemyScrollLayer")
         enemyScrollLayerFast = self.childNodeWithName("enemyScrollLayerFast")
         enemyScrollLayerSlow = self.childNodeWithName("enemyScrollLayerSlow")
+        firstChallengeHolder = self.childNodeWithName("//firstChallengeHolder") as! SKSpriteNode
         firstChallengeLabel = self.childNodeWithName("//firstChallengeLabel") as! SKLabelNode
         firstCompletedSprite = self.childNodeWithName("//firstCompletedSprite") as! SKSpriteNode
         firstProgressLabel = self.childNodeWithName("//firstProgressLabel") as! SKLabelNode
@@ -152,6 +167,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
         startGroundLarge = self.childNodeWithName("//startGroundLarge") as! SKSpriteNode
         scoreLabel = self.childNodeWithName("scoreLabel") as! SKLabelNode
         scoreLabelGO = self.childNodeWithName("//scoreLabelGO") as! SKLabelNode
+        secondChallengeHolder = self.childNodeWithName("//secondChallengeHolder") as! SKSpriteNode
         secondChallengeLabel = self.childNodeWithName("//secondChallengeLabel") as! SKLabelNode
         secondCompletedSprite = self.childNodeWithName("//secondCompletedSprite") as! SKSpriteNode
         secondProgressLabel = self.childNodeWithName("//secondProgressLabel") as! SKLabelNode
@@ -162,6 +178,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
         startingScrollLayer = self.childNodeWithName("startingScrollLayer")
         startTreesBack = self.childNodeWithName("startTreesBack") as! SKSpriteNode
         startTreesFront = self.childNodeWithName("startTreesFront") as! SKSpriteNode
+        thirdChallengeHolder = self.childNodeWithName("//thirdChallengeHolder") as! SKSpriteNode
         thirdChallengeLabel = self.childNodeWithName("//thirdChallengeLabel") as! SKLabelNode
         thirdCompletedSprite = self.childNodeWithName("//thirdCompletedSprite") as! SKSpriteNode
         thirdProgressLabel = self.childNodeWithName("//thirdProgressLabel") as! SKLabelNode
@@ -206,7 +223,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
             self.list = ScrollingList(size: CGSize(width: self.size.width * 0.9, height: self.size.height * 0.9))
             self.list.horizontalAlignmentMode = .Left
             self.list.zPosition = self.gameOverScreen.zPosition + 50
-            self.list.color = UIColor(red: 125/255, green: 82/255, blue: 48/255, alpha: 1)
+            self.list.color = UIColor.flatCoffeeDarkColor()
             self.setupList()
         }
         
@@ -240,11 +257,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
         
         setChallengeLabels()
         setProgressLabels()
+        createChallengeIcons([:])
         levelLabel.text = String(Int(LevelManager.sharedInstance.level))
         levelProgressBar.xScale = LevelManager.sharedInstance.getProgressBarXScale()
         
         addHeart()
         addHeart()
+        
+        showChallengesAtGameStart()
         
         gameState.enterState(StartingState)
     }
@@ -270,7 +290,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
             
             if archer.state == .Dead || archer.state == .Running || archer.state == .Hurt { return }
             
-            
+            if archer.state == .DoubleJumping || archer.state == .HurtDoubleJump {
+                archer.removeActionForKey("doubleJump")
+                let resetRotation = SKAction.rotateToAngle(6.2830, duration: 0)
+                archer.runAction(resetRotation)
+            }
             
             archer.run()
             
@@ -458,7 +482,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
             if hurtTimer >= 1.25 {
                 archer.removeActionForKey("hurtAnimation")
                 archer.alpha = 1
-                archer.run()
+                
+                if archer.state == .HurtJump {
+                    archer.state = .Jumping
+                }
+                else if archer.state == .HurtDoubleJump {
+                    archer.state = .DoubleJumping
+                }
+                else {
+                  archer.run()  
+                }
+                
                 archer.physicsBody?.contactTestBitMask = PhysicsCategory.Obstacle | PhysicsCategory.Coin | PhysicsCategory.Heart | PhysicsCategory.IceBlock
                 hurtTimer = 0
             }
@@ -512,5 +546,101 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
         firstProgressLabel.text = ChallengeManager.sharedInstance.activeChallenges["firstChallenge"]!.progressDescription()
         secondProgressLabel.text = ChallengeManager.sharedInstance.activeChallenges["secondChallenge"]!.progressDescription()
         thirdProgressLabel.text = ChallengeManager.sharedInstance.activeChallenges["thirdChallenge"]!.progressDescription()
+    }
+    
+    func createChallengeIcons(challenges: [String:Challenge]) {
+        let iconSize = CGSize(width: 40, height: 40)
+        let spritePosition = CGPoint(x: -168, y: -0.2)
+        let spriteSize = CGSize(width: 39, height: 60.5)
+        
+        if challenges.isEmpty && challengeIcons.isEmpty {
+            //First time add all 3 SpriteNodes
+            let activeChallenges = ChallengeManager.sharedInstance.activeChallenges
+            for (key, challenge) in activeChallenges {
+                let newIcon = SKSpriteNode(texture: challenge.getTexture(), color: UIColor.clearColor(), size: iconSize)
+                let newSprite = SKSpriteNode(color: challenge.getBGColor(), size: spriteSize)
+                newSprite.addChild(newIcon)
+                
+                if key == "firstChallenge" {
+                    challengeIcons.append(newSprite)
+                    firstChallengeHolder.addChild(newSprite)
+                }
+                else if key == "secondChallenge" {
+                    challengeIcons.append(newSprite)
+                    secondChallengeHolder.addChild(newSprite)
+                }
+                else if key == "thirdChallenge" {
+                    challengeIcons.append(newSprite)
+                    thirdChallengeHolder.addChild(newSprite)
+                }
+                
+                newSprite.position = spritePosition
+            }
+        }
+        else if !challenges.isEmpty {
+            //Change specific challenge
+            for (key, challenge) in challenges {
+                let newIcon = SKSpriteNode(texture: challenge.getTexture(), color: UIColor.clearColor(), size: iconSize)
+                let newSprite = SKSpriteNode(color: challenge.getBGColor(), size: spriteSize)
+                newSprite.addChild(newIcon)
+                
+                if key == "firstChallenge" {
+                    challengeIcons[1].removeFromParent()
+                    
+                    firstChallengeHolder.addChild(newSprite)
+                    
+                    challengeIcons[1] = newSprite
+                }
+                else if key == "secondChallenge" {
+                    challengeIcons[2].removeFromParent()
+                    
+                    secondChallengeHolder.addChild(newSprite)
+                    
+                    challengeIcons[2] = newSprite
+                }
+                else if key == "thirdChallenge" {
+                    challengeIcons[0].removeFromParent()
+                    
+                    thirdChallengeHolder.addChild(newSprite)
+                    
+                    challengeIcons[0] = newSprite
+                }
+                
+                newSprite.position = spritePosition
+            }
+        }
+    }
+    
+    func showChallengesAtGameStart() {
+        //Show banner
+        let showBanner = SKAction.moveToY(355, duration: 0.5)
+        
+        //Get first challenge info
+        let updateInfoFirst = SKAction.runBlock({
+            self.updateForChallengeKey("firstChallenge")
+        })
+        //wait for 0.5 seconds
+        let wait = SKAction.waitForDuration(1.5)
+        //repeat for other to challenges
+        let updateInfoSecond = SKAction.runBlock({
+            self.updateForChallengeKey("secondChallenge")
+        })
+        let updateInfoThird = SKAction.runBlock({
+            self.updateForChallengeKey("thirdChallenge")
+        })
+        //Hide banner
+        let hideBanner = SKAction.moveToY(446.5, duration: 0.5)
+        
+        //Run action
+        let sequence = SKAction.sequence([updateInfoFirst, showBanner, wait, updateInfoSecond, wait, updateInfoThird, wait, hideBanner])
+        challengeActiveBanner.runAction(sequence)
+    }
+    
+    func updateForChallengeKey(key: String) {
+        let challenge = ChallengeManager.sharedInstance.activeChallenges[key]!
+        challengeActiveLabel.text = challenge.description()
+        challengeActiveProgress.text = challenge.progressDescription()
+        challengeIconBG.color = challenge.getBGColor()
+        challengeIcon.texture = challenge.getTexture()
     }
 }

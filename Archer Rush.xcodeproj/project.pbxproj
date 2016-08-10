@@ -13,14 +13,19 @@
 		A020545F1D5001A0005C7C13 /* HeartExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = A020545E1D5001A0005C7C13 /* HeartExplosion.sks */; };
 		A02054611D5001CD005C7C13 /* heart-empty.png in Resources */ = {isa = PBXBuildFile; fileRef = A02054601D5001CD005C7C13 /* heart-empty.png */; };
 		A02266C11D4BD1F9000D1818 /* LevelUp.sks in Resources */ = {isa = PBXBuildFile; fileRef = A02266C01D4BD1F9000D1818 /* LevelUp.sks */; };
+		A023FDD41D5AD686001F3DC9 /* ChameleonPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = A023FDD31D5AD686001F3DC9 /* ChameleonPalette.swift */; };
 		A024BFFC1D3EDDFA00164646 /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = A024BFFB1D3EDDFA00164646 /* Target.swift */; };
 		A029AB4E1D52AB8300A4F970 /* snowflake.png in Resources */ = {isa = PBXBuildFile; fileRef = A029AB4D1D52AB8300A4F970 /* snowflake.png */; };
 		A029AB501D52B13F00A4F970 /* UndeadState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A029AB4F1D52B13F00A4F970 /* UndeadState.swift */; };
+		A02DD8591D5A3FFA005C6942 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A02DD8561D5A3FFA005C6942 /* FBSDKLoginKit.framework */; };
+		A02DD85A1D5A3FFA005C6942 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A02DD8571D5A3FFA005C6942 /* FBSDKShareKit.framework */; };
+		A02DD85C1D5A4063005C6942 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A02DD85B1D5A4063005C6942 /* Bolts.framework */; };
 		A03C1B941D38146200973F27 /* LongRangeOrc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03C1B931D38146200973F27 /* LongRangeOrc.swift */; };
 		A03C1B961D38371700973F27 /* MeleeOrc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03C1B951D38371700973F27 /* MeleeOrc.swift */; };
 		A03C1B981D385A1900973F27 /* Arrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03C1B971D385A1900973F27 /* Arrow.swift */; };
 		A03D2B7E1D5104E0008C0B39 /* ScrollingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03D2B7D1D5104E0008C0B39 /* ScrollingList.swift */; };
 		A03F3EA11D287CFD00E177F9 /* Archer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03F3EA01D287CFD00E177F9 /* Archer.swift */; };
+		A040A5401D5BE49E00F7E2F1 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A040A53F1D5BE49E00F7E2F1 /* FBSDKCoreKit.framework */; };
 		A046D67B1D25B8A7007608A1 /* Clouds.sks in Resources */ = {isa = PBXBuildFile; fileRef = A046D6791D25B8A7007608A1 /* Clouds.sks */; };
 		A046D67E1D25B98C007608A1 /* cloud2.png in Resources */ = {isa = PBXBuildFile; fileRef = A046D67D1D25B98C007608A1 /* cloud2.png */; };
 		A04F9C161D4E886B0031A494 /* IceExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = A04F9C151D4E886B0031A494 /* IceExplosion.sks */; };
@@ -108,14 +113,19 @@
 		A020545E1D5001A0005C7C13 /* HeartExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = HeartExplosion.sks; sourceTree = "<group>"; };
 		A02054601D5001CD005C7C13 /* heart-empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-empty.png"; sourceTree = "<group>"; };
 		A02266C01D4BD1F9000D1818 /* LevelUp.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelUp.sks; sourceTree = "<group>"; };
+		A023FDD31D5AD686001F3DC9 /* ChameleonPalette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChameleonPalette.swift; sourceTree = "<group>"; };
 		A024BFFB1D3EDDFA00164646 /* Target.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Target.swift; sourceTree = "<group>"; };
 		A029AB4D1D52AB8300A4F970 /* snowflake.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = snowflake.png; sourceTree = "<group>"; };
 		A029AB4F1D52B13F00A4F970 /* UndeadState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UndeadState.swift; sourceTree = "<group>"; };
+		A02DD8561D5A3FFA005C6942 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		A02DD8571D5A3FFA005C6942 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		A02DD85B1D5A4063005C6942 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		A03C1B931D38146200973F27 /* LongRangeOrc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LongRangeOrc.swift; sourceTree = "<group>"; };
 		A03C1B951D38371700973F27 /* MeleeOrc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeleeOrc.swift; sourceTree = "<group>"; };
 		A03C1B971D385A1900973F27 /* Arrow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arrow.swift; sourceTree = "<group>"; };
 		A03D2B7D1D5104E0008C0B39 /* ScrollingList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollingList.swift; sourceTree = "<group>"; };
 		A03F3EA01D287CFD00E177F9 /* Archer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Archer.swift; sourceTree = "<group>"; };
+		A040A53F1D5BE49E00F7E2F1 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		A046D6791D25B8A7007608A1 /* Clouds.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Clouds.sks; sourceTree = "<group>"; };
 		A046D67D1D25B98C007608A1 /* cloud2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud2.png; sourceTree = "<group>"; };
 		A04F9C151D4E886B0031A494 /* IceExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = IceExplosion.sks; sourceTree = "<group>"; };
@@ -183,6 +193,7 @@
 		A0F42DDB1D4DA7590081D2BD /* FireTrail.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = FireTrail.sks; sourceTree = "<group>"; };
 		A0F42DDC1D4DA7590081D2BD /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		A0F42DE31D4DA9EB0081D2BD /* DynamiteTrail.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = DynamiteTrail.sks; sourceTree = "<group>"; };
+		A0F566A91D592DE200418B75 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +201,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A02DD8591D5A3FFA005C6942 /* FBSDKLoginKit.framework in Frameworks */,
+				A040A5401D5BE49E00F7E2F1 /* FBSDKCoreKit.framework in Frameworks */,
+				A02DD85A1D5A3FFA005C6942 /* FBSDKShareKit.framework in Frameworks */,
+				A02DD85C1D5A4063005C6942 /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,6 +272,17 @@
 				A0EDE1FE1D234080008B5371 /* StartScene.swift */,
 			);
 			name = Scenes;
+			sourceTree = "<group>";
+		};
+		A02DD8481D5A3E6F005C6942 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A02DD85B1D5A4063005C6942 /* Bolts.framework */,
+				A040A53F1D5BE49E00F7E2F1 /* FBSDKCoreKit.framework */,
+				A02DD8561D5A3FFA005C6942 /* FBSDKLoginKit.framework */,
+				A02DD8571D5A3FFA005C6942 /* FBSDKShareKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		A046D6781D25B88C007608A1 /* Particles */ = {
@@ -337,6 +363,7 @@
 				A0ADEC851D359CE200E21CE0 /* Animations.sks */,
 				A024BFF91D3EC9B800164646 /* App */,
 				A06081C41D3455F300596B59 /* Entities */,
+				A02DD8481D5A3E6F005C6942 /* Frameworks */,
 				A046D6781D25B88C007608A1 /* Particles */,
 				A024BFFA1D3ECA0E00164646 /* Scenes */,
 				A024BFF31D3E91B700164646 /* SFX */,
@@ -348,8 +375,10 @@
 				A0A266071D36C09200054ECE /* Archer.atlas */,
 				A0B486681D468E74004F8EB8 /* ChallengeManager.swift */,
 				A0B4866C1D4691E8004F8EB8 /* Challenge.swift */,
+				A023FDD31D5AD686001F3DC9 /* ChameleonPalette.swift */,
 				A05B41A71D4A9B6F00D229C0 /* LevelManager.swift */,
 				A03D2B7D1D5104E0008C0B39 /* ScrollingList.swift */,
+				A0F566A91D592DE200418B75 /* Bridging-Header.h */,
 			);
 			name = "Archer Rush";
 			path = "Archer Run";
@@ -566,6 +595,7 @@
 				A0EDE21C1D23432F008B5371 /* SKTTimingFunctions.swift in Sources */,
 				A0EDE1D11D233F4A008B5371 /* GameViewController.swift in Sources */,
 				A03C1B941D38146200973F27 /* LongRangeOrc.swift in Sources */,
+				A023FDD41D5AD686001F3DC9 /* ChameleonPalette.swift in Sources */,
 				A08ED7B21D548F75002ED820 /* ShopExtension.swift in Sources */,
 				A029AB501D52B13F00A4F970 /* UndeadState.swift in Sources */,
 				A0B4866D1D4691E8004F8EB8 /* Challenge.swift in Sources */,
@@ -749,11 +779,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Archer Run";
 				INFOPLIST_FILE = "Archer Run/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.Rush-Archer";
 				PRODUCT_NAME = "Archer Rush";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Archer Run/Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -764,11 +796,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Archer Run";
 				INFOPLIST_FILE = "Archer Run/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.Rush-Archer";
 				PRODUCT_NAME = "Archer Rush";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Archer Run/Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

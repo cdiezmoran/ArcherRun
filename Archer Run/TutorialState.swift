@@ -49,7 +49,12 @@ class TutorialState: GKState {
         dragLabel = SKLabelNode(fontNamed: "Arial")
         
         tapLabel.text = "Tap to Jump"
-        dragLabel.text = "Tap to shoot"
+        dragLabel.text = "Tap to Shoot"
+        
+        let extraLabel = SKLabelNode(fontNamed: "Arial")
+        extraLabel.text = "(location matters!)"
+        dragLabel.addChild(extraLabel)
+        extraLabel.position += CGPoint(x: 0, y: -dragLabel.fontSize)
         
         tapLabel.position.x = tapSideWidth / 2
         tapLabel.position.y = scene.size.height / 2
@@ -68,7 +73,7 @@ class TutorialState: GKState {
     }
     
     override func isValidNextState(stateClass: AnyClass) -> Bool {
-       return true
+        return true
     }
     
     override func willExitWithNextState(nextState: GKState) {

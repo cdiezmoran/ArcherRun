@@ -42,7 +42,11 @@ class PlayingState: GKState {
             scene.floorSpeed = 8
         }
         
-        if scene.floorSpeed >= 4 && scene.floorSpeed < 6 {
+        if scene.score > 1500 {
+            scene.intervalMin = 0.3
+            scene.intervalMax = 0.4
+        }
+        else if scene.floorSpeed >= 4 && scene.floorSpeed < 6 {
             scene.intervalMin = 0.5
             scene.intervalMax = 1
         }
@@ -70,7 +74,7 @@ class PlayingState: GKState {
             let changeText = SKAction.runBlock({
                 self.scene.challengeCompletedLabel.text = ChallengeManager.sharedInstance.challengeCompleted.description()
             })
-            let showBanner = SKAction.moveToY(381.5, duration: 0.5)
+            let showBanner = SKAction.moveToY(355, duration: 0.5)
             let wait = SKAction.waitForDuration(1)
             let hideBanner = SKAction.moveToY(446.5, duration: 1)
             
