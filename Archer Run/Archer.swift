@@ -137,7 +137,6 @@ class Archer: SKSpriteNode {
         physicsBody?.categoryBitMask = PhysicsCategory.None
         physicsBody?.contactTestBitMask = PhysicsCategory.None
         
-        removeActionForKey("runForever")
         removeAllActions()
         
         runAction(deadAnimation)
@@ -159,5 +158,11 @@ class Archer: SKSpriteNode {
         }
         
         return textures
+    }
+    
+    func resetRotation() {
+        removeAllActions()
+        let resetRotation = SKAction.rotateToAngle(6.2830, duration: 0)
+        runAction(resetRotation)
     }
 }

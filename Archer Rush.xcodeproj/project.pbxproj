@@ -26,6 +26,7 @@
 		A03D2B7E1D5104E0008C0B39 /* ScrollingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03D2B7D1D5104E0008C0B39 /* ScrollingList.swift */; };
 		A03F3EA11D287CFD00E177F9 /* Archer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03F3EA01D287CFD00E177F9 /* Archer.swift */; };
 		A040A5401D5BE49E00F7E2F1 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A040A53F1D5BE49E00F7E2F1 /* FBSDKCoreKit.framework */; };
+		A040A5421D5CEA6B00F7E2F1 /* ChallengeCompletedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A040A5411D5CEA6B00F7E2F1 /* ChallengeCompletedState.swift */; };
 		A046D67B1D25B8A7007608A1 /* Clouds.sks in Resources */ = {isa = PBXBuildFile; fileRef = A046D6791D25B8A7007608A1 /* Clouds.sks */; };
 		A046D67E1D25B98C007608A1 /* cloud2.png in Resources */ = {isa = PBXBuildFile; fileRef = A046D67D1D25B98C007608A1 /* cloud2.png */; };
 		A04F9C161D4E886B0031A494 /* IceExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = A04F9C151D4E886B0031A494 /* IceExplosion.sks */; };
@@ -126,6 +127,7 @@
 		A03D2B7D1D5104E0008C0B39 /* ScrollingList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollingList.swift; sourceTree = "<group>"; };
 		A03F3EA01D287CFD00E177F9 /* Archer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Archer.swift; sourceTree = "<group>"; };
 		A040A53F1D5BE49E00F7E2F1 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		A040A5411D5CEA6B00F7E2F1 /* ChallengeCompletedState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengeCompletedState.swift; sourceTree = "<group>"; };
 		A046D6791D25B8A7007608A1 /* Clouds.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Clouds.sks; sourceTree = "<group>"; };
 		A046D67D1D25B98C007608A1 /* cloud2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud2.png; sourceTree = "<group>"; };
 		A04F9C151D4E886B0031A494 /* IceExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = IceExplosion.sks; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				A0E4CD861D26EAC20091FD5F /* PlayingState.swift */,
 				A0E4CD881D26EACF0091FD5F /* GameOverState.swift */,
 				A029AB4F1D52B13F00A4F970 /* UndeadState.swift */,
+				A040A5411D5CEA6B00F7E2F1 /* ChallengeCompletedState.swift */,
 			);
 			name = States;
 			sourceTree = "<group>";
@@ -628,6 +631,7 @@
 				A0EDE2151D23432F008B5371 /* Int+Extensions.swift in Sources */,
 				A024BFFC1D3EDDFA00164646 /* Target.swift in Sources */,
 				A0C813C51D41908D00AF4581 /* TutorialState.swift in Sources */,
+				A040A5421D5CEA6B00F7E2F1 /* ChallengeCompletedState.swift in Sources */,
 				A0EDE21D1D23432F008B5371 /* Vector3.swift in Sources */,
 				A06081C61D3457EE00596B59 /* Spike.swift in Sources */,
 				A0E4CD871D26EAC20091FD5F /* PlayingState.swift in Sources */,

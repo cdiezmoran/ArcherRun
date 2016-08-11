@@ -437,16 +437,16 @@ class ChallengeManager {
         return false
     }
     
-    func checkForCompletedChallenges() -> [String] {
-        var completedKeys = [String]()
+    func checkForCompletedChallenges() -> [String: Challenge] {
+        var completedChallenges = [String: Challenge]()
         for (key, challenge) in activeChallenges {
             if challenge.state == .Completed {
                 replaceChallengeForKey(key)
-                completedKeys.append(key)
+                completedChallenges[key] = challenge
             }
         }
         
-        return completedKeys
+        return completedChallenges
     }
     
     func notifyOnChallengeCompletion() -> Bool {

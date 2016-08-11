@@ -81,6 +81,7 @@ class PlayingState: GKState {
             let bannerSequence = SKAction.sequence([changeText, showBanner, wait, hideBanner])
             
             scene.challengeCompletedBanner.runAction(bannerSequence)
+            scene.didCompleteChallenge = true
         }
     }
     

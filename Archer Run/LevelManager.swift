@@ -14,6 +14,7 @@ class LevelManager {
     
     var didLevelUp: Bool = false
     var level: Double = 1.0
+    var levelUpCount: Int = 1
     var expRequired: Int!
     var lastExpRequired: Int!
     var progress: Int = 0
