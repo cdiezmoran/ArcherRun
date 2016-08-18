@@ -136,7 +136,7 @@ extension GameScene {
         let heartTexture = SKTexture(imageNamed: "heartFinal")
         let newHeart = SKSpriteNode(texture: heartTexture, color: UIColor.clearColor(), size: CGSize(width: 32, height: 32))
         if hearts.isEmpty {
-            newHeart.position = CGPointMake(622, 380)
+            newHeart.position = CGPointMake(610, 380)
             hearts.append(newHeart)
             addChild(newHeart)
         }
@@ -171,8 +171,11 @@ extension GameScene {
     }
     
     func hitUndead(arrowNode: SKNode) {
+        if undead.state == .Dead { return }
+        
         let arrow = arrowNode as! Arrow
         undead.lives -= 1
+        undeadHealthBar.xScale += 0.5
         
         arrow.physicsBody?.categoryBitMask = PhysicsCategory.None
         

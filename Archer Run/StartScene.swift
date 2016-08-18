@@ -9,6 +9,10 @@
 import SpriteKit
 import GameplayKit
 
+import FBSDKCoreKit
+//import FBSDKLoginKit
+//import FBSDKShareKit
+
 class StartScene: SKScene {
     var water: SKSpriteNode!
     var water2: SKSpriteNode!
@@ -33,6 +37,10 @@ class StartScene: SKScene {
         soundsOff = self.childNodeWithName("soundsOff") as! MSButtonNode
         
         clouds.advanceSimulationTime(100)
+        
+        /*let fbLoginView: FBSDKLoginButton = FBSDKLoginButton(frame: CGRect(origin: scene!.position, size: CGSize(width: 200, height: 50)))
+        fbLoginView.readPermissions = ["public_profile", "email", "user_friends", "publish_actions"]
+        self.view?.addSubview(fbLoginView)*/
         
         let userDefaults = NSUserDefaults.standardUserDefaults()
         let musicIsOn = userDefaults.boolForKey("musicSettings")

@@ -21,7 +21,7 @@ class ChallengeCompletedState: GKState {
         scene.challengeCompletedScreen.zPosition = 0
         scene.levelInfoHolder.zPosition = 1
         
-        ChallengeManager.sharedInstance.cleanUpOnGameOver()
+        //ChallengeManager.sharedInstance.cleanUpOnGameOver()
         scene.setProgressLabels()
         let completedChallenges = ChallengeManager.sharedInstance.checkForCompletedChallenges()
         var actions = [SKAction]()
@@ -97,9 +97,14 @@ class ChallengeCompletedState: GKState {
         let giveExp = SKAction.runBlock({
             LevelManager.sharedInstance.gainExp()
         })
+        //Update progress bar w/ last progress
+        /*let updateLastProgressBar = SKAction.runBlock({
+            self.scene.levelProgressBar.xScale = LevelManager.sharedInstance.getLastProgressBarXScale()
+        })*/
+        
         //Update progress bar
         let updateProgressBar = SKAction.customActionWithDuration(0.5, actionBlock: { (node: SKNode!, elapsedTime: CGFloat) in
-            self.scene.levelProgressBar.xScale = (LevelManager.sharedInstance.getProgressBarXScale() * elapsedTime) / 0.5
+            self.scene.levelProgressBar.xScale = ((LevelManager.sharedInstance.getProgressBarXScale() * elapsedTime) / 0.5) + LevelManager.sharedInstance.getLastProgressBarXScale()
             if self.scene.levelProgressBar.xScale >= 1 {
                 self.scene.levelProgressBar.xScale = 1
             }
@@ -146,6 +151,7 @@ class ChallengeCompletedState: GKState {
         //remove particles
         let removeParticles = SKAction.runBlock({
             particles.removeFromParent()
+            self.scene.coinRewardLabel.hidden = true
         })
         //Reset banner position
         let resetBanner = SKAction.runBlock({

@@ -53,6 +53,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
     var intervalMax:CGFloat = 1.5
     var lastRoundedScore: Int = 0
     var lastUpdateTime: CFTimeInterval = 0
+    var leaderboardsAreOpen: Bool = false
     var list: ScrollingList!
     var playedGames: Int = 0
     var randomInterval: CGFloat!
@@ -70,6 +71,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
     var timer: CFTimeInterval = 0
     var userDefaults: NSUserDefaults!
     var undead: Undead!
+    var undeadHealthBar: SKSpriteNode!
     
     var archer: Archer!
     var challengeActiveBanner: SKSpriteNode!
@@ -99,6 +101,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
     var gameOverScreen: SKSpriteNode!
     var highScoreLabel: SKLabelNode!
     var invisibleGround: SKSpriteNode!
+    var leaderboardsButton: MSButtonNode!
+    var leaderboardsScreen: SKSpriteNode!
     var levelHolder1: SKSpriteNode!
     var levelHolder2: SKSpriteNode!
     var levelInfoHolder: SKSpriteNode!
@@ -109,7 +113,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
     var musicOff: MSButtonNode!
     var musicOn: MSButtonNode!
     var obstacleScrollLayer: SKNode!
+    var pauseButton: MSButtonNode!
+    var pauseScreen: SKSpriteNode!
     var playAgainButton: MSButtonNode!
+    var playButton: MSButtonNode!
+    var retryButton: MSButtonNode!
     var startGroundLarge: SKSpriteNode!
     var scoreLabel: SKLabelNode!
     var scoreLabelGO: SKLabelNode!
@@ -173,6 +181,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
         gameOverScreen = self.childNodeWithName("gameOverScreen") as! SKSpriteNode
         highScoreLabel = self.childNodeWithName("//highScoreLabel") as! SKLabelNode
         invisibleGround = self.childNodeWithName("//invisibleGround") as! SKSpriteNode
+        leaderboardsButton = self.childNodeWithName("//leaderboardsButton") as! MSButtonNode
+        leaderboardsScreen = self.childNodeWithName("//leaderboardsScreen") as! SKSpriteNode
         levelHolder1 = self.childNodeWithName("levelHolder1") as! SKSpriteNode
         levelHolder2 = self.childNodeWithName("levelHolder2") as! SKSpriteNode
         levelInfoHolder = self.childNodeWithName("//levelInfoHolder") as! SKSpriteNode
@@ -183,7 +193,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
         musicOff = self.childNodeWithName("//musicOff") as! MSButtonNode
         musicOn = self.childNodeWithName("//musicOn") as! MSButtonNode
         obstacleScrollLayer = self.childNodeWithName("obstacleScrollLayer")
+        pauseButton = self.childNodeWithName("pauseButton") as! MSButtonNode
+        pauseScreen = self.childNodeWithName("pauseScreen") as! SKSpriteNode
         playAgainButton = self.childNodeWithName("//playAgainButton") as! MSButtonNode
+        playButton = self.childNodeWithName("//playButton") as! MSButtonNode
+        retryButton = self.childNodeWithName("//retryButton") as! MSButtonNode
         startGroundLarge = self.childNodeWithName("//startGroundLarge") as! SKSpriteNode
         scoreLabel = self.childNodeWithName("scoreLabel") as! SKLabelNode
         scoreLabelGO = self.childNodeWithName("//scoreLabelGO") as! SKLabelNode
@@ -215,6 +229,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
         clouds.advanceSimulationTime(320)
         
         coinRewardLabel.hidden = true
+        pauseScreen.hidden = true
         
         setupGroundPhysics()
         
@@ -229,26 +244,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
         
         randomInterval = CGFloat.random(min: 0.3, max: 1)
         
-        playAgainButton.selectedHandler = {
-            if let scene = GameScene(fileNamed:"GameScene") {
-                let skView = self.view!
-                
-                /* Sprite Kit applies additional optimizations to improve rendering performance */
-                skView.ignoresSiblingOrder = true
-                
-                /* Set the scale mode to scale to fit the window */
-                scene.scaleMode = .Fill
-                
-                skView.presentScene(scene)
-            }
-        }
-        shopButton.selectedHandler = {
-            self.list = ScrollingList(size: CGSize(width: self.size.width * 0.9, height: self.size.height * 0.9))
-            self.list.horizontalAlignmentMode = .Left
-            self.list.zPosition = self.gameOverScreen.zPosition + 50
-            self.list.color = UIColor.flatCoffeeDarkColor()
-            self.setupList()
-        }
+        setButtonHandlers()
         
         userDefaults = NSUserDefaults.standardUserDefaults()
         playedGames = userDefaults.integerForKey("playedGames")
@@ -442,7 +438,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
        /* Called when a touch begins */
-        if gameState.currentState is GameOverState || gameState.currentState is StartingState { return }
+        if gameState.currentState is GameOverState || gameState.currentState is StartingState || gameState.currentState is ChallengeCompletedState { return }
         
         let touch = touches.first
         let location = touch?.locationInNode(self)
@@ -530,6 +526,68 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
         arrowTimer += deltaTime
     }
     
+    func setButtonHandlers() {
+        playAgainButton.selectedHandler = {
+            self.loadGameScene()
+        }
+        shopButton.selectedHandler = {
+            self.list = ScrollingList(size: CGSize(width: self.size.width * 0.9, height: self.size.height * 0.9))
+            self.list.horizontalAlignmentMode = .Left
+            self.list.zPosition = self.gameOverScreen.zPosition + 50
+            self.list.color = UIColor.flatCoffeeDarkColor()
+            self.setupList()
+        }
+        pauseButton.selectedHandler = {
+            let pauseAction = SKAction.runBlock({self.view?.paused = true})
+            let showPauseScreen = SKAction.runBlock({self.pauseScreen.hidden = false})
+            let sequence = SKAction.sequence([showPauseScreen, pauseAction])
+            self.runAction(sequence)
+        }
+        playButton.selectedHandler = {
+            self.view?.paused = false
+            self.pauseScreen.hidden = true
+        }
+        retryButton.selectedHandler = {
+            self.loadGameScene()
+        }
+        setLeaderboardsSelectedHandler()
+    }
+    
+    func loadGameScene() {
+        if let scene = GameScene(fileNamed:"GameScene") {
+            let skView = self.view!
+            
+            /* Sprite Kit applies additional optimizations to improve rendering performance */
+            skView.ignoresSiblingOrder = true
+            
+            /* Set the scale mode to scale to fit the window */
+            scene.scaleMode = .Fill
+            
+            skView.presentScene(scene)
+        }
+    }
+    
+    func setLeaderboardsSelectedHandler() {
+        if leaderboardsAreOpen {
+            leaderboardsButton.selectedHandler = {
+                let hideAction = SKAction.moveToX(-595, duration: 0.5)
+                self.leaderboardsScreen.runAction(hideAction)
+                
+                self.leaderboardsAreOpen = false
+                self.setLeaderboardsSelectedHandler()
+            }
+        }
+        else {
+            leaderboardsButton.selectedHandler = {
+                let showAction = SKAction.moveToX(-141, duration: 0.5)
+                self.leaderboardsScreen.runAction(showAction)
+                
+                self.leaderboardsAreOpen = true
+                self.setLeaderboardsSelectedHandler()
+            }
+        }
+    }
+    
     func setupGroundPhysics() {
         startGroundLarge.physicsBody = SKPhysicsBody(texture: startGroundLarge!.texture!, size: startGroundLarge.size)
         startGroundLarge.physicsBody?.affectedByGravity = false
@@ -561,68 +619,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
         invisibleGround.physicsBody?.categoryBitMask = PhysicsCategory.Floor
         invisibleGround.physicsBody?.contactTestBitMask = PhysicsCategory.None
         invisibleGround.physicsBody?.collisionBitMask = PhysicsCategory.Player
-    }
-    
-    func setChallengeLabels() {
-        firstChallengeLabel.text = ChallengeManager.sharedInstance.activeChallenges["firstChallenge"]!.description()
-        secondChallengeLabel.text = ChallengeManager.sharedInstance.activeChallenges["secondChallenge"]!.description()
-        thirdChallengeLabel.text = ChallengeManager.sharedInstance.activeChallenges["thirdChallenge"]!.description()
-    }
-    
-    func setProgressLabels() {
-        firstProgressLabel.text = ChallengeManager.sharedInstance.activeChallenges["firstChallenge"]!.progressDescription()
-        secondProgressLabel.text = ChallengeManager.sharedInstance.activeChallenges["secondChallenge"]!.progressDescription()
-        thirdProgressLabel.text = ChallengeManager.sharedInstance.activeChallenges["thirdChallenge"]!.progressDescription()
-    }
-    
-    func setChallengeIcons() {
-        let activeChallenges = ChallengeManager.sharedInstance.activeChallenges
-        for (key, challenge) in activeChallenges {
-            if key == "firstChallenge" {
-                firstChallengeIcon.texture = challenge.getTexture()
-                firstChallengeIconBG.color = challenge.getBGColor()
-            }
-            else if key == "secondChallenge" {
-                secondChallengeIcon.texture = challenge.getTexture()
-                secondChallengeIconBG.color = challenge.getBGColor()
-            }
-            else if key == "thirdChallenge" {
-                thirdChallengeIcon.texture = challenge.getTexture()
-                thirdChallengeIconBG.color = challenge.getBGColor()
-            }
-        }
-    }
-    
-    func showChallengesAtGameStart() {
-        //Show banner
-        let showBanner = SKAction.moveToY(355, duration: 0.5)
-        
-        //Get first challenge info
-        let updateInfoFirst = SKAction.runBlock({
-            self.updateForChallengeKey("firstChallenge")
-        })
-        //wait for 0.5 seconds
-        let wait = SKAction.waitForDuration(1.5)
-        //repeat for other to challenges
-        let updateInfoSecond = SKAction.runBlock({
-            self.updateForChallengeKey("secondChallenge")
-        })
-        let updateInfoThird = SKAction.runBlock({
-            self.updateForChallengeKey("thirdChallenge")
-        })
-        //Hide banner
-        let hideBanner = SKAction.moveToY(446.5, duration: 0.5)
-        
-        //Run action
-        let sequence = SKAction.sequence([updateInfoFirst, showBanner, wait, updateInfoSecond, wait, updateInfoThird, wait, hideBanner])
-        challengeActiveBanner.runAction(sequence)
-    }
-    
-    func updateForChallengeKey(key: String) {
-        let challenge = ChallengeManager.sharedInstance.activeChallenges[key]!
-        challengeActiveLabel.text = challenge.description()
-        challengeActiveProgress.text = challenge.progressDescription()
-        challengeIconBG.color = challenge.getBGColor()
-        challengeIcon.texture = challenge.getTexture()
     }
 }

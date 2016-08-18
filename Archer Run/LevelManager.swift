@@ -14,10 +14,10 @@ class LevelManager {
     
     var didLevelUp: Bool = false
     var level: Double = 1.0
-    var levelUpCount: Int = 1
     var expRequired: Int!
     var lastExpRequired: Int!
     var progress: Int = 0
+    var lastProgress: Int = 0
     
     var userDefaults: NSUserDefaults!
     
@@ -43,10 +43,20 @@ class LevelManager {
     }
     
     func gainExp() {
-        progress += 500
+        lastProgress = progress
+        
+        let levelDiv = level / 5
+        
+        for i in 1...10 {
+            if levelDiv > Double(i-1) && levelDiv <= Double(i) {
+                progress += 500 * i
+            }
+        }
+        
         if progress >= expRequired {
             levelUp()
             progress = 0
+            lastProgress = 0
         }
         storeLevelData()
     }
@@ -59,7 +69,13 @@ class LevelManager {
     }
     
     func getProgressBarXScale() -> CGFloat {
-        let progressBarXScale: CGFloat = CGFloat(progress) / CGFloat(expRequired)
+        let progressBarXScale: CGFloat = CGFloat(progress - lastProgress) / CGFloat(expRequired)
+        
+        return progressBarXScale
+    }
+    
+    func getLastProgressBarXScale() -> CGFloat {
+        let progressBarXScale: CGFloat = CGFloat(lastProgress) / CGFloat(expRequired)
         
         return progressBarXScale
     }

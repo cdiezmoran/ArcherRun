@@ -23,16 +23,17 @@ class GameOverState: GKState {
         let displayGameOverScreen = SKAction(named: "DisplayGameOver")!
         if scene.didCompleteChallenge {
             scene.gameOverScreen.runAction(displayGameOverScreen)
+            let moveLevelInfo = SKAction.moveTo(CGPoint(x: -124.5, y: -120), duration: 0.75)
+            scene.levelInfoHolder.runAction(moveLevelInfo)
         }
         else {
             let waitForDeadAnimation = SKAction.waitForDuration(0.8)
             gameOverSequence = SKAction.sequence([waitForDeadAnimation, displayGameOverScreen])
             
             scene.gameOverScreen.runAction(gameOverSequence)
+            scene.levelInfoHolder.position = CGPoint(x: -124.5, y: -120)
+            scene.levelInfoHolder.zPosition = 1
         }
-        
-        let moveLevelInfo = SKAction.moveTo(CGPoint(x: -124.5, y: -120), duration: 0.75)
-        scene.levelInfoHolder.runAction(moveLevelInfo)
         
         let userDefaults = NSUserDefaults.standardUserDefaults()
         var highscore = userDefaults.integerForKey("highscore")
@@ -53,9 +54,13 @@ class GameOverState: GKState {
         scene.highScoreLabel.text = "\(highscore)m"
         scene.totalCoinCountLabel.text = String(totalCoinCount)
         
+        ChallengeManager.sharedInstance.cleanUpOnGameOver()
+        
         scene.setChallengeLabels()
         scene.setProgressLabels()
         scene.setChallengeIcons()
+        
+        ChallengeManager.sharedInstance.storeChallengesData()
     }
     
     override func isValidNextState(stateClass: AnyClass) -> Bool {

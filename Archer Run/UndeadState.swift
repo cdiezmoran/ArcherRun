@@ -13,9 +13,9 @@ class UndeadState: GKState {
     
     unowned let scene: GameScene
     
+    var arrowCount: Int = 0
     var checkPosition: CGPoint!
     var undeadArrowTimer: NSTimeInterval = 0
-    var arrowCount: Int = 0
     
     init(scene: GameScene) {
         self.scene = scene
@@ -29,6 +29,7 @@ class UndeadState: GKState {
         let y = CGFloat.random(min: minY, max: maxY)
         scene.undead.position = CGPointMake(x, y)
         createMagicPlatform()
+        createHealthBar()
         checkPosition = scene.undead.position
     }
     
@@ -37,7 +38,16 @@ class UndeadState: GKState {
     }
     
     override func willExitWithNextState(nextState: GKState) {
-        let moveToAction = SKAction.moveToY(scene.size.height * 2, duration: 0.5)
+        var moveToAction: SKAction
+        if scene.undead.state == .Dead {
+            //moveToAction = SKAction.moveToY(-scene.size.height * 2, duration: 1)
+            moveToAction = SKAction.moveTo(CGPoint(x: scene.size.width / 2, y: -scene.size.height * 2), duration: 1)
+        }
+        else {
+            //moveToAction = SKAction.moveToY(scene.size.height * 2, duration: 1)
+            moveToAction = SKAction.moveTo(CGPoint(x: 0, y: scene.size.height * 2), duration: 1)
+        }
+        
         let removeFromParent = SKAction.runBlock({ self.scene.undead.removeFromParent() })
         
         let sequence = SKAction.sequence([moveToAction, removeFromParent])
@@ -111,5 +121,18 @@ class UndeadState: GKState {
         
         let particles = SKEmitterNode(fileNamed: "MagicPlatformTrail")!
         platform.addChild(particles)
+    }
+    
+    func createHealthBar() {
+        let healthBarSize = CGSize(width: 40, height: 5)
+        let healthBarHolder = SKSpriteNode(color: UIColor.flatGrayColor(), size: healthBarSize)
+        scene.undead.addChild(healthBarHolder)
+        healthBarHolder.position = CGPoint(x: -7, y: 40)
+        
+        scene.undeadHealthBar = SKSpriteNode(color: UIColor.flatRedColor(), size: healthBarSize)
+        scene.undeadHealthBar.anchorPoint.x = 0
+        scene.undeadHealthBar.xScale = -1
+        healthBarHolder.addChild(scene.undeadHealthBar)
+        scene.undeadHealthBar.position.x = 20
     }
 }

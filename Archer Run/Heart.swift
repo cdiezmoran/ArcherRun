@@ -14,6 +14,7 @@ class Heart: SKSpriteNode {
         let defaultTexture = SKTexture(imageNamed: "heartFinal")
         super.init(texture: defaultTexture, color: UIColor.clearColor(), size: CGSize(width: 32, height: 32))
         
+        zPosition = 51
         createPhysicsBody()
     }
     

@@ -1,0 +1,1 @@
+This is a project i started at Make School's Summer Academy 2016. It is an endless scroller for iOS where you have to evade traps by jumping and shoot monsters with your bow and arrow.

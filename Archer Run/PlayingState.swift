@@ -14,6 +14,7 @@ class PlayingState: GKState {
     unowned let scene: GameScene
     
     var compoundObjects: CompoundObjects!
+    var heartTimer: CFTimeInterval = 1
     
     init(scene: GameScene) {
         self.scene = scene
@@ -33,7 +34,7 @@ class PlayingState: GKState {
     override func updateWithDeltaTime(seconds: NSTimeInterval) {
         scene.score += scene.floorSpeed * CGFloat(seconds)
         
-        scene.floorSpeed += 0.00075
+        scene.floorSpeed += 0.001
         if scene.score < 10 {
             scene.floorSpeed = 4
         }
@@ -43,20 +44,20 @@ class PlayingState: GKState {
         }
         
         if scene.score > 1500 {
-            scene.intervalMin = 0.3
+            scene.intervalMin = 0.2
             scene.intervalMax = 0.4
         }
         else if scene.floorSpeed >= 4 && scene.floorSpeed < 6 {
-            scene.intervalMin = 0.5
+            scene.intervalMin = 0.6
             scene.intervalMax = 1
         }
         else if scene.floorSpeed >= 6 && scene.floorSpeed < 8 {
             scene.intervalMin = 0.4
-            scene.intervalMax = 1.05
+            scene.intervalMax = 1
         }
         else if scene.floorSpeed >= 8 {
-            scene.intervalMin = 0.3
-            scene.intervalMax = 1.1
+            scene.intervalMin = 0.2
+            scene.intervalMax = 1
         }
         
         /*--------------------------------------------------------------------------------------*/
@@ -64,6 +65,15 @@ class PlayingState: GKState {
         if scene.score >= 10 {
            addRandomEntity()
         }
+        
+        //add heart every 100m
+        if round(scene.score) % 100 == 0 && round(scene.score) >= 100 {
+            if heartTimer >= 1 {
+                addSpriteToScene(Heart())
+                heartTimer = 0
+            }
+        }
+        heartTimer += scene.deltaTime
         
         /*--------------------------------------------------------------------------------------*/
         
@@ -129,29 +139,25 @@ class PlayingState: GKState {
                 compoundObjects.generateCoinBlock()
                 changeIntervalForLargeObject()
             }
-            else if randomSelector > 0.8 && randomSelector <= 0.95 && scene.score >= 60 {
+            else if randomSelector > 0.8 && randomSelector <= 0.975 && scene.score >= 40 {
                 //Target
                 compoundObjects.generateSpikesWithTarget()
                 changeIntervalForLargeObject()
             }
-            else if randomSelector > 0.8 && randomSelector <= 0.95 && scene.score < 60 {
+            else if randomSelector > 0.8 && randomSelector <= 0.975 && scene.score < 40 {
                 //Coin Block
                 compoundObjects.generateCoinBlock()
                 changeIntervalForLargeObject()
             }
-            else if randomSelector > 0.95 && randomSelector <= 0.975 && scene.score >= 40 {
+            else if randomSelector > 0.975 && scene.score >= 100 {
                 //Undead
                 scene.gameState.enterState(UndeadState)
             }
-            else if randomSelector > 0.9 && randomSelector <= 0.975 && scene.score < 40 {
+            else if randomSelector > 0.975 && scene.score < 100 {
                 //Orc or Spike
                 generateOrcOrSpike()
             }
-            else if randomSelector > 0.975 {
-                //heart
-                addSpriteToScene(Heart())
-            }
-                        
+            
             scene.timer = 0
             scene.randomInterval = CGFloat.random(min: scene.intervalMin, max: scene.intervalMax)
         }
