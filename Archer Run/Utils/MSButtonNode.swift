@@ -43,6 +43,10 @@ class MSButtonNode: SKSpriteNode {
         }
     }
     
+    override init(texture: SKTexture?, color: UIColor, size: CGSize) {
+        super.init(texture: texture, color: color, size: size)
+    }
+    
     /* Support for NSKeyedArchiver (loading objects from SK Scene Editor */
     required init?(coder aDecoder: NSCoder) {
         

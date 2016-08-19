@@ -21,7 +21,7 @@ struct PhysicsCategory {
     static let Heart:       UInt32 = 0b10000000
 }
 
-class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameState: GKStateMachine!
     var gameOverState: GKState!
     var playingState: GKState!
@@ -54,7 +54,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
     var lastRoundedScore: Int = 0
     var lastUpdateTime: CFTimeInterval = 0
     var leaderboardsAreOpen: Bool = false
-    var list: ScrollingList!
     var playedGames: Int = 0
     var randomInterval: CGFloat!
     var score: CGFloat = 0 {
@@ -531,11 +530,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ScrollListDelegate {
             self.loadGameScene()
         }
         shopButton.selectedHandler = {
-            self.list = ScrollingList(size: CGSize(width: self.size.width * 0.9, height: self.size.height * 0.9))
-            self.list.horizontalAlignmentMode = .Left
-            self.list.zPosition = self.gameOverScreen.zPosition + 50
-            self.list.color = UIColor.flatCoffeeDarkColor()
-            self.setupList()
+            self.createShopMenuWindow()
         }
         pauseButton.selectedHandler = {
             let pauseAction = SKAction.runBlock({self.view?.paused = true})
