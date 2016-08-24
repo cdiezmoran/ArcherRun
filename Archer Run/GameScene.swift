@@ -66,6 +66,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             lastRoundedScore = roundedScore
         }
     }
+    var shopIndex: Int = 0
     var soundsAreOn: Bool!
     var timer: CFTimeInterval = 0
     var userDefaults: NSUserDefaults!
@@ -282,7 +283,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addHeart()
         
         showChallengesAtGameStart()
-        
+                
         gameState.enterState(StartingState)
     }
     
@@ -308,7 +309,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if archer.state == .Dead || archer.state == .Running || archer.state == .Hurt { return }
             
             if archer.state == .DoubleJumping || archer.state == .HurtDoubleJump {
-                //archer.removeActionForKey("doubleJump")
                 archer.resetRotation()
             }
             
@@ -334,6 +334,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
             if archer.lives <= 0 {
                 archer.die()
+                archer.resetRotation()
                 if didCompleteChallenge {
                     gameState.enterState(ChallengeCompletedState)
                 }
