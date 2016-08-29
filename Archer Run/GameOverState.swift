@@ -20,6 +20,8 @@ class GameOverState: GKState {
     }
     
     override func didEnterWithPreviousState(previousState: GKState?) {
+        NSNotificationCenter.defaultCenter().postNotificationName("removeAds", object: nil)
+
         let displayGameOverScreen = SKAction(named: "DisplayGameOver")!
         if scene.didCompleteChallenge {
             scene.gameOverScreen.runAction(displayGameOverScreen)
@@ -54,6 +56,7 @@ class GameOverState: GKState {
         scene.highScoreLabel.text = "\(highscore)m"
         scene.totalCoinCountLabel.text = String(totalCoinCount)
         
+        scene.levelProgressBar.xScale = LevelManager.sharedInstance.getLastProgressBarXScale()
         ChallengeManager.sharedInstance.cleanUpOnGameOver()
         
         scene.setChallengeLabels()

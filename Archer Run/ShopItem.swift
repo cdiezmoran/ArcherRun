@@ -47,16 +47,16 @@ class ShopItem {
         
         switch key {
         case "ice":
-            texture = SKTexture(imageNamed: "arrowIce")
+            texture = SKTexture(imageNamed: "shopIceArrow")
             break
         case "fire":
-            texture = SKTexture(imageNamed: "arrowFire")
+            texture = SKTexture(imageNamed: "shopFireArrow")
             break
         case "explosive":
-            texture = SKTexture(imageNamed: "arrowExplosive")
+            texture = SKTexture(imageNamed: "shopExplosiveArrow")
             break
         default:
-            texture = SKTexture(imageNamed: "arrow")
+            texture = SKTexture(imageNamed: "shopArrow")
         }
         
         return texture

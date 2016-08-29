@@ -283,8 +283,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addHeart()
         
         showChallengesAtGameStart()
-                
+        
+        loadAds()
+        
+        //Enter first State
         gameState.enterState(StartingState)
+        
+        //Observer to pause game when ad is clicked
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: #selector(GameScene.pauseGame),
+            name: "pauseGame",
+            object: nil)
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
@@ -333,8 +343,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             hearts.removeLast()
 
             if archer.lives <= 0 {
-                archer.die()
                 archer.resetRotation()
+                archer.die()
                 if didCompleteChallenge {
                     gameState.enterState(ChallengeCompletedState)
                 }
@@ -534,10 +544,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.createShopMenuWindow()
         }
         pauseButton.selectedHandler = {
-            let pauseAction = SKAction.runBlock({self.view?.paused = true})
-            let showPauseScreen = SKAction.runBlock({self.pauseScreen.hidden = false})
-            let sequence = SKAction.sequence([showPauseScreen, pauseAction])
-            self.runAction(sequence)
+            self.pauseGame()
         }
         playButton.selectedHandler = {
             self.view?.paused = false
@@ -550,6 +557,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func loadGameScene() {
+        NSNotificationCenter.defaultCenter().postNotificationName("removeAds", object: nil)
         if let scene = GameScene(fileNamed:"GameScene") {
             let skView = self.view!
             
@@ -584,6 +592,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func pauseGame() {
+        if gameState.currentState is GameOverState || gameState.currentState is ChallengeCompletedState {
+            return
+        }
+        
+        let pauseAction = SKAction.runBlock({self.view?.paused = true})
+        let showPauseScreen = SKAction.runBlock({self.pauseScreen.hidden = false})
+        let sequence = SKAction.sequence([showPauseScreen, pauseAction])
+        runAction(sequence)
+    }
+    
     func setupGroundPhysics() {
         startGroundLarge.physicsBody = SKPhysicsBody(texture: startGroundLarge!.texture!, size: startGroundLarge.size)
         startGroundLarge.physicsBody?.affectedByGravity = false
@@ -615,5 +634,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         invisibleGround.physicsBody?.categoryBitMask = PhysicsCategory.Floor
         invisibleGround.physicsBody?.contactTestBitMask = PhysicsCategory.None
         invisibleGround.physicsBody?.collisionBitMask = PhysicsCategory.Player
+    }
+    
+    func loadAds() {
+        //Call observer
+        NSNotificationCenter.defaultCenter().postNotificationName("loadAds", object: nil)
     }
 }

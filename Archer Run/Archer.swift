@@ -64,7 +64,7 @@ class Archer: SKSpriteNode {
     
     func setupArcher() {
         position.x = 146
-        position.y = 331
+        position.y = 334
         
         createPhysicsBody()
     }
