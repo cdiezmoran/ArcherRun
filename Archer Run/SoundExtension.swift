@@ -44,14 +44,7 @@ extension GameScene {
         }
     }
     
-    func checkMusicAndSoundSettings() {
-        if soundsAreOn! {
-            soundsOff.hidden = true
-        }
-        else {
-            soundsOn.hidden = true
-        }
-        
+    func setMusicAndSoundHandlers() {
         musicOn.selectedHandler = {
             //Turn music off
             self.musicOn.hidden = true
@@ -61,6 +54,7 @@ extension GameScene {
                 music.removeFromParent()
             }
             
+            self.musicIsOn = false
             self.userDefaults.setBool(false, forKey: "musicSettings")
             self.userDefaults.synchronize()
         }
@@ -72,6 +66,7 @@ extension GameScene {
             
             self.playBackgroundMusic()
             
+            self.musicIsOn = true
             self.userDefaults.setBool(true, forKey: "musicSettings")
             self.userDefaults.synchronize()
         }
@@ -81,6 +76,7 @@ extension GameScene {
             self.soundsOn.hidden = true
             self.soundsOff.hidden = false
             
+            self.soundsAreOn = false
             self.userDefaults.setBool(false, forKey: "soundsSettings")
             self.userDefaults.synchronize()
         }
@@ -90,8 +86,29 @@ extension GameScene {
             self.soundsOn.hidden = false
             self.soundsOff.hidden = true
             
+            self.soundsAreOn = true
             self.userDefaults.setBool(true, forKey: "soundsSettings")
             self.userDefaults.synchronize()
+        }
+    }
+    
+    func toggleMusicAndSoundVisibility() {
+        if soundsAreOn! {
+            soundsOff.hidden = true
+            soundsOn.hidden = false
+        }
+        else {
+            soundsOn.hidden = true
+            soundsOff.hidden = false
+        }
+        
+        if musicIsOn! {
+            musicOff.hidden = true
+            musicOn.hidden = false
+        }
+        else {
+            musicOn.hidden = true
+            musicOff.hidden = false
         }
     }
 }

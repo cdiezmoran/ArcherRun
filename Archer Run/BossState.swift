@@ -9,7 +9,7 @@
 import SpriteKit
 import GameplayKit
 
-class UndeadState: GKState {
+class BossState: GKState {
     
     unowned let scene: GameScene
     

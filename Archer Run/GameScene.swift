@@ -24,10 +24,11 @@ struct PhysicsCategory {
 class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameState: GKStateMachine!
     var gameOverState: GKState!
+    var pauseState: GKState!
     var playingState: GKState!
     var startingState: GKState!
     var tutorialState: GKState!
-    var undeadState: GKState!
+    var bossState: GKState!
     var challengeCompletedState: GKState!
     
     var arrows: [Arrow] = []
@@ -54,6 +55,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var lastRoundedScore: Int = 0
     var lastUpdateTime: CFTimeInterval = 0
     var leaderboardsAreOpen: Bool = false
+    var musicIsOn: Bool!
     var playedGames: Int = 0
     var randomInterval: CGFloat!
     var score: CGFloat = 0 {
@@ -230,17 +232,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         coinRewardLabel.hidden = true
         pauseScreen.hidden = true
+        soundsOn.hidden = true
+        soundsOff.hidden = true
+        musicOn.hidden = true
+        musicOff.hidden = true
         
         setupGroundPhysics()
         
         gameOverState = GameOverState(scene: self)
+        pauseState = PauseState(scene: self)
         playingState = PlayingState(scene: self)
         startingState = StartingState(scene: self)
         tutorialState = TutorialState(scene: self)
-        undeadState = UndeadState(scene: self)
+        bossState = BossState(scene: self)
         challengeCompletedState = ChallengeCompletedState(scene: self)
         
-        gameState = GKStateMachine(states: [startingState, playingState, gameOverState, tutorialState, undeadState, challengeCompletedState])
+        gameState = GKStateMachine(states: [startingState, pauseState, playingState, gameOverState, tutorialState, bossState, challengeCompletedState])
         
         randomInterval = CGFloat.random(min: 0.3, max: 1)
         
@@ -262,17 +269,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         soundsAreOn = userDefaults.boolForKey("soundsSettings")
-        let musicIsOn = userDefaults.boolForKey("musicSettings")
+        musicIsOn = userDefaults.boolForKey("musicSettings")
         
-        if musicIsOn {
-            musicOff.hidden = true
+        if musicIsOn! {
             playBackgroundMusic()
         }
-        else {
-            musicOn.hidden = true
-        }
         
-        checkMusicAndSoundSettings()
+        setMusicAndSoundHandlers()
         
         setChallengeLabels()
         setProgressLabels()
@@ -494,6 +497,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
    
     override func update(currentTime: NSTimeInterval) {
+        if gameState.currentState is PauseState {
+            return
+        }
+        
         /* Update states with deltaTime */
         deltaTime = currentTime - lastUpdateTime
         lastUpdateTime = currentTime
@@ -547,8 +554,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.pauseGame()
         }
         playButton.selectedHandler = {
-            self.view?.paused = false
+            self.gameState.enterState(PlayingState)
+            
             self.pauseScreen.hidden = true
+            
+            self.musicOn.hidden = true
+            self.musicOff.hidden = true
+            self.soundsOn.hidden = true
+            self.soundsOff.hidden = true
         }
         retryButton.selectedHandler = {
             self.loadGameScene()
@@ -593,40 +606,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func pauseGame() {
-        if gameState.currentState is GameOverState || gameState.currentState is ChallengeCompletedState {
-            return
-        }
-        
-        let pauseAction = SKAction.runBlock({self.view?.paused = true})
-        let showPauseScreen = SKAction.runBlock({self.pauseScreen.hidden = false})
-        let sequence = SKAction.sequence([showPauseScreen, pauseAction])
-        runAction(sequence)
+        gameState.enterState(PauseState)
     }
     
     func setupGroundPhysics() {
-        startGroundLarge.physicsBody = SKPhysicsBody(texture: startGroundLarge!.texture!, size: startGroundLarge.size)
-        startGroundLarge.physicsBody?.affectedByGravity = false
-        startGroundLarge.physicsBody?.dynamic = false
-        startGroundLarge.physicsBody?.restitution = 0
-        startGroundLarge.physicsBody?.categoryBitMask = PhysicsCategory.Floor
-        startGroundLarge.physicsBody?.contactTestBitMask = PhysicsCategory.Player
-        startGroundLarge.physicsBody?.collisionBitMask = PhysicsCategory.Player
+        startGroundLarge.physicsBody = getFloorPhysicsBody(texture: startGroundLarge!.texture!, size: startGroundLarge.size)
         
-        levelHolder1.physicsBody = SKPhysicsBody(texture: levelHolder1!.texture!, size: levelHolder1.size)
-        levelHolder1.physicsBody?.affectedByGravity = false
-        levelHolder1.physicsBody?.dynamic = false
-        levelHolder1.physicsBody?.restitution = 0
-        levelHolder1.physicsBody?.categoryBitMask = PhysicsCategory.Floor
-        levelHolder1.physicsBody?.contactTestBitMask = PhysicsCategory.Player
-        levelHolder1.physicsBody?.collisionBitMask = PhysicsCategory.Player
+        levelHolder1.physicsBody = getFloorPhysicsBody(texture: levelHolder1!.texture!, size: levelHolder1.size)
         
-        levelHolder2.physicsBody = SKPhysicsBody(texture: levelHolder2!.texture!, size: levelHolder2.size)
-        levelHolder2.physicsBody?.affectedByGravity = false
-        levelHolder2.physicsBody?.dynamic = false
-        levelHolder2.physicsBody?.restitution = 0
-        levelHolder2.physicsBody?.categoryBitMask = PhysicsCategory.Floor
-        levelHolder2.physicsBody?.contactTestBitMask = PhysicsCategory.Player
-        levelHolder2.physicsBody?.collisionBitMask = PhysicsCategory.Player
+        levelHolder2.physicsBody = getFloorPhysicsBody(texture: levelHolder2!.texture!, size: levelHolder2.size)
         
         invisibleGround.physicsBody = SKPhysicsBody(rectangleOfSize: invisibleGround.size)
         invisibleGround.physicsBody?.affectedByGravity = false
@@ -634,6 +622,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         invisibleGround.physicsBody?.categoryBitMask = PhysicsCategory.Floor
         invisibleGround.physicsBody?.contactTestBitMask = PhysicsCategory.None
         invisibleGround.physicsBody?.collisionBitMask = PhysicsCategory.Player
+    }
+    
+    func getFloorPhysicsBody(texture texture: SKTexture, size: CGSize) -> SKPhysicsBody {
+        let body = SKPhysicsBody(texture: texture, size: size)
+        
+        body.affectedByGravity = false
+        body.dynamic = false
+        body.restitution = 0
+        body.categoryBitMask = PhysicsCategory.Floor
+        body.contactTestBitMask = PhysicsCategory.Player
+        body.collisionBitMask = PhysicsCategory.Player
+        
+        return body
     }
     
     func loadAds() {

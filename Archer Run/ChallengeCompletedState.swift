@@ -28,20 +28,8 @@ class ChallengeCompletedState: GKState {
         let completedChallenges = ChallengeManager.sharedInstance.checkForCompletedChallenges()
         var actions = [SKAction]()
         
-        for (key, challenge) in completedChallenges {
-            switch key {
-            case "firstChallenge":
-                actions += challengeCompletedSequence(challenge)
-                break
-            case "secondChallenge":
-                actions += challengeCompletedSequence(challenge)
-                break
-            case "thirdChallenge":
-                actions += challengeCompletedSequence(challenge)
-                break
-            default:
-                break
-            }
+        for (_, challenge) in completedChallenges {
+            actions += challengeCompletedSequence(challenge)
         }
         
         let goToGameOver = SKAction.runBlock({
@@ -99,10 +87,6 @@ class ChallengeCompletedState: GKState {
         let giveExp = SKAction.runBlock({
             LevelManager.sharedInstance.gainExp()
         })
-        //Update progress bar w/ last progress
-        /*let updateLastProgressBar = SKAction.runBlock({
-            self.scene.levelProgressBar.xScale = LevelManager.sharedInstance.getLastProgressBarXScale()
-        })*/
         
         //Update progress bar
         let updateProgressBar = SKAction.customActionWithDuration(0.5, actionBlock: { (node: SKNode!, elapsedTime: CGFloat) in

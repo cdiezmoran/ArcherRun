@@ -196,6 +196,8 @@
 		A01F1E191D6E74500005ED73 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A01F1E181D6E74500005ED73 /* QuartzCore.framework */; };
 		A01F1E1B1D6E745F0005ED73 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A01F1E1A1D6E745F0005ED73 /* StoreKit.framework */; };
 		A01F1E1D1D6E746C0005ED73 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A01F1E1C1D6E746C0005ED73 /* SystemConfiguration.framework */; };
+		A01F1E1F1D74FD460005ED73 /* CircularProgressNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01F1E1E1D74FD460005ED73 /* CircularProgressNode.swift */; };
+		A01F1E211D7527D60005ED73 /* PauseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01F1E201D7527D60005ED73 /* PauseState.swift */; };
 		A020545B1D4FB29E005C7C13 /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = A020545A1D4FB29E005C7C13 /* Explosion.sks */; };
 		A020545D1D4FFE73005C7C13 /* Heart.swift in Sources */ = {isa = PBXBuildFile; fileRef = A020545C1D4FFE73005C7C13 /* Heart.swift */; };
 		A020545F1D5001A0005C7C13 /* HeartExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = A020545E1D5001A0005C7C13 /* HeartExplosion.sks */; };
@@ -204,7 +206,7 @@
 		A023FDD41D5AD686001F3DC9 /* ChameleonPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = A023FDD31D5AD686001F3DC9 /* ChameleonPalette.swift */; };
 		A024BFFC1D3EDDFA00164646 /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = A024BFFB1D3EDDFA00164646 /* Target.swift */; };
 		A029AB4E1D52AB8300A4F970 /* snowflake.png in Resources */ = {isa = PBXBuildFile; fileRef = A029AB4D1D52AB8300A4F970 /* snowflake.png */; };
-		A029AB501D52B13F00A4F970 /* UndeadState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A029AB4F1D52B13F00A4F970 /* UndeadState.swift */; };
+		A029AB501D52B13F00A4F970 /* BossState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A029AB4F1D52B13F00A4F970 /* BossState.swift */; };
 		A02DD8591D5A3FFA005C6942 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A02DD8561D5A3FFA005C6942 /* FBSDKLoginKit.framework */; };
 		A02DD85A1D5A3FFA005C6942 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A02DD8571D5A3FFA005C6942 /* FBSDKShareKit.framework */; };
 		A02DD85C1D5A4063005C6942 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A02DD85B1D5A4063005C6942 /* Bolts.framework */; };
@@ -672,6 +674,8 @@
 		A01F1E181D6E74500005ED73 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A01F1E1A1D6E745F0005ED73 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		A01F1E1C1D6E746C0005ED73 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		A01F1E1E1D74FD460005ED73 /* CircularProgressNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProgressNode.swift; sourceTree = "<group>"; };
+		A01F1E201D7527D60005ED73 /* PauseState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseState.swift; sourceTree = "<group>"; };
 		A020545A1D4FB29E005C7C13 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
 		A020545C1D4FFE73005C7C13 /* Heart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Heart.swift; sourceTree = "<group>"; };
 		A020545E1D5001A0005C7C13 /* HeartExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = HeartExplosion.sks; sourceTree = "<group>"; };
@@ -680,7 +684,7 @@
 		A023FDD31D5AD686001F3DC9 /* ChameleonPalette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChameleonPalette.swift; path = ../ChameleonPalette.swift; sourceTree = "<group>"; };
 		A024BFFB1D3EDDFA00164646 /* Target.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Target.swift; sourceTree = "<group>"; };
 		A029AB4D1D52AB8300A4F970 /* snowflake.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = snowflake.png; sourceTree = "<group>"; };
-		A029AB4F1D52B13F00A4F970 /* UndeadState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UndeadState.swift; sourceTree = "<group>"; };
+		A029AB4F1D52B13F00A4F970 /* BossState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BossState.swift; sourceTree = "<group>"; };
 		A02DD8561D5A3FFA005C6942 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		A02DD8571D5A3FFA005C6942 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		A02DD85B1D5A4063005C6942 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -1378,8 +1382,9 @@
 				A0C813C41D41908D00AF4581 /* TutorialState.swift */,
 				A0E4CD861D26EAC20091FD5F /* PlayingState.swift */,
 				A0E4CD881D26EACF0091FD5F /* GameOverState.swift */,
-				A029AB4F1D52B13F00A4F970 /* UndeadState.swift */,
+				A029AB4F1D52B13F00A4F970 /* BossState.swift */,
 				A040A5411D5CEA6B00F7E2F1 /* ChallengeCompletedState.swift */,
+				A01F1E201D7527D60005ED73 /* PauseState.swift */,
 			);
 			name = States;
 			sourceTree = "<group>";
@@ -1545,6 +1550,7 @@
 			isa = PBXGroup;
 			children = (
 				A023FDD31D5AD686001F3DC9 /* ChameleonPalette.swift */,
+				A01F1E1E1D74FD460005ED73 /* CircularProgressNode.swift */,
 				A0D90D051D668A0F00195F10 /* CloseButton.swift */,
 				A061FE331D6CADD00040261A /* DictionarySort.swift */,
 				A0EDE2011D23432F008B5371 /* MSButtonNode.swift */,
@@ -1795,7 +1801,7 @@
 				A01F1DD71D6E58E40005ED73 /* MPNativeAdRenderingImageLoader.m in Sources */,
 				A01F1DD81D6E58E40005ED73 /* MPNativeAdRequest.m in Sources */,
 				A01F1D981D6E58E40005ED73 /* UIView+MPAdditions.m in Sources */,
-				A029AB501D52B13F00A4F970 /* UndeadState.swift in Sources */,
+				A029AB501D52B13F00A4F970 /* BossState.swift in Sources */,
 				A0B4866D1D4691E8004F8EB8 /* Challenge.swift in Sources */,
 				A01F1D7A1D6E58E40005ED73 /* MPHTMLInterstitialViewController.m in Sources */,
 				A01F1D911D6E58E40005ED73 /* MRProperty.m in Sources */,
@@ -1904,6 +1910,7 @@
 				A01F1DC61D6E58E40005ED73 /* MPNativeAdSourceQueue.m in Sources */,
 				A01F1DB51D6E58E40005ED73 /* MPVASTTrackingEvent.m in Sources */,
 				A0EDE2111D23432F008B5371 /* MSReferenceNode.swift in Sources */,
+				A01F1E1F1D74FD460005ED73 /* CircularProgressNode.swift in Sources */,
 				A01F1D9E1D6E58E40005ED73 /* MPIdentityProvider.m in Sources */,
 				A01F1DEF1D6E58E40005ED73 /* MOPUBNativeVideoAdRendererSettings.m in Sources */,
 				A01F1D761D6E58E40005ED73 /* MPAdWebView.m in Sources */,
@@ -1939,6 +1946,7 @@
 				A0EDE21D1D23432F008B5371 /* Vector3.swift in Sources */,
 				A01F1D801D6E58E40005ED73 /* MPInstanceProvider.m in Sources */,
 				A01F1DE61D6E58E40005ED73 /* MOPUBNativeVideoAdAdapter.m in Sources */,
+				A01F1E211D7527D60005ED73 /* PauseState.swift in Sources */,
 				A01F1DE71D6E58E40005ED73 /* MOPUBNativeVideoAdConfigValues.m in Sources */,
 				A01F1D861D6E58E40005ED73 /* MRBridge.m in Sources */,
 				A01F1D751D6E58E40005ED73 /* MPRetryingHTTPOperation.m in Sources */,

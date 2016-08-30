@@ -172,8 +172,11 @@ extension GameScene {
                 self.userDefaults.setObject(itemData, forKey: defaultsKey)
                 self.userDefaults.synchronize()
                 
-                availableCoinsLabel.text = String(totalCoinCount)
-                self.totalCoinCountLabel.text = String(totalCoinCount)
+                let totalCoinString = String(totalCoinCount)
+                availableCoinsLabel.text = totalCoinString
+                self.totalCoinCountLabel.text = totalCoinString
+                menuWindowCoinLabel.text = totalCoinString
+                
                 priceLabel.text = ""
                 manageButton.texture = SKTexture(imageNamed: "selectButton")
                 

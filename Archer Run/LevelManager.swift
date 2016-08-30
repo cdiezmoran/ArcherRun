@@ -79,7 +79,7 @@ class LevelManager {
         
         return progressBarXScale
     }
-    
+        
     //Find fibonacci number for a given nth number
     func findExpRequired (nthNumber : Double) -> Int {
         let phiOne : Double = (1.0 + sqrt(5.0)) / 2.0

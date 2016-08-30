@@ -151,7 +151,7 @@ class PlayingState: GKState {
             }
             else if randomSelector > 0.975 && scene.score >= 100 {
                 //Undead
-                scene.gameState.enterState(UndeadState)
+                scene.gameState.enterState(BossState)
             }
             else if randomSelector > 0.975 && scene.score < 100 {
                 //Orc or Spike
