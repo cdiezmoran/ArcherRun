@@ -165,4 +165,14 @@ class Archer: SKSpriteNode {
         let resetRotation = SKAction.rotateToAngle(6.2830, duration: 0)
         runAction(resetRotation)
     }
+    
+    func doRunAnimation() {
+        runAction(runAnimation, withKey: "runForever")
+    }
+    
+    func revive() {
+        lives += 1
+        physicsBody?.categoryBitMask = PhysicsCategory.Player
+        physicsBody?.contactTestBitMask = PhysicsCategory.Obstacle | PhysicsCategory.Coin | PhysicsCategory.IceBlock | PhysicsCategory.Heart
+    }
 }

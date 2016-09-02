@@ -22,6 +22,10 @@ class GameOverState: GKState {
     override func didEnterWithPreviousState(previousState: GKState?) {
         NSNotificationCenter.defaultCenter().postNotificationName("removeAds", object: nil)
         
+        if scene.playedGames % 5 == 0 && !scene.didGetExtraChance {
+            NSNotificationCenter.defaultCenter().postNotificationName("showInterstitial", object: nil)
+        }
+
         moveAndShowSoundButtons()
         
         displayGameOverScreen()

@@ -30,12 +30,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var tutorialState: GKState!
     var bossState: GKState!
     var challengeCompletedState: GKState!
+    var extraChanceState: GKState!
     
     var arrows: [Arrow] = []
     var arrowTimer: CFTimeInterval = 0.4
     var availableArrows = [String:Bool]()
     var backgroundMusic: SKAudioNode!
     var didCompleteChallenge: Bool = false
+    var didGetExtraChance: Bool = false
     var challengeIcons = [SKSpriteNode]()
     var coinCount: Int = 0 {
         didSet {
@@ -246,8 +248,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         tutorialState = TutorialState(scene: self)
         bossState = BossState(scene: self)
         challengeCompletedState = ChallengeCompletedState(scene: self)
+        extraChanceState = ExtraChanceState(scene: self)
         
-        gameState = GKStateMachine(states: [startingState, pauseState, playingState, gameOverState, tutorialState, bossState, challengeCompletedState])
+        gameState = GKStateMachine(states: [startingState, pauseState, playingState, gameOverState, tutorialState, bossState, challengeCompletedState, extraChanceState])
         
         randomInterval = CGFloat.random(min: 0.3, max: 1)
         
@@ -348,11 +351,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if archer.lives <= 0 {
                 archer.resetRotation()
                 archer.die()
-                if didCompleteChallenge {
-                    gameState.enterState(ChallengeCompletedState)
+                //Go to ExtraChanceState
+                if !didGetExtraChance {
+                    gameState.enterState(ExtraChanceState)
                 }
                 else {
-                    gameState.enterState(GameOverState)
+                    if didCompleteChallenge {
+                        gameState.enterState(ChallengeCompletedState)
+                    }
+                    else {
+                        gameState.enterState(GameOverState)
+                    }
                 }
             }
             else {
@@ -451,7 +460,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
        /* Called when a touch begins */
-        if gameState.currentState is GameOverState || gameState.currentState is StartingState || gameState.currentState is ChallengeCompletedState { return }
+        if gameState.currentState is GameOverState || gameState.currentState is StartingState || gameState.currentState is ChallengeCompletedState || gameState.currentState is ExtraChanceState { return }
         
         let touch = touches.first
         let location = touch?.locationInNode(self)
@@ -640,5 +649,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func loadAds() {
         //Call observer
         NSNotificationCenter.defaultCenter().postNotificationName("loadAds", object: nil)
+    }
+    
+    func clearObstacles() {
+        removeChildrenOfNode(obstacleScrollLayer)
+        removeChildrenOfNode(enemyScrollLayer)
+        removeChildrenOfNode(enemyScrollLayerFast)
+        removeChildrenOfNode(enemyScrollLayerSlow)
+    }
+    
+    func removeChildrenOfNode(node: SKNode) {
+        for child in node.children {
+            child.removeFromParent()
+        }
     }
 }

@@ -17,9 +17,7 @@ class ChallengeCompletedState: GKState {
         self.scene = scene
     }
     
-    override func didEnterWithPreviousState(previousState: GKState?) {
-        NSNotificationCenter.defaultCenter().postNotificationName("removeAds", object: nil)
-        
+    override func didEnterWithPreviousState(previousState: GKState?) {        
         scene.challengeCompletedScreen.zPosition = 0
         scene.levelInfoHolder.zPosition = 1
         

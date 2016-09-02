@@ -15,7 +15,7 @@ extension GameScene {
         gameOverScreen.addChild(window)
         window.zPosition = 50
         
-        let alphaBlack = UIColor.blackColor().colorWithAlphaComponent(0.75)
+        let alphaBlack = UIColor.blackColor().colorWithAlphaComponent(0.65)
         let bg = SKSpriteNode(color: alphaBlack, size: frame.size)
         window.addChild(bg)
         bg.zPosition = -5

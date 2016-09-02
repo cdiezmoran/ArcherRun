@@ -30,6 +30,6 @@ class PauseState: GKState {
     
     override func willExitWithNextState(nextState: GKState) {
         //resume animations
-        scene.archer.run()
+        scene.archer.doRunAnimation()
     }
 }
