@@ -144,6 +144,7 @@ class GameViewController: UIViewController, MPAdViewDelegate, GADRewardBasedVide
     
     func rewardBasedVideoAd(rewardBasedVideoAd: GADRewardBasedVideoAd!, didRewardUserWithReward reward: GADAdReward!) {
         //Give reward
+        print("REWARD WORKED!")
         NSNotificationCenter.defaultCenter().postNotificationName("giveExtraChance", object: nil)
     }
     
@@ -155,7 +156,8 @@ class GameViewController: UIViewController, MPAdViewDelegate, GADRewardBasedVide
         print("REWARD AD FAILED WITH ERROR: \(error.description)")
     }
     
-    func rewardBasedVideoAdDidClose(rewardBasedVideoAd: GADRewardBasedVideoAd!) {
+    /*func rewardBasedVideoAdDidClose(rewardBasedVideoAd: GADRewardBasedVideoAd!) {
+        print("GAVE REWARD BY CLOSING")
         NSNotificationCenter.defaultCenter().postNotificationName("giveExtraChance", object: nil)
-    }
+    }*/
 }
