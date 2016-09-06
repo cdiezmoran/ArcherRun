@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "iceBlockAlt.png",
+      "filename" : "iceBlockAlt@1x.png",
       "scale" : "1x"
     },
     {

@@ -35,6 +35,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var arrows: [Arrow] = []
     var arrowTimer: CFTimeInterval = 0.4
     var availableArrows = [String:Bool]()
+    var availableCharacters = [String: Bool]()
     var backgroundMusic: SKAudioNode!
     var didCompleteChallenge: Bool = false
     var didGetExtraChance: Bool = false
@@ -258,18 +259,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         userDefaults = NSUserDefaults.standardUserDefaults()
         playedGames = userDefaults.integerForKey("playedGames")
-        
-        if let dict = userDefaults.dictionaryForKey("availableArrows") {
-            availableArrows = dict as! [String:Bool]
-        }
-        else {
-            availableArrows["regular"] = true
-            availableArrows["ice"] = false
-            availableArrows["fire"] = false
-            availableArrows["explosive"] = false
-            userDefaults.setObject(availableArrows, forKey: "availableArrows")
-            userDefaults.synchronize()
-        }
         
         soundsAreOn = userDefaults.boolForKey("soundsSettings")
         musicIsOn = userDefaults.boolForKey("musicSettings")

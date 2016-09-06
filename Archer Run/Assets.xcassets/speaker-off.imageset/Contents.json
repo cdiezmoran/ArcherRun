@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "speaker-off.png",
+      "filename" : "speaker-off@1x.png",
       "scale" : "1x"
     },
     {

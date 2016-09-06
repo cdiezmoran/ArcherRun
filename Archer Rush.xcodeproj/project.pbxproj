@@ -217,6 +217,8 @@
 		A040A5421D5CEA6B00F7E2F1 /* ChallengeCompletedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A040A5411D5CEA6B00F7E2F1 /* ChallengeCompletedState.swift */; };
 		A046D67B1D25B8A7007608A1 /* Clouds.sks in Resources */ = {isa = PBXBuildFile; fileRef = A046D6791D25B8A7007608A1 /* Clouds.sks */; };
 		A046D67E1D25B98C007608A1 /* cloud2.png in Resources */ = {isa = PBXBuildFile; fileRef = A046D67D1D25B98C007608A1 /* cloud2.png */; };
+		A04B25D81D7E4289008C4B6F /* assets.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A04B25D71D7E4289008C4B6F /* assets.atlas */; };
+		A04B25DE1D7E4F11008C4B6F /* Angel.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A04B25DD1D7E4F11008C4B6F /* Angel.atlas */; };
 		A04F9C161D4E886B0031A494 /* IceExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = A04F9C151D4E886B0031A494 /* IceExplosion.sks */; };
 		A04F9C181D4E8FAD0031A494 /* Fire.sks in Resources */ = {isa = PBXBuildFile; fileRef = A04F9C171D4E8FAD0031A494 /* Fire.sks */; };
 		A05A5E7C1D6276ED00AFE1BA /* ChallengesExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05A5E7B1D6276ED00AFE1BA /* ChallengesExtension.swift */; };
@@ -244,6 +246,7 @@
 		A0B486691D468E74004F8EB8 /* ChallengeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B486681D468E74004F8EB8 /* ChallengeManager.swift */; };
 		A0B4866D1D4691E8004F8EB8 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B4866C1D4691E8004F8EB8 /* Challenge.swift */; };
 		A0C813C51D41908D00AF4581 /* TutorialState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C813C41D41908D00AF4581 /* TutorialState.swift */; };
+		A0D08C9A1D7A9A6F009052C5 /* libVungleAdapter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0D08C991D7A9A6F009052C5 /* libVungleAdapter.a */; };
 		A0D90D061D668A0F00195F10 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D90D051D668A0F00195F10 /* CloseButton.swift */; };
 		A0DE12AB1D78E8E80086D41F /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0DE12AA1D78E8E80086D41F /* GoogleMobileAds.framework */; };
 		A0DE12AD1D78EA1E0086D41F /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0DE12AC1D78EA1E0086D41F /* AdSupport.framework */; };
@@ -288,7 +291,6 @@
 		A0F42DDD1D4DA7590081D2BD /* FireTrail.sks in Resources */ = {isa = PBXBuildFile; fileRef = A0F42DDB1D4DA7590081D2BD /* FireTrail.sks */; };
 		A0F42DDE1D4DA7590081D2BD /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F42DDC1D4DA7590081D2BD /* spark.png */; };
 		A0F42DE41D4DA9EB0081D2BD /* DynamiteTrail.sks in Resources */ = {isa = PBXBuildFile; fileRef = A0F42DE31D4DA9EB0081D2BD /* DynamiteTrail.sks */; };
-		A0F8AEFA1D79F9D40034DBC6 /* libVungleAdapter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F8AEF91D79F9D40034DBC6 /* libVungleAdapter.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -703,6 +705,8 @@
 		A040A5411D5CEA6B00F7E2F1 /* ChallengeCompletedState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengeCompletedState.swift; sourceTree = "<group>"; };
 		A046D6791D25B8A7007608A1 /* Clouds.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Clouds.sks; sourceTree = "<group>"; };
 		A046D67D1D25B98C007608A1 /* cloud2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud2.png; sourceTree = "<group>"; };
+		A04B25D71D7E4289008C4B6F /* assets.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = assets.atlas; sourceTree = "<group>"; };
+		A04B25DD1D7E4F11008C4B6F /* Angel.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Angel.atlas; sourceTree = "<group>"; };
 		A04F9C151D4E886B0031A494 /* IceExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = IceExplosion.sks; sourceTree = "<group>"; };
 		A04F9C171D4E8FAD0031A494 /* Fire.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Fire.sks; sourceTree = "<group>"; };
 		A05A5E7B1D6276ED00AFE1BA /* ChallengesExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengesExtension.swift; sourceTree = "<group>"; };
@@ -730,6 +734,7 @@
 		A0B486681D468E74004F8EB8 /* ChallengeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengeManager.swift; sourceTree = "<group>"; };
 		A0B4866C1D4691E8004F8EB8 /* Challenge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Challenge.swift; sourceTree = "<group>"; };
 		A0C813C41D41908D00AF4581 /* TutorialState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialState.swift; sourceTree = "<group>"; };
+		A0D08C991D7A9A6F009052C5 /* libVungleAdapter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libVungleAdapter.a; sourceTree = "<group>"; };
 		A0D90D051D668A0F00195F10 /* CloseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		A0DE12AA1D78E8E80086D41F /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
 		A0DE12AC1D78EA1E0086D41F /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -780,7 +785,6 @@
 		A0F42DDB1D4DA7590081D2BD /* FireTrail.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = FireTrail.sks; sourceTree = "<group>"; };
 		A0F42DDC1D4DA7590081D2BD /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		A0F42DE31D4DA9EB0081D2BD /* DynamiteTrail.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = DynamiteTrail.sks; sourceTree = "<group>"; };
-		A0F8AEF91D79F9D40034DBC6 /* libVungleAdapter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libVungleAdapter.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -802,7 +806,7 @@
 				A01F1E101D6E73C40005ED73 /* EventKit.framework in Frameworks */,
 				A01F1E0E1D6E73B60005ED73 /* CoreLocation.framework in Frameworks */,
 				A01F1E0C1D6E737C0005ED73 /* CoreGraphics.framework in Frameworks */,
-				A0F8AEFA1D79F9D40034DBC6 /* libVungleAdapter.a in Frameworks */,
+				A0D08C9A1D7A9A6F009052C5 /* libVungleAdapter.a in Frameworks */,
 				A02DD8591D5A3FFA005C6942 /* FBSDKLoginKit.framework in Frameworks */,
 				A06E61661D66A0D000AF6C69 /* FBSDKCoreKit.framework in Frameworks */,
 				A02DD85A1D5A3FFA005C6942 /* FBSDKShareKit.framework in Frameworks */,
@@ -1441,7 +1445,7 @@
 		A02DD8481D5A3E6F005C6942 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A0F8AEF91D79F9D40034DBC6 /* libVungleAdapter.a */,
+				A0D08C991D7A9A6F009052C5 /* libVungleAdapter.a */,
 				A0DE12AC1D78EA1E0086D41F /* AdSupport.framework */,
 				A0DE12AE1D78EA260086D41F /* AudioToolbox.framework */,
 				A0DE12B01D78EA380086D41F /* AVFoundation.framework */,
@@ -1551,8 +1555,10 @@
 				A024BFF81D3EC99A00164646 /* States */,
 				A0EDE2001D23432F008B5371 /* Utils */,
 				A0EDE1D51D233F4A008B5371 /* Assets.xcassets */,
+				A04B25D71D7E4289008C4B6F /* assets.atlas */,
 				A08ED7AA1D543946002ED820 /* Undead.atlas */,
 				A0A2660D1D36EE1900054ECE /* Orc.atlas */,
+				A04B25DD1D7E4F11008C4B6F /* Angel.atlas */,
 				A0A266071D36C09200054ECE /* Archer.atlas */,
 			);
 			name = "Archer Rush";
@@ -1716,6 +1722,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A029AB4E1D52AB8300A4F970 /* snowflake.png in Resources */,
+				A04B25D81D7E4289008C4B6F /* assets.atlas in Resources */,
 				A04F9C181D4E8FAD0031A494 /* Fire.sks in Resources */,
 				A0DF62F01D3D97E4005926A5 /* spark2.png in Resources */,
 				A08ED7B91D549CD1002ED820 /* arrow-hitting.mp3 in Resources */,
@@ -1755,6 +1762,7 @@
 				A01F1DF61D6E58E40005ED73 /* MPDAAIcon.png in Resources */,
 				A01F1DF91D6E58E40005ED73 /* MPMutedBtn.png in Resources */,
 				A01F1E001D6E58E40005ED73 /* MPUnmutedBtn@2x.png in Resources */,
+				A04B25DE1D7E4F11008C4B6F /* Angel.atlas in Resources */,
 				A0EDE1D61D233F4A008B5371 /* Assets.xcassets in Resources */,
 				A0DF62ED1D3D89CC005926A5 /* CoinGrab.sks in Resources */,
 				A0F42DE41D4DA9EB0081D2BD /* DynamiteTrail.sks in Resources */,
@@ -2145,25 +2153,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SRCROOT)/**",
-					"$(PROJECT_DIR)/Archer",
-					Run/MoPubSDK/AdNetworkSupport/GoogleAdMob/SDK,
-					"$(PROJECT_DIR)/Archer",
-					Run/MoPubSDK/AdNetworkSupport/Millennial/SDK,
-					"$(PROJECT_DIR)/MoPubSDK/AdNetworkSupport/GoogleAdMob/SDK",
-					"$(PROJECT_DIR)/MoPubSDK/AdNetworkSupport/Millennial/SDK",
-					"$(PROJECT_DIR)/Archer",
-					Run,
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/**";
 				INFOPLIST_FILE = "Archer Run/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Archer",
-					Run,
-				);
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/\"Archer Run\"";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.Rush-Archer";
 				PRODUCT_NAME = "Archer Rush";
 				PROVISIONING_PROFILE = "";
@@ -2178,25 +2173,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SRCROOT)/**",
-					"$(PROJECT_DIR)/Archer",
-					Run/MoPubSDK/AdNetworkSupport/GoogleAdMob/SDK,
-					"$(PROJECT_DIR)/Archer",
-					Run/MoPubSDK/AdNetworkSupport/Millennial/SDK,
-					"$(PROJECT_DIR)/MoPubSDK/AdNetworkSupport/GoogleAdMob/SDK",
-					"$(PROJECT_DIR)/MoPubSDK/AdNetworkSupport/Millennial/SDK",
-					"$(PROJECT_DIR)/Archer",
-					Run,
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/**";
 				INFOPLIST_FILE = "Archer Run/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Archer",
-					Run,
-				);
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/\"Archer Run\"";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cdiez.Rush-Archer";
 				PRODUCT_NAME = "Archer Rush";
 				PROVISIONING_PROFILE = "";

@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "item-holder.png",
+      "filename" : "item-holder@1x.png",
       "scale" : "1x"
     },
     {

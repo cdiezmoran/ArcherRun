@@ -109,17 +109,4 @@ class Arrow: SKSpriteNode {
         particles.advanceSimulationTime(time)
         addChild(particles)
     }
-    
-    static func setEquippedTypeFromRawValue(rawValue: String) {
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        userDefaults.setObject(rawValue, forKey: "arrowRawValue")
-        userDefaults.synchronize()
-    }
-    
-    static func isEquipped(rawValue: String) -> Bool {
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        let arrowRaw = userDefaults.stringForKey("arrowRawValue")!
-        
-        return arrowRaw == rawValue
-    }
 }

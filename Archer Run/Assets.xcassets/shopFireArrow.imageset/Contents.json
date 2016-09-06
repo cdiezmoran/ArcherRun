@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "shopFireArrow.png",
+      "filename" : "shopFireArrow@1x.png",
       "scale" : "1x"
     },
     {

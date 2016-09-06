@@ -12,6 +12,11 @@ enum EntityState {
     case None, Jumping, Running, Dead, DoubleJumping, Hurt, HurtJump, HurtDoubleJump
 }
 
+enum ArcherType: String {
+    case Archer = "archer"
+    case Angel = "angel"
+}
+
 class Archer: SKSpriteNode {
     
     var deadAnimation: SKAction!
@@ -21,8 +26,20 @@ class Archer: SKSpriteNode {
     var runAnimationOnce: SKAction!
     var shootAnimation: SKAction!
     
+    var runName: String = "run-"
+    var runCount: Int = 14
+    var jumpName: String = "jump-"
+    var jumpCount: Int = 8
+    var deadName: String = "dead-"
+    var deadCount: Int = 6
+    var shootName: String = "shoot_straight-"
+    var shootCount: Int = 5
+    var hurtName: String = "hurt-"
+    var hurtCount: Int = 3
+    
     var lives: Int = 2
     var state: EntityState = .None
+    var type: ArcherType = .Archer
     
     init() {
         let defaulTexture = SKTexture(imageNamed: "idle-1")
@@ -30,29 +47,31 @@ class Archer: SKSpriteNode {
         
     /*--------------------------------------SETUP ARCHER------------------------------------------------*/
         setupArcher()
+        getArcherType()
+        getValuesForAnimations()
         
     /*--------------------------------------RUN ANIMATION-----------------------------------------------*/
         var textures = [SKTexture]()
-        textures = getTextures("run-", total: 14)
+        textures = getTextures(runName, total: runCount)
         
         runAnimationOnce = SKAction.animateWithTextures(textures, timePerFrame: 0.05, resize: true, restore: false)
         
         runAnimation = SKAction.repeatActionForever(runAnimationOnce)
         
     /*-------------------------------------JUMP ANIMATION-----------------------------------------------*/
-        textures = getTextures("jump-", total: 8)
+        textures = getTextures(jumpName, total: jumpCount)
         jumpAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.075, resize: true, restore: false)
         
     /*-------------------------------------DEAD ANIMATION-----------------------------------------------*/
-        textures = getTextures("dead-", total: 6)
+        textures = getTextures(deadName, total: deadCount)
         deadAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)
         
     /*-------------------------------------SHOOT ANIMATION-----------------------------------------------*/
-        textures = getTextures("shoot_straight-", total: 5)
+        textures = getTextures(shootName, total: shootCount)
         shootAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.025, resize: true, restore: false)
         
     /*-------------------------------------HURT ANIMATION-----------------------------------------------*/
-        textures = getTextures("hurt-", total: 3)
+        textures = getTextures(hurtName, total: hurtCount)
         hurtAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)
     }
     
@@ -174,5 +193,41 @@ class Archer: SKSpriteNode {
         lives += 1
         physicsBody?.categoryBitMask = PhysicsCategory.Player
         physicsBody?.contactTestBitMask = PhysicsCategory.Obstacle | PhysicsCategory.Coin | PhysicsCategory.IceBlock | PhysicsCategory.Heart
+    }
+    
+    func getValuesForAnimations() {
+        switch type {
+        case .Angel:
+            setNamePrefix("angel-")
+            
+            runCount = 10
+            jumpCount = 10
+            deadCount = 10
+            shootCount = 10
+            hurtCount = 10
+            break
+        default:
+            break
+        }
+    }
+    
+    func setNamePrefix(prefix: String) {
+        runName = prefix + runName
+        jumpName = prefix + jumpName
+        deadName = prefix + deadName
+        shootName = prefix + shootName
+        hurtName = prefix + hurtName
+    }
+    
+    func getArcherType() {
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        if let arrowRaw = userDefaults.stringForKey("archerRawValue") {
+            self.type = ArcherType(rawValue: arrowRaw)!
+        }
+        else {
+            type = .Archer
+            userDefaults.setObject(type.rawValue, forKey: "archerRawValue")
+            userDefaults.synchronize()
+        }
     }
 }

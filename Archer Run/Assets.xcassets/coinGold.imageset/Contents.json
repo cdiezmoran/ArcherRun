@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "coinGold.png",
+      "filename" : "coinGold@1x.png",
       "scale" : "1x"
     },
     {

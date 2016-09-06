@@ -15,11 +15,13 @@ class ShopItem {
     var key: String
     var name: String
     var isBought: Bool
+    var size: CGSize?
     
     init(key: String, isBought: Bool) {
         self.price = ShopItem.getPrice(key)
         self.texture = ShopItem.getTexture(key)
         self.name = ShopItem.getName(key)
+        self.size = ShopItem.getSize(key)
         self.isBought = isBought
         self.key = key
     }
@@ -33,6 +35,9 @@ class ShopItem {
             break
         case "explosive":
             itemPrice = 7500
+            break
+        case "angel":
+            itemPrice = 50000
             break
         default:
             itemPrice = 0
@@ -55,6 +60,10 @@ class ShopItem {
         case "explosive":
             texture = SKTexture(imageNamed: "shopExplosiveArrow")
             break
+        case "archer":
+            texture = SKTexture(imageNamed: "idle-1")
+        case "angel":
+            texture = SKTexture(imageNamed: "angel-run-1")
         default:
             texture = SKTexture(imageNamed: "shopArrow")
         }
@@ -75,10 +84,33 @@ class ShopItem {
         case "explosive":
             name = "Explosive Arrow"
             break
+        case "archer":
+            name = "Archer"
+            break
+        case "angel":
+            name = "Angel"
         default:
             name = "Regular Arrow"
         }
         
         return name
+    }
+    
+    static func getSize(key: String) -> CGSize? {
+        var size: CGSize?
+        
+        switch key {
+        case "archer":
+            size = CGSize(width: 137, height: 125)
+            break
+        case "angel":
+            size = CGSize(width: 112, height: 125)
+            break
+        default:
+            size = nil
+            break
+        }
+        
+        return size
     }
 }
