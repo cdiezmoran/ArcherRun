@@ -47,6 +47,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     var currentLevelHolder: String = "levelHolder1"
     var deltaTime: Double!
+    var didRecieveRewardAd: Bool = false
     var didTutJump: Bool = false
     var didTutShoot: Bool = false
     var firstTouchLocation = CGPointZero
@@ -290,6 +291,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             selector: #selector(GameScene.pauseGame),
             name: "pauseGame",
             object: nil)
+        
+        //Observer to check if reward ad failed to load
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: #selector(GameScene.receivedRewardAd),
+            name: "receivedReward",
+            object: nil)
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
@@ -341,7 +349,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 archer.resetRotation()
                 archer.die()
                 //Go to ExtraChanceState
-                if !didGetExtraChance {
+                if !didGetExtraChance && didRecieveRewardAd {
                     gameState.enterState(ExtraChanceState)
                 }
                 else {
@@ -651,5 +659,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for child in node.children {
             child.removeFromParent()
         }
+    }
+    
+    func receivedRewardAd() {
+        didRecieveRewardAd = true
     }
 }

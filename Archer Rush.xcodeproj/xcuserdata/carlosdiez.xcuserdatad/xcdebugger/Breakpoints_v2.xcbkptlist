@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Archer Run/GameScene.swift"
-            timestampString = "494819035.063104"
+            timestampString = "494896408.350816"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "498"
-            endingLineNumber = "498"
+            startingLineNumber = "506"
+            endingLineNumber = "506"
             landmarkName = "update(_:)"
             landmarkType = "5">
          </BreakpointContent>

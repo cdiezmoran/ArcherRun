@@ -81,7 +81,8 @@ class Arrow: SKSpriteNode {
     }
     
     func createPhysicsBody() {
-        let body = SKPhysicsBody(texture: defaultTexture, size: defaultSize)
+        //let body = SKPhysicsBody(texture: defaultTexture, size: defaultSize)
+        let body = SKPhysicsBody(rectangleOfSize: defaultSize)
         
         body.mass = 0.0037
         

@@ -10,9 +10,10 @@ import UIKit
 import SpriteKit
 import GoogleMobileAds
 
-class GameViewController: UIViewController, MPAdViewDelegate, GADRewardBasedVideoAdDelegate {
+class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate, GADBannerViewDelegate {
     
-    var adView: MPAdView!
+    //var adView: MPAdView!
+    var bannerView: GADBannerView!
     var interstitial: GADInterstitial!
 
     override func viewDidLoad() {
@@ -82,19 +83,24 @@ class GameViewController: UIViewController, MPAdViewDelegate, GADRewardBasedVide
     }
     
     func loadAds() {
-        //Banner ad from mopub
-        adView = MPAdView(adUnitId: "7a7cbbb929f843049d76cabc6bffc802", size: MOPUB_BANNER_SIZE)
-        adView.delegate = self
-        adView.frame = CGRectMake((view!.bounds.size.width - MOPUB_BANNER_SIZE.width) / 2,
-                                  view!.bounds.size.height - MOPUB_BANNER_SIZE.height,
-                                  MOPUB_BANNER_SIZE.width, MOPUB_BANNER_SIZE.height);
-        view!.addSubview(adView)
-        adView.hidden = true
-        adView.loadAd()
+        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+        bannerView.frame = CGRectMake((view!.bounds.size.width - kGADAdSizeBanner.size.width) / 2,
+                                      view!.bounds.size.height - kGADAdSizeBanner.size.height,
+                                      kGADAdSizeBanner.size.width, kGADAdSizeBanner.size.height);
+        bannerView.delegate = self
+        bannerView.adUnitID = "ca-app-pub-1607117345046468/9082311632"
+        
+        bannerView.rootViewController = self
+        view!.addSubview(bannerView)
+        
+        bannerView.hidden = true
+        
+        let bannerRequest = GADRequest()
+        bannerRequest.testDevices = ["65bff9d7a2bfc4f181d7db7dafdfcfa2", "Simulator"]
+        bannerView.loadRequest(bannerRequest)
         
         //Interstitial from admob
         interstitial = GADInterstitial(adUnitID: "ca-app-pub-1607117345046468/5914009238")
-        //interstitial.delegate = self
         let request = GADRequest()
         request.testDevices = ["65bff9d7a2bfc4f181d7db7dafdfcfa2", "Simulator"]
         interstitial.loadRequest(request)
@@ -104,20 +110,18 @@ class GameViewController: UIViewController, MPAdViewDelegate, GADRewardBasedVide
         GADRewardBasedVideoAd.sharedInstance().loadRequest(GADRequest(), withAdUnitID: "ca-app-pub-1607117345046468/1983337237")
     }
     
-    func adViewDidLoadAd(view: MPAdView!) {
-        //show ad
-        adView.hidden = false
+    func adViewDidReceiveAd(bannerView: GADBannerView!) {
+        self.bannerView.hidden = false
     }
     
-    func adViewDidFailToLoadAd(view: MPAdView!) {
-        //hide ad
-        adView.hidden = true
+    func adView(bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
+        print("ERROR LOADING BANNER AD: \(error.description)")
+        self.bannerView.hidden = true
     }
     
     func removeAdsOnGameOver() {
-        if let _ = adView.superview {
-            adView.stopAutomaticallyRefreshingContents()
-            adView.removeFromSuperview()
+        if let _ = bannerView.superview {
+            bannerView.removeFromSuperview()
         }
     }
     
@@ -125,8 +129,7 @@ class GameViewController: UIViewController, MPAdViewDelegate, GADRewardBasedVide
         return self
     }
     
-    func willPresentModalViewForAd(view: MPAdView!) {
-        //Pause game
+    func adViewWillPresentScreen(bannerView: GADBannerView!) {
         NSNotificationCenter.defaultCenter().postNotificationName("pauseGame", object: nil)
     }
     
@@ -150,14 +153,10 @@ class GameViewController: UIViewController, MPAdViewDelegate, GADRewardBasedVide
     
     func rewardBasedVideoAdDidReceiveAd(rewardBasedVideoAd: GADRewardBasedVideoAd!) {
         print("RECIEVED REWARD AD!")
+        NSNotificationCenter.defaultCenter().postNotificationName("receivedReward", object: nil)
     }
     
     func rewardBasedVideoAd(rewardBasedVideoAd: GADRewardBasedVideoAd!, didFailToLoadWithError error: NSError!) {
-        print("REWARD AD FAILED WITH ERROR: \(error.description)")
+        print("REWARD AD FAILED: \(error.description)")
     }
-    
-    /*func rewardBasedVideoAdDidClose(rewardBasedVideoAd: GADRewardBasedVideoAd!) {
-        print("GAVE REWARD BY CLOSING")
-        NSNotificationCenter.defaultCenter().postNotificationName("giveExtraChance", object: nil)
-    }*/
 }
