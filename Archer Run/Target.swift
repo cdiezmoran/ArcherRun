@@ -13,7 +13,7 @@ class Target: SKSpriteNode {
     let defaultTexture = SKTexture(imageNamed: "target")
     
     init() {
-        super.init(texture: defaultTexture, color: UIColor.clearColor(), size: defaultTexture.size())
+        super.init(texture: defaultTexture, color: UIColor.clear, size: defaultTexture.size())
         
         createPhysicsBody()
     }
@@ -42,7 +42,7 @@ class Target: SKSpriteNode {
     }
     
     func freeze() {
-        let iceBlock = SKSpriteNode(texture: SKTexture(imageNamed: "iceBlockAlt"), color: UIColor.clearColor(), size: defaultTexture.size())
+        let iceBlock = SKSpriteNode(texture: SKTexture(imageNamed: "iceBlockAlt"), color: UIColor.clear, size: defaultTexture.size())
         iceBlock.alpha = 0.5
         iceBlock.zPosition = self.zPosition + 1
         addChild(iceBlock)

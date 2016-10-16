@@ -9,7 +9,7 @@
 import SpriteKit
 
 extension GameScene {
-    func scrollSprite(sprite: SKSpriteNode, speed: CGFloat) {
+    func scrollSprite(_ sprite: SKSpriteNode, speed: CGFloat) {
         sprite.position.x -= speed
         
         if sprite.position.x <= sprite.size.width {
@@ -17,7 +17,7 @@ extension GameScene {
         }
     }
     
-    func scrollStartingWorldElement(sprite: SKSpriteNode, speed: CGFloat) {
+    func scrollStartingWorldElement(_ sprite: SKSpriteNode, speed: CGFloat) {
         sprite.position.x -= speed
         
         if sprite.position.x <= -frame.size.width {
@@ -25,7 +25,7 @@ extension GameScene {
         }
     }
     
-    func scrollStartingWorldLayer(sprite: SKNode, speed: CGFloat) {
+    func scrollStartingWorldLayer(_ sprite: SKNode, speed: CGFloat) {
         sprite.position.x -= speed
         
         if startingScrollLayer.position.x <= -frame.size.width {
@@ -33,7 +33,7 @@ extension GameScene {
         }
     }
     
-    func scrollSpriteInState(sprite: SKSpriteNode, speed: CGFloat) {
+    func scrollSpriteInState(_ sprite: SKSpriteNode, speed: CGFloat) {
         sprite.position.x -= speed
         
         if sprite.position.x <= -(sprite.size.width / 2) {
@@ -47,7 +47,7 @@ extension GameScene {
         }
     }
     
-    func scrollWorld(seconds: NSTimeInterval) {
+    func scrollWorld(_ seconds: TimeInterval) {
         let secondsFloat = CGFloat(seconds)
         
         let scrollSpeed = (floorSpeed * 60) * secondsFloat
@@ -82,7 +82,7 @@ extension GameScene {
     
     func removeObstacles() {
         for child in obstacleScrollLayer.children {
-            let positionInScene = self.convertPoint(child.position, fromNode: obstacleScrollLayer)
+            let positionInScene = self.convert(child.position, from: obstacleScrollLayer)
             if positionInScene.x < -size.width / 3 {
                 child.removeFromParent()
             }

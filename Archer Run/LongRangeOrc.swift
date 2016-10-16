@@ -20,19 +20,19 @@ class LongRangeOrc: Orc {
         
         //THROW-LEFT ANIMATION
         textures = getTextures("throw_left-", total: 8)
-        throwLeftAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)
+        throwLeftAnimation = SKAction.animate(with: textures, timePerFrame: 0.1, resize: true, restore: false)
         
         //THROW-RIGHT ANIMATION
         textures = getTextures("throw_right-", total: 8)
-        throwRightAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)
+        throwRightAnimation = SKAction.animate(with: textures, timePerFrame: 0.1, resize: true, restore: false)
         
         removeAllActions()
         
         //IDLE ANIMATION
         textures = getTextures("idleOrc-", total: 6)
-        let animation = SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)
-        let idleAction = SKAction.repeatActionForever(animation)
-        runAction(idleAction)
+        let animation = SKAction.animate(with: textures, timePerFrame: 0.1, resize: true, restore: false)
+        let idleAction = SKAction.repeatForever(animation)
+        run(idleAction)
     }
     
     required init?(coder aDecoder: NSCoder) {

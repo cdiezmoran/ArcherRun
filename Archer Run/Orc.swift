@@ -12,14 +12,14 @@ class Orc: SKSpriteNode {
     
     var deadAnimation: SKAction!
     var throwAnimation: SKAction!
-    var state: EntityState = .None
+    var state: EntityState = .none
     var bodySize = CGSize(width: 36, height: 48)
     var bodyPosition = CGPoint(x: -2.5, y: -4.5)
     
 /*-----------------------------------------------INIT-------------------------------------------------------------*/
     init() {
         let defaultTexture = SKTexture(imageNamed: "idleOrc-1")
-        super.init(texture: defaultTexture, color: UIColor.clearColor(), size: defaultTexture.size())
+        super.init(texture: defaultTexture, color: UIColor.clear, size: defaultTexture.size())
         
         xScale = -1
         createPhysicsBody()
@@ -29,12 +29,12 @@ class Orc: SKSpriteNode {
         //DEAD ANIMATION
         textures = getTextures("deadOrc-", total: 6)
         
-        deadAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)
+        deadAnimation = SKAction.animate(with: textures, timePerFrame: 0.1, resize: true, restore: false)
         
         //THROW ANIMATION
         textures = getTextures("throw_left-", total: 8)
         
-        throwAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.01, resize: true, restore: false)
+        throwAnimation = SKAction.animate(with: textures, timePerFrame: 0.01, resize: true, restore: false)
     }
     
     
@@ -45,7 +45,7 @@ class Orc: SKSpriteNode {
     
     
 /*---------------------------------------------GET TEXTURES-------------------------------------------------------*/
-    func getTextures(prefix: String, total: Int) -> [SKTexture] {
+    func getTextures(_ prefix: String, total: Int) -> [SKTexture] {
         var textures: [SKTexture] = []
         
         for index in 1...total {
@@ -59,12 +59,12 @@ class Orc: SKSpriteNode {
     
 /*-------------------------------------------CREATE PHYSICS BODY-------------------------------------------------*/
     func createPhysicsBody() {
-        let orcPhysicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 36, height: 48), center: CGPoint(x: -2.5, y: -4.5))
+        let orcPhysicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 36, height: 48), center: CGPoint(x: -2.5, y: -4.5))
         
         orcPhysicsBody.affectedByGravity = true
         orcPhysicsBody.usesPreciseCollisionDetection = true
         orcPhysicsBody.allowsRotation = false
-        orcPhysicsBody.dynamic = true
+        orcPhysicsBody.isDynamic = true
         
         orcPhysicsBody.categoryBitMask = PhysicsCategory.Obstacle
         orcPhysicsBody.collisionBitMask = PhysicsCategory.Floor
@@ -79,7 +79,7 @@ class Orc: SKSpriteNode {
         
         self.physicsBody?.categoryBitMask = PhysicsCategory.None
         
-        runAction(deadAnimation)
+        run(deadAnimation)
     }
     
     func freeze() {
@@ -87,7 +87,7 @@ class Orc: SKSpriteNode {
         
         self.physicsBody?.categoryBitMask = PhysicsCategory.IceBlock
         
-        let iceBlock = SKSpriteNode(texture: SKTexture(imageNamed: "iceBlockAlt"), color: UIColor.clearColor(), size: bodySize)
+        let iceBlock = SKSpriteNode(texture: SKTexture(imageNamed: "iceBlockAlt"), color: UIColor.clear, size: bodySize)
         iceBlock.alpha = 0.5
         iceBlock.zPosition = self.zPosition + 1
         addChild(iceBlock)

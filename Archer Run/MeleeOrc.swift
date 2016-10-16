@@ -19,11 +19,11 @@ class MeleeOrc: Orc {
         var textures = [SKTexture]()
         textures = getTextures("walkOrc-", total: 14)
         
-        let animate = SKAction.animateWithTextures(textures, timePerFrame: 0.05, resize: true, restore: false)
+        let animate = SKAction.animate(with: textures, timePerFrame: 0.05, resize: true, restore: false)
         
-        runAnimation = SKAction.repeatActionForever(animate)
+        runAnimation = SKAction.repeatForever(animate)
         
-        runAction(runAnimation)        
+        run(runAnimation)        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -33,10 +33,10 @@ class MeleeOrc: Orc {
     func hitArcher() {
         removeAllActions()
         
-        let wait = SKAction.waitForDuration(throwAnimation.duration)
+        let wait = SKAction.wait(forDuration: throwAnimation.duration)
         
         let sequence = SKAction.sequence([throwAnimation, wait, runAnimation])
         
-        runAction(sequence)
+        run(sequence)
     }
 }

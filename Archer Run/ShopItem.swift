@@ -26,7 +26,7 @@ class ShopItem {
         self.key = key
     }
     
-    static func getPrice(key: String) -> Int {
+    static func getPrice(_ key: String) -> Int {
         var itemPrice: Int = 0
         
         switch key {
@@ -47,7 +47,7 @@ class ShopItem {
         return itemPrice
     }
     
-    static func getTexture(key: String) -> SKTexture {
+    static func getTexture(_ key: String) -> SKTexture {
         var texture: SKTexture!
         
         switch key {
@@ -71,7 +71,7 @@ class ShopItem {
         return texture
     }
     
-    static func getName(key: String) -> String {
+    static func getName(_ key: String) -> String {
         var name: String = ""
         
         switch key {
@@ -96,7 +96,7 @@ class ShopItem {
         return name
     }
     
-    static func getSize(key: String) -> CGSize? {
+    static func getSize(_ key: String) -> CGSize? {
         var size: CGSize?
         
         switch key {

@@ -12,14 +12,14 @@ extension GameScene {
     func checkForArrowOutOfBounds() {
         for arrow in arrows {
             if arrow.position.y < 0 || arrow.position.x < 0{
-                let index = arrows.indexOf(arrow)!
-                arrows.removeAtIndex(index)
+                let index = arrows.index(of: arrow)!
+                arrows.remove(at: index)
                 arrow.removeFromParent()
             }
         }
     }
     
-    func grabCoin(node: SKNode) {
+    func grabCoin(_ node: SKNode) {
         let coin = node as! Coin
         
         coin.removeFromParent()
@@ -31,7 +31,7 @@ extension GameScene {
         ChallengeManager.sharedInstance.collectedCoin()
     }
     
-    func killOrc(nodeOrc: SKNode, nodeArrow: SKNode) {
+    func killOrc(_ nodeOrc: SKNode, nodeArrow: SKNode) {
         let orc = nodeOrc as! MeleeOrc
         let arrow = nodeArrow as! Arrow
         
@@ -48,15 +48,15 @@ extension GameScene {
             
             let explosion = SKEmitterNode(fileNamed: "Explosion")!
             explosion.zPosition = orc.zPosition + 1
-            explosion.position = orc.parent!.convertPoint(orc.position, toNode: obstacleScrollLayer)
+            explosion.position = orc.parent!.convert(orc.position, to: obstacleScrollLayer)
             obstacleScrollLayer.addChild(explosion)
             
-            let wait = SKAction.waitForDuration(0.8)
-            let removeExplosion = SKAction.runBlock({ explosion.removeFromParent() })
+            let wait = SKAction.wait(forDuration: 0.8)
+            let removeExplosion = SKAction.run({ explosion.removeFromParent() })
             
             let sequence = SKAction.sequence([wait, removeExplosion])
             
-            runAction(sequence)
+            run(sequence)
             
             orc.die()
         }
@@ -65,48 +65,48 @@ extension GameScene {
         }
         
         //Remove arrow from parent
-        let removeArrow = SKAction.runBlock({
+        let removeArrow = SKAction.run({
             arrow.removeFromParent()
         })
         
-        self.runAction(removeArrow)
+        self.run(removeArrow)
         
-        arrows.removeAtIndex(arrows.indexOf(arrow)!)
+        arrows.remove(at: arrows.index(of: arrow)!)
         
-        let removeAndAddOrc = SKAction.runBlock({
-            orc.position = orc.parent!.convertPoint(orc.position, toNode: self.obstacleScrollLayer)
+        let removeAndAddOrc = SKAction.run({
+            orc.position = orc.parent!.convert(orc.position, to: self.obstacleScrollLayer)
             orc.removeFromParent()
             self.obstacleScrollLayer.addChild(orc)
         })
         
-        self.runAction(removeAndAddOrc)
+        self.run(removeAndAddOrc)
         
         playArrowHitSound()
         
         ChallengeManager.sharedInstance.killedOrc()
     }
     
-    func hitTargetWithSpikes(node: SKNode, nodeArrow: SKNode) {
+    func hitTargetWithSpikes(_ node: SKNode, nodeArrow: SKNode) {
         let target = node as! Target
         let arrow = nodeArrow as! Arrow
         
-        let removeArrow = SKAction.runBlock({
+        let removeArrow = SKAction.run({
             arrow.removeFromParent()
         })
         
         if arrow.type == .Ice {
             target.freeze()
-            self.runAction(removeArrow)
+            self.run(removeArrow)
         }
         
         for case let spike as Spike in target.children {
-            let slideDown = SKAction.moveBy(CGVector(dx: 0, dy: -spike.size.height), duration: 0.25)
-            let removeSpike = SKAction.runBlock({ spike.removeFromParent() })
+            let slideDown = SKAction.move(by: CGVector(dx: 0, dy: -spike.size.height), duration: 0.25)
+            let removeSpike = SKAction.run({ spike.removeFromParent() })
             
             let slideAndRemove = SKAction.sequence([slideDown, removeSpike])
             
             spike.zPosition = -1
-            spike.runAction(slideAndRemove)
+            spike.run(slideAndRemove)
         }
         
         target.gotHit()
@@ -116,27 +116,27 @@ extension GameScene {
         ChallengeManager.sharedInstance.hitTarget()
     }
     
-    func breakiceBlock(orcNode: SKNode) {
+    func breakiceBlock(_ orcNode: SKNode) {
         let orc = orcNode as! Orc
         
         let particles = SKEmitterNode(fileNamed: "IceExplosion")!
         particles.position = orc.position
         
-        let removeOrc = SKAction.runBlock({ orc.removeFromParent() })
-        let addParticles = SKAction.runBlock({ self.obstacleScrollLayer.addChild(particles) })
-        let wait = SKAction.waitForDuration(2.5)
-        let removeParticles = SKAction.runBlock({ particles.removeFromParent() })
+        let removeOrc = SKAction.run({ orc.removeFromParent() })
+        let addParticles = SKAction.run({ self.obstacleScrollLayer.addChild(particles) })
+        let wait = SKAction.wait(forDuration: 2.5)
+        let removeParticles = SKAction.run({ particles.removeFromParent() })
         
         let sequence = SKAction.sequence([removeOrc, addParticles, wait, removeParticles])
                 
-        runAction(sequence)
+        run(sequence)
     }
     
     func addHeart() {
         let heartTexture = SKTexture(imageNamed: "heartFinal")
-        let newHeart = SKSpriteNode(texture: heartTexture, color: UIColor.clearColor(), size: CGSize(width: 32, height: 32))
+        let newHeart = SKSpriteNode(texture: heartTexture, color: UIColor.clear, size: CGSize(width: 32, height: 32))
         if hearts.isEmpty {
-            newHeart.position = CGPointMake(610, 380)
+            newHeart.position = CGPoint(x: 610, y: 380)
             hearts.append(newHeart)
             addChild(newHeart)
         }
@@ -147,20 +147,20 @@ extension GameScene {
         }
     }
     
-    func grabHeart(heartNode: SKNode) {
+    func grabHeart(_ heartNode: SKNode) {
         let heart = heartNode as! Heart
         
         let heartExplosion = SKEmitterNode(fileNamed: "HeartExplosion")!
         heartExplosion.position = heart.position
         
-        let removeHeart = SKAction.runBlock({ heart.removeFromParent() })
-        let addParticles = SKAction.runBlock({ self.obstacleScrollLayer.addChild(heartExplosion) })
-        let wait = SKAction.waitForDuration(1.5)
-        let removeParticles = SKAction.runBlock({ heartExplosion.removeFromParent() })
+        let removeHeart = SKAction.run({ heart.removeFromParent() })
+        let addParticles = SKAction.run({ self.obstacleScrollLayer.addChild(heartExplosion) })
+        let wait = SKAction.wait(forDuration: 1.5)
+        let removeParticles = SKAction.run({ heartExplosion.removeFromParent() })
         
         let sequence = SKAction.sequence([removeHeart, addParticles, wait, removeParticles])
         
-        runAction(sequence)
+        run(sequence)
         
         if archer.lives >= 2 {
             return
@@ -170,8 +170,8 @@ extension GameScene {
         addHeart()
     }
     
-    func hitUndead(arrowNode: SKNode) {
-        if undead.state == .Dead { return }
+    func hitUndead(_ arrowNode: SKNode) {
+        if undead.state == .dead { return }
         
         let arrow = arrowNode as! Arrow
         undead.lives -= 1
@@ -186,14 +186,14 @@ extension GameScene {
         else {
             //add hit anim
             let hitAnim = SKAction(named: "HurtFadeOnce")!
-            undead.runAction(hitAnim)
+            undead.run(hitAnim)
         }
         
-        let removeArrow = SKAction.runBlock({
+        let removeArrow = SKAction.run({
             arrow.removeFromParent()
         })
         
-        self.runAction(removeArrow)
+        self.run(removeArrow)
         
         playArrowHitSound()
     }

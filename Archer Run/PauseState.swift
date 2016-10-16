@@ -17,18 +17,18 @@ class PauseState: GKState {
         self.scene = scene
     }
     
-    override func didEnterWithPreviousState(previousState: GKState?) {
-        scene.pauseScreen.hidden = false
+    override func didEnter(from previousState: GKState?) {
+        scene.pauseScreen.isHidden = false
         scene.toggleMusicAndSoundVisibility()
         
         scene.archer.removeAllActions()
     }
     
-    override func isValidNextState(stateClass: AnyClass) -> Bool {
+    override func isValidNextState(_ stateClass: AnyClass) -> Bool {
         return true
     }
     
-    override func willExitWithNextState(nextState: GKState) {
+    override func willExit(to nextState: GKState) {
         //resume animations
         scene.archer.doRunAnimation()
     }

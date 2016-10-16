@@ -12,7 +12,7 @@ class Heart: SKSpriteNode {
     
     init() {
         let defaultTexture = SKTexture(imageNamed: "heartFinal")
-        super.init(texture: defaultTexture, color: UIColor.clearColor(), size: CGSize(width: 32, height: 32))
+        super.init(texture: defaultTexture, color: UIColor.clear, size: CGSize(width: 32, height: 32))
         
         zPosition = 51
         createPhysicsBody()
@@ -23,10 +23,10 @@ class Heart: SKSpriteNode {
     }
     
     func createPhysicsBody() {
-        let body = SKPhysicsBody(rectangleOfSize: CGSize(width: 32, height: 32))
+        let body = SKPhysicsBody(rectangleOf: CGSize(width: 32, height: 32))
         
         body.affectedByGravity = false
-        body.dynamic = false
+        body.isDynamic = false
         body.allowsRotation = false
         
         body.categoryBitMask = PhysicsCategory.Heart

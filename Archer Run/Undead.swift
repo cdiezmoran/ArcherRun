@@ -17,11 +17,11 @@ class Undead: SKSpriteNode {
     var isMoving: Bool = false
     var isPositioned: Bool = false
     var lives: Int = 2
-    var state: EntityState = .None
+    var state: EntityState = .none
     
     init() {
         let defaultTexture = SKTexture(imageNamed: "unIdle-1")
-        super.init(texture: defaultTexture, color: UIColor.clearColor(), size: defaultTexture.size())
+        super.init(texture: defaultTexture, color: UIColor.clear, size: defaultTexture.size())
         
         xScale = -1
         createPhysicsBody()
@@ -31,18 +31,18 @@ class Undead: SKSpriteNode {
         //IDLE ANIMATION
         textures = getTextures("unIdle-", total: 6)
         
-        let animate = SKAction.animateWithTextures(textures, timePerFrame: 0.25, resize: true, restore: false)
+        let animate = SKAction.animate(with: textures, timePerFrame: 0.25, resize: true, restore: false)
         
-        idleAnimation = SKAction.repeatActionForever(animate)
-        runAction(idleAnimation)
+        idleAnimation = SKAction.repeatForever(animate)
+        run(idleAnimation)
         
         //SHOOT ANIMATION
         textures = getTextures("unShoot-", total: 5)
-        shootAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.025, resize: true, restore: false)
+        shootAnimation = SKAction.animate(with: textures, timePerFrame: 0.025, resize: true, restore: false)
         
         //DEAD ANIMATION
         textures = getTextures("unDead-", total: 5)
-        deadAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.0075, resize: true, restore: false)
+        deadAnimation = SKAction.animate(with: textures, timePerFrame: 0.0075, resize: true, restore: false)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -50,12 +50,12 @@ class Undead: SKSpriteNode {
     }
     
     func createPhysicsBody() {
-        let body = SKPhysicsBody(rectangleOfSize: CGSize(width: 34, height: 62), center: CGPoint(x: 7.5, y: 0.4))
+        let body = SKPhysicsBody(rectangleOf: CGSize(width: 34, height: 62), center: CGPoint(x: 7.5, y: 0.4))
         
         body.affectedByGravity = false
         body.usesPreciseCollisionDetection = true
         body.allowsRotation = false
-        body.dynamic = false
+        body.isDynamic = false
         
         body.restitution = 0
         
@@ -69,19 +69,19 @@ class Undead: SKSpriteNode {
     func die() {
         removeAllActions()
         
-        runAction(deadAnimation)
+        run(deadAnimation)
         
-        state = .Dead
+        state = .dead
     }
     
     func shoot() {
         removeAllActions()
-        let waitAction = SKAction.waitForDuration(shootAnimation.duration)
+        let waitAction = SKAction.wait(forDuration: shootAnimation.duration)
         let sequence = SKAction.sequence([shootAnimation, waitAction, idleAnimation])
-        runAction(sequence)
+        run(sequence)
     }
     
-    func getTextures(prefix: String, total: Int) -> [SKTexture] {
+    func getTextures(_ prefix: String, total: Int) -> [SKTexture] {
         var textures: [SKTexture] = []
         
         for index in 1...total {

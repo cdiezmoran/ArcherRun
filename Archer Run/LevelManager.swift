@@ -19,21 +19,21 @@ class LevelManager {
     var progress: Int = 0
     var lastProgress: Int = 0
     
-    var userDefaults: NSUserDefaults!
+    var userDefaults: UserDefaults!
     
     init() {
-        userDefaults = NSUserDefaults.standardUserDefaults()
+        userDefaults = UserDefaults.standard
         retrieveLevelData()
         expRequired = findExpRequired(level)
         lastExpRequired = expRequired
     }
     
     func retrieveLevelData() {
-        level = userDefaults.doubleForKey("userLevel")
+        level = userDefaults.double(forKey: "userLevel")
         if level == 0 {
             level = 1
         }
-        progress = userDefaults.integerForKey("expProgress")
+        progress = userDefaults.integer(forKey: "expProgress")
     }
     
     func storeLevelData() {
@@ -81,7 +81,7 @@ class LevelManager {
     }
         
     //Find fibonacci number for a given nth number
-    func findExpRequired (nthNumber : Double) -> Int {
+    func findExpRequired (_ nthNumber : Double) -> Int {
         let phiOne : Double = (1.0 + sqrt(5.0)) / 2.0
         let phiTwo : Double = (1.0 - sqrt(5.0)) / 2.0
         let nthNumber : Double = (pow(phiOne, nthNumber) - (pow(phiTwo, nthNumber))) / sqrt(5.0)

@@ -9,7 +9,7 @@
 import SpriteKit
 
 enum MSButtonNodeState {
-    case Active, MSButtonNodeStateSelected, MSButtonNodeStateHidden, Disabled
+    case active, msButtonNodeStateSelected, msButtonNodeStateHidden, disabled
 }
 
 class MSButtonNode: SKSpriteNode {
@@ -18,36 +18,36 @@ class MSButtonNode: SKSpriteNode {
     var selectedHandler: () -> Void = { print("No button action set") }
     
     /* Button state management */
-    var state: MSButtonNodeState = .Active {
+    var state: MSButtonNodeState = .active {
         didSet {
             switch state {
-            case .Active:
+            case .active:
                 /* Enable touch */
-                self.userInteractionEnabled = true
+                self.isUserInteractionEnabled = true
                 
                 /* Visible */
                 self.alpha = 1
                 break
-            case .MSButtonNodeStateSelected:
+            case .msButtonNodeStateSelected:
                 /* Semi transparent */
                 self.alpha = 0.7
                 break
-            case .MSButtonNodeStateHidden:
+            case .msButtonNodeStateHidden:
                 /* Disable touch */
-                self.userInteractionEnabled = false
+                self.isUserInteractionEnabled = false
                 
                 /* Hide */
                 self.alpha = 0
                 break
-            case .Disabled:
-                self.userInteractionEnabled = false
+            case .disabled:
+                self.isUserInteractionEnabled = false
             }
         }
     }
     
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
         super.init(texture: texture, color: color, size: size)
-        self.userInteractionEnabled = true
+        self.isUserInteractionEnabled = true
     }
     
     /* Support for NSKeyedArchiver (loading objects from SK Scene Editor */
@@ -57,17 +57,17 @@ class MSButtonNode: SKSpriteNode {
         super.init(coder: aDecoder)
         
         /* Enable touch on button node */
-        self.userInteractionEnabled = true
+        self.isUserInteractionEnabled = true
     }
     
     // MARK: - Touch handling
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        state = .MSButtonNodeStateSelected
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        state = .msButtonNodeStateSelected
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         selectedHandler()
-        state = .Active
+        state = .active
     }
     
 }

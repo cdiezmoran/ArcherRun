@@ -12,14 +12,14 @@ class ChallengeManager {
     static let sharedInstance = ChallengeManager()
     
     var challengeCompleted: Challenge!
-    var userDefaults: NSUserDefaults!
+    var userDefaults: UserDefaults!
     
     var activeChallenges = [String: Challenge]()
     var lastGoals = [String: Int]()
     var highestGoals = [String: Int]()
     
     init() {
-        userDefaults = NSUserDefaults.standardUserDefaults()
+        userDefaults = UserDefaults.standard
         retreiveChallengesData()
     }
     
@@ -50,7 +50,7 @@ class ChallengeManager {
     
     func retreiveChallengesData() {
         //Retreive challenges from local storage
-        if let dictionary = userDefaults.dictionaryForKey("lastGoals") {
+        if let dictionary = userDefaults.dictionary(forKey: "lastGoals") {
             lastGoals = dictionary as! [String: Int]
         }
         else {
@@ -62,7 +62,7 @@ class ChallengeManager {
             lastGoals["undeadGoal"] = 0
         }
         
-        if let dictionary = userDefaults.dictionaryForKey("highestGoals") {
+        if let dictionary = userDefaults.dictionary(forKey: "highestGoals") {
             highestGoals = dictionary as! [String: Int]
         }
         else {
@@ -86,7 +86,7 @@ class ChallengeManager {
             highestGoals["undeadHighestTimes"] = 0
         }
         
-        let challengesExist = userDefaults.boolForKey("challengesExist")
+        let challengesExist = userDefaults.bool(forKey: "challengesExist")
         
         if challengesExist {
             activeChallenges["firstChallenge"] = retrieveChallenge("-first")
@@ -103,41 +103,41 @@ class ChallengeManager {
     
     func storeChallengesData() {
         //Store challenges in local storage
-        userDefaults.setObject(lastGoals, forKey: "lastGoals")
-        userDefaults.setObject(highestGoals, forKey: "highestGoals")
+        userDefaults.set(lastGoals, forKey: "lastGoals")
+        userDefaults.set(highestGoals, forKey: "highestGoals")
         
         saveChallenge(activeChallenges["firstChallenge"]!, selector: "-first")
         saveChallenge(activeChallenges["secondChallenge"]!, selector: "-second")
         saveChallenge(activeChallenges["thirdChallenge"]!, selector: "-third")
         
-        userDefaults.setBool(true, forKey: "challengesExist")
+        userDefaults.set(true, forKey: "challengesExist")
         
         userDefaults.synchronize()
     }
     
-    func saveChallenge(challenge: Challenge, selector: String) {
-        userDefaults.setObject(challenge.type.rawValue, forKey: "type" + selector)
+    func saveChallenge(_ challenge: Challenge, selector: String) {
+        userDefaults.set(challenge.type.rawValue, forKey: "type" + selector)
         userDefaults.setValue(challenge.goal, forKey: "goal" + selector)
         userDefaults.setValue(challenge.progress, forKey: "progress" + selector)
         userDefaults.setValue(challenge.times, forKey: "times" + selector)
         userDefaults.setValue(challenge.timesProgress, forKey: "timesProgress" + selector)
-        userDefaults.setObject(challenge.goalType.rawValue, forKey: "goalType" + selector)
-        userDefaults.setObject(challenge.state.rawValue, forKey: "state" + selector)
+        userDefaults.set(challenge.goalType.rawValue, forKey: "goalType" + selector)
+        userDefaults.set(challenge.state.rawValue, forKey: "state" + selector)
     }
     
-    func retrieveChallenge(selector: String) -> Challenge {
-        let goal = userDefaults.integerForKey("goal" + selector)
-        let progress = userDefaults.integerForKey("progress" + selector)
-        let times = userDefaults.integerForKey("times" + selector)
-        let timesProgress = userDefaults.integerForKey("timesProgress" + selector)
+    func retrieveChallenge(_ selector: String) -> Challenge {
+        let goal = userDefaults.integer(forKey: "goal" + selector)
+        let progress = userDefaults.integer(forKey: "progress" + selector)
+        let times = userDefaults.integer(forKey: "times" + selector)
+        let timesProgress = userDefaults.integer(forKey: "timesProgress" + selector)
         
-        let goalTypeRawValue = userDefaults.stringForKey("goalType" + selector)!
+        let goalTypeRawValue = userDefaults.string(forKey: "goalType" + selector)!
         let goalType = GoalType(rawValue: goalTypeRawValue)!
         
-        let typeRawValue = userDefaults.stringForKey("type" + selector)!
+        let typeRawValue = userDefaults.string(forKey: "type" + selector)!
         let type = ChallengeType(rawValue: typeRawValue)!
         
-        let stateRawValue = userDefaults.stringForKey("state" + selector)!
+        let stateRawValue = userDefaults.string(forKey: "state" + selector)!
         let state = ChallengeState(rawValue: stateRawValue)!
         
         let newChallenge = Challenge(withProgress: progress, goal: goal, type: type, goalType: goalType, state: state, times: times, timesProgress: timesProgress)
@@ -145,7 +145,7 @@ class ChallengeManager {
         return newChallenge
     }
     
-    func addToProgressOfType(type: ChallengeType) {
+    func addToProgressOfType(_ type: ChallengeType) {
         for (_, challenge) in activeChallenges {
             if challenge.state != .Completed {
                 if challenge.type == type {
@@ -196,7 +196,7 @@ class ChallengeManager {
         }
     }
     
-    func replaceChallengeForKey(key: String) {
+    func replaceChallengeForKey(_ key: String) {
         let oldChallenge = activeChallenges[key]!
         //get last challenge info
         let lastGoal = oldChallenge.goal
@@ -428,7 +428,7 @@ class ChallengeManager {
         }
     }
     
-    func isGoalAndTypeEqual(goalType: GoalType, type: ChallengeType) -> Bool {
+    func isGoalAndTypeEqual(_ goalType: GoalType, type: ChallengeType) -> Bool {
         for (_, challenge) in activeChallenges {
             if challenge.type == type && challenge.goalType == goalType {
                 return true

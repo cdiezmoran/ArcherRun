@@ -27,14 +27,14 @@ class StartScene: SKScene {
     let fixedDelta: CFTimeInterval = 1.0/60.0
     let scrollSpeed: CGFloat = 160
     
-    override func didMoveToView(view: SKView) {
-        water = self.childNodeWithName("water") as! SKSpriteNode
-        water2 = self.childNodeWithName("water2") as! SKSpriteNode
-        clouds = self.childNodeWithName("clouds") as! SKEmitterNode
-        musicOn = self.childNodeWithName("musicOn") as! MSButtonNode
-        musicOff = self.childNodeWithName("musicOff") as! MSButtonNode
-        soundsOn = self.childNodeWithName("soundsOn") as! MSButtonNode
-        soundsOff = self.childNodeWithName("soundsOff") as! MSButtonNode
+    override func didMove(to view: SKView) {
+        water = self.childNode(withName: "water") as! SKSpriteNode
+        water2 = self.childNode(withName: "water2") as! SKSpriteNode
+        clouds = self.childNode(withName: "clouds") as! SKEmitterNode
+        musicOn = self.childNode(withName: "musicOn") as! MSButtonNode
+        musicOff = self.childNode(withName: "musicOff") as! MSButtonNode
+        soundsOn = self.childNode(withName: "soundsOn") as! MSButtonNode
+        soundsOff = self.childNode(withName: "soundsOff") as! MSButtonNode
         
         clouds.advanceSimulationTime(100)
         
@@ -42,69 +42,69 @@ class StartScene: SKScene {
         fbLoginView.readPermissions = ["public_profile", "email", "user_friends", "publish_actions"]
         self.view?.addSubview(fbLoginView)*/
         
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        let musicIsOn = userDefaults.boolForKey("musicSettings")
-        let soundsAreOn = userDefaults.boolForKey("soundsSettings")
+        let userDefaults = UserDefaults.standard
+        let musicIsOn = userDefaults.bool(forKey: "musicSettings")
+        let soundsAreOn = userDefaults.bool(forKey: "soundsSettings")
         
         if musicIsOn {
-            musicOff.hidden = true
+            musicOff.isHidden = true
             playBackgroundMusic()
         }
         else {
-            musicOn.hidden = true
+            musicOn.isHidden = true
         }
         
         if soundsAreOn {
-            soundsOff.hidden = true
+            soundsOff.isHidden = true
         }
         else {
-            soundsOn.hidden = true
+            soundsOn.isHidden = true
         }
         
         musicOn.selectedHandler = {
             //Turn music off
-            self.musicOn.hidden = true
-            self.musicOff.hidden = false
+            self.musicOn.isHidden = true
+            self.musicOff.isHidden = false
             
             if let music = self.backgroundMusic {
                 music.removeFromParent()
             }
             
-            userDefaults.setBool(false, forKey: "musicSettings")
+            userDefaults.set(false, forKey: "musicSettings")
             userDefaults.synchronize()
         }
         
         musicOff.selectedHandler = {
             //Turn music on
-            self.musicOn.hidden = false
-            self.musicOff.hidden = true
+            self.musicOn.isHidden = false
+            self.musicOff.isHidden = true
             
             self.playBackgroundMusic()
             
-            userDefaults.setBool(true, forKey: "musicSettings")
+            userDefaults.set(true, forKey: "musicSettings")
             userDefaults.synchronize()
         }
         
         soundsOn.selectedHandler = {
             //Turn sounds off
-            self.soundsOn.hidden = true
-            self.soundsOff.hidden = false
+            self.soundsOn.isHidden = true
+            self.soundsOff.isHidden = false
             
-            userDefaults.setBool(false, forKey: "soundsSettings")
+            userDefaults.set(false, forKey: "soundsSettings")
             userDefaults.synchronize()
         }
         
         soundsOff.selectedHandler = {
             //Turn sounds on
-            self.soundsOn.hidden = false
-            self.soundsOff.hidden = true
+            self.soundsOn.isHidden = false
+            self.soundsOff.isHidden = true
             
-            userDefaults.setBool(true, forKey: "soundsSettings")
+            userDefaults.set(true, forKey: "soundsSettings")
             userDefaults.synchronize()
         }
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let scene = GameScene(fileNamed:"GameScene") {
             let skView = self.view!
             
@@ -112,18 +112,18 @@ class StartScene: SKScene {
             skView.ignoresSiblingOrder = true
             
             /* Set the scale mode to scale to fit the window */
-            scene.scaleMode = .Fill
+            scene.scaleMode = .fill
             
             skView.presentScene(scene)
         }
     }
     
-    override func update(currentTime: NSTimeInterval) {
+    override func update(_ currentTime: TimeInterval) {
         scrollSprite(water, speed: 0.8)
         scrollSprite(water2, speed: 0.8)
     }
     
-    func scrollSprite(sprite: SKSpriteNode, speed: CGFloat) {
+    func scrollSprite(_ sprite: SKSpriteNode, speed: CGFloat) {
         sprite.position.x -= speed
         
         if sprite.position.x <= sprite.size.width {
@@ -132,8 +132,8 @@ class StartScene: SKScene {
     }
     
     func playBackgroundMusic() {
-        if let musicURL = NSBundle.mainBundle().URLForResource("bg-music", withExtension: "mp3") {
-            backgroundMusic = SKAudioNode(URL: musicURL)
+        if let musicURL = Bundle.main.url(forResource: "bg-music", withExtension: "mp3") {
+            backgroundMusic = SKAudioNode(url: musicURL)
             addChild(backgroundMusic)
         }
     }

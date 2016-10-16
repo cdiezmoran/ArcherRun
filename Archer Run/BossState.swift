@@ -15,71 +15,71 @@ class BossState: GKState {
     
     var arrowCount: Int = 0
     var checkPosition: CGPoint!
-    var undeadArrowTimer: NSTimeInterval = 0
+    var undeadArrowTimer: TimeInterval = 0
     
     init(scene: GameScene) {
         self.scene = scene
     }
 
-    override func didEnterWithPreviousState(previousState: GKState?) {
+    override func didEnter(from previousState: GKState?) {
         scene.undead = Undead()
         let x = scene.size.width + 10
         let minY = scene.levelHolder1.size.height + scene.undead.size.height
         let maxY = scene.size.height - scene.undead.size.height
         let y = CGFloat.random(min: minY, max: maxY)
-        scene.undead.position = CGPointMake(x, y)
+        scene.undead.position = CGPoint(x: x, y: y)
         createMagicPlatform()
         createHealthBar()
         checkPosition = scene.undead.position
     }
     
-    override func isValidNextState(stateClass: AnyClass) -> Bool {
+    override func isValidNextState(_ stateClass: AnyClass) -> Bool {
         return true
     }
     
-    override func willExitWithNextState(nextState: GKState) {
+    override func willExit(to nextState: GKState) {
         var moveToAction: SKAction
-        if scene.undead.state == .Dead {
+        if scene.undead.state == .dead {
             //moveToAction = SKAction.moveToY(-scene.size.height * 2, duration: 1)
-            moveToAction = SKAction.moveTo(CGPoint(x: scene.size.width / 2, y: -scene.size.height * 2), duration: 1)
+            moveToAction = SKAction.move(to: CGPoint(x: scene.size.width / 2, y: -scene.size.height * 2), duration: 1)
         }
         else {
             //moveToAction = SKAction.moveToY(scene.size.height * 2, duration: 1)
-            moveToAction = SKAction.moveTo(CGPoint(x: 0, y: scene.size.height * 2), duration: 1)
+            moveToAction = SKAction.move(to: CGPoint(x: 0, y: scene.size.height * 2), duration: 1)
         }
         
-        let removeFromParent = SKAction.runBlock({ self.scene.undead.removeFromParent() })
+        let removeFromParent = SKAction.run({ self.scene.undead.removeFromParent() })
         
         let sequence = SKAction.sequence([moveToAction, removeFromParent])
         
         undeadArrowTimer = 0
         arrowCount = 0
         
-        scene.undead.runAction(sequence)
+        scene.undead.run(sequence)
     }
     
-    override func updateWithDeltaTime(seconds: NSTimeInterval) {
+    override func update(deltaTime seconds: TimeInterval) {
         scene.score += scene.floorSpeed * CGFloat(seconds)
         
-        if scene.undead.state == .Dead || arrowCount >= 2 {
-            scene.gameState.enterState(PlayingState)
+        if scene.undead.state == .dead || arrowCount >= 2 {
+            scene.gameState.enter(PlayingState.self)
         }
         
         if !scene.undead.isPositioned {
             if scene.obstacleScrollLayer.children.count == 0 {
-                scene.undead.position = scene.convertPoint(scene.undead.position, toNode: scene.obstacleScrollLayer)
+                scene.undead.position = scene.convert(scene.undead.position, to: scene.obstacleScrollLayer)
                 scene.obstacleScrollLayer.addChild(scene.undead)
                 scene.undead.isMoving = true
             }
         }
         
         if scene.undead.isMoving {
-            checkPosition = scene.convertPoint(scene.undead.position, fromNode: scene.obstacleScrollLayer)
+            checkPosition = scene.convert(scene.undead.position, from: scene.obstacleScrollLayer)
         }
         
         if !scene.undead.isPositioned {
             if checkPosition.x <= (scene.size.width * 7) / 8 {
-                scene.undead.position = scene.convertPoint(scene.undead.position, fromNode: scene.obstacleScrollLayer)
+                scene.undead.position = scene.convert(scene.undead.position, from: scene.obstacleScrollLayer)
                 scene.undead.removeFromParent()
                 scene.addChild(scene.undead)
                 
@@ -115,7 +115,7 @@ class BossState: GKState {
     
     func createMagicPlatform() {
         let platformTexture = SKTexture(imageNamed: "magicPlatform")
-        let platform = SKSpriteNode(texture: platformTexture, color: UIColor.clearColor(), size: CGSize(width: 100, height: 30))
+        let platform = SKSpriteNode(texture: platformTexture, color: UIColor.clear, size: CGSize(width: 100, height: 30))
         scene.undead.addChild(platform)
         platform.position = CGPoint(x: -10, y: -40)
         

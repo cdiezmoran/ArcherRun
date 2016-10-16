@@ -19,11 +19,11 @@ class GameOverState: GKState {
         self.scene = scene
     }
     
-    override func didEnterWithPreviousState(previousState: GKState?) {
-        NSNotificationCenter.defaultCenter().postNotificationName("removeAds", object: nil)
+    override func didEnter(from previousState: GKState?) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "removeAds"), object: nil)
         
         if scene.playedGames % 5 == 0 && !scene.didGetExtraChance {
-            NSNotificationCenter.defaultCenter().postNotificationName("showInterstitial", object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "showInterstitial"), object: nil)
         }
 
         moveAndShowSoundButtons()
@@ -31,9 +31,9 @@ class GameOverState: GKState {
         displayGameOverScreen()
         
         //Get current highscore and coin count
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        var highscore = userDefaults.integerForKey("highscore")
-        var totalCoinCount = userDefaults.integerForKey("totalCoins")
+        let userDefaults = UserDefaults.standard
+        var highscore = userDefaults.integer(forKey: "highscore")
+        var totalCoinCount = userDefaults.integer(forKey: "totalCoins")
         let roundedScore = Int(round(scene.score))
         
         //Update highscore if user's score is better
@@ -69,15 +69,15 @@ class GameOverState: GKState {
         ChallengeManager.sharedInstance.storeChallengesData()
     }
     
-    override func isValidNextState(stateClass: AnyClass) -> Bool {
+    override func isValidNextState(_ stateClass: AnyClass) -> Bool {
         return true
     }
     
-    override func willExitWithNextState(nextState: GKState) {
+    override func willExit(to nextState: GKState) {
         
     }
     
-    override func updateWithDeltaTime(seconds: NSTimeInterval) {
+    override func update(deltaTime seconds: TimeInterval) {
         let moveSpeed = CGFloat(60 * seconds)
         
         scene.enemyScrollLayer.position.x -= moveSpeed
@@ -86,7 +86,7 @@ class GameOverState: GKState {
     }
     
     func moveAndShowSoundButtons() {
-        let moveAndShowSoundButtons = SKAction.runBlock({
+        let moveAndShowSoundButtons = SKAction.run({
             let soundsPos = CGPoint(x: 193, y: -15.5)
             let musicPos = CGPoint(x: 275, y: -15.5)
             
@@ -100,21 +100,21 @@ class GameOverState: GKState {
 
         })
         
-        scene.runAction(moveAndShowSoundButtons)
+        scene.run(moveAndShowSoundButtons)
     }
     
     func displayGameOverScreen() {
         let displayGameOverScreen = SKAction(named: "DisplayGameOver")!
         if scene.didCompleteChallenge {
-            scene.gameOverScreen.runAction(displayGameOverScreen)
-            let moveLevelInfo = SKAction.moveTo(CGPoint(x: -124.5, y: -120), duration: 0.75)
-            scene.levelInfoHolder.runAction(moveLevelInfo)
+            scene.gameOverScreen.run(displayGameOverScreen)
+            let moveLevelInfo = SKAction.move(to: CGPoint(x: -124.5, y: -120), duration: 0.75)
+            scene.levelInfoHolder.run(moveLevelInfo)
         }
         else {
-            let waitForDeadAnimation = SKAction.waitForDuration(0.8)
+            let waitForDeadAnimation = SKAction.wait(forDuration: 0.8)
             gameOverSequence = SKAction.sequence([waitForDeadAnimation, displayGameOverScreen])
             
-            scene.gameOverScreen.runAction(gameOverSequence)
+            scene.gameOverScreen.run(gameOverSequence)
             scene.levelInfoHolder.position = CGPoint(x: -124.5, y: -120)
             scene.levelInfoHolder.zPosition = 1
         }

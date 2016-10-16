@@ -8,6 +8,17 @@
 
 import SpriteKit
 import GameplayKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 struct PhysicsCategory {
     static let None:        UInt32 = 0          // 0000
@@ -50,7 +61,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var didRecieveRewardAd: Bool = false
     var didTutJump: Bool = false
     var didTutShoot: Bool = false
-    var firstTouchLocation = CGPointZero
+    var firstTouchLocation = CGPoint.zero
     var floorSpeed: CGFloat = 4
     var hearts = [SKSpriteNode]()
     var hurtTimer: CFTimeInterval = 0
@@ -75,7 +86,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var shopIndex: Int = 0
     var soundsAreOn: Bool!
     var timer: CFTimeInterval = 0
-    var userDefaults: NSUserDefaults!
+    var userDefaults: UserDefaults!
     var undead: Undead!
     var undeadHealthBar: SKSpriteNode!
     
@@ -152,7 +163,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var water: SKSpriteNode!
     var water2: SKSpriteNode!
     
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
         /* Setup your scene here */
         
         physicsWorld.contactDelegate = self
@@ -160,86 +171,86 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         archer = Archer()
         addChild(archer)
         
-        challengeActiveBanner = self.childNodeWithName("challengeActiveBanner") as! SKSpriteNode
-        challengeActiveLabel = self.childNodeWithName("//challengeActiveLabel") as! SKLabelNode
-        challengeActiveProgress = self.childNodeWithName("//challengeActiveProgress") as! SKLabelNode
-        challengeCompletedBanner = self.childNodeWithName("challengeCompletedBanner") as! SKSpriteNode
-        challengeCompletedIcon = self.childNodeWithName("//challengeCompletedIcon") as! SKSpriteNode
-        challengeCompletedIconBG = self.childNodeWithName("//challengeCompletedIconBG") as! SKSpriteNode
-        challengeCompletedLabel = self.childNodeWithName("//challengeCompletedLabel") as! SKLabelNode
-        challengeCompletedScreen = self.childNodeWithName("//challengeCompletedScreen") as! SKSpriteNode
-        challengeHolder = self.childNodeWithName("challengeHolder") as! SKSpriteNode
-        challengeIcon = self.childNodeWithName("//challengeIcon") as! SKSpriteNode
-        challengeIconBG = self.childNodeWithName("//challengeIconBG") as! SKSpriteNode
-        challengeLabel = self.childNodeWithName("//challengeLabel") as! SKLabelNode
-        clouds = self.childNodeWithName("clouds") as! SKEmitterNode
-        coinCountLabel = self.childNodeWithName("coinCountLabel") as! SKLabelNode
-        coinRewardLabel = self.childNodeWithName("//coinRewardLabel") as! SKLabelNode
-        completedSprite = self.childNodeWithName("//completedSprite") as! SKSpriteNode
-        enemyScrollLayer = self.childNodeWithName("enemyScrollLayer")
-        enemyScrollLayerFast = self.childNodeWithName("enemyScrollLayerFast")
-        enemyScrollLayerSlow = self.childNodeWithName("enemyScrollLayerSlow")
-        firstChallengeHolder = self.childNodeWithName("//firstChallengeHolder") as! SKSpriteNode
-        firstChallengeLabel = self.childNodeWithName("//firstChallengeLabel") as! SKLabelNode
-        firstChallengeIcon = self.childNodeWithName("//firstChallengeIcon") as! SKSpriteNode
-        firstChallengeIconBG = self.childNodeWithName("//firstChallengeIconBG") as! SKSpriteNode
-        firstProgressLabel = self.childNodeWithName("//firstProgressLabel") as! SKLabelNode
-        gameOverScreen = self.childNodeWithName("gameOverScreen") as! SKSpriteNode
-        highScoreLabel = self.childNodeWithName("//highScoreLabel") as! SKLabelNode
-        invisibleGround = self.childNodeWithName("//invisibleGround") as! SKSpriteNode
-        leaderboardsButton = self.childNodeWithName("//leaderboardsButton") as! MSButtonNode
-        leaderboardsScreen = self.childNodeWithName("//leaderboardsScreen") as! SKSpriteNode
-        levelHolder1 = self.childNodeWithName("levelHolder1") as! SKSpriteNode
-        levelHolder2 = self.childNodeWithName("levelHolder2") as! SKSpriteNode
-        levelInfoHolder = self.childNodeWithName("//levelInfoHolder") as! SKSpriteNode
-        levelLabel = self.childNodeWithName("//levelLabel") as! SKLabelNode
-        levelProgressBar = self.childNodeWithName("//levelProgressBar") as! SKSpriteNode
-        mountains1 = self.childNodeWithName("mountains1") as! SKSpriteNode
-        mountains2 = self.childNodeWithName("mountains2") as! SKSpriteNode
-        musicOff = self.childNodeWithName("//musicOff") as! MSButtonNode
-        musicOn = self.childNodeWithName("//musicOn") as! MSButtonNode
-        obstacleScrollLayer = self.childNodeWithName("obstacleScrollLayer")
-        pauseButton = self.childNodeWithName("pauseButton") as! MSButtonNode
-        pauseScreen = self.childNodeWithName("pauseScreen") as! SKSpriteNode
-        playAgainButton = self.childNodeWithName("//playAgainButton") as! MSButtonNode
-        playButton = self.childNodeWithName("//playButton") as! MSButtonNode
-        retryButton = self.childNodeWithName("//retryButton") as! MSButtonNode
-        startGroundLarge = self.childNodeWithName("//startGroundLarge") as! SKSpriteNode
-        scoreLabel = self.childNodeWithName("scoreLabel") as! SKLabelNode
-        scoreLabelGO = self.childNodeWithName("//scoreLabelGO") as! SKLabelNode
-        secondChallengeHolder = self.childNodeWithName("//secondChallengeHolder") as! SKSpriteNode
-        secondChallengeLabel = self.childNodeWithName("//secondChallengeLabel") as! SKLabelNode
-        secondChallengeIcon = self.childNodeWithName("//secondChallengeIcon") as! SKSpriteNode
-        secondChallengeIconBG = self.childNodeWithName("//secondChallengeIconBG") as! SKSpriteNode
-        secondProgressLabel = self.childNodeWithName("//secondProgressLabel") as! SKLabelNode
-        shopButton = self.childNodeWithName("//shopButton") as! MSButtonNode
-        soundsOff = self.childNodeWithName("//soundsOff") as! MSButtonNode
-        soundsOn = self.childNodeWithName("//soundsOn") as! MSButtonNode
-        startMountains = self.childNodeWithName("startMountains") as! SKSpriteNode
-        startingScrollLayer = self.childNodeWithName("startingScrollLayer")
-        startTreesBack = self.childNodeWithName("startTreesBack") as! SKSpriteNode
-        startTreesFront = self.childNodeWithName("startTreesFront") as! SKSpriteNode
-        thirdChallengeHolder = self.childNodeWithName("//thirdChallengeHolder") as! SKSpriteNode
-        thirdChallengeLabel = self.childNodeWithName("//thirdChallengeLabel") as! SKLabelNode
-        thirdChallengeIcon = self.childNodeWithName("//thirdChallengeIcon") as! SKSpriteNode
-        thirdChallengeIconBG = self.childNodeWithName("//thirdChallengeIconBG") as! SKSpriteNode
-        thirdProgressLabel = self.childNodeWithName("//thirdProgressLabel") as! SKLabelNode
-        totalCoinCountLabel = self.childNodeWithName("//totalCoinCountLabel") as! SKLabelNode
-        treesBack1 = self.childNodeWithName("treesBack1") as! SKSpriteNode
-        treesBack2 = self.childNodeWithName("treesBack2") as! SKSpriteNode
-        treesFront1 = self.childNodeWithName("treesFront1") as! SKSpriteNode
-        treesFront2 = self.childNodeWithName("treesFront2") as! SKSpriteNode
-        water = self.childNodeWithName("//water") as! SKSpriteNode
-        water2 = self.childNodeWithName("//water2") as! SKSpriteNode
+        challengeActiveBanner = self.childNode(withName: "challengeActiveBanner") as! SKSpriteNode
+        challengeActiveLabel = self.childNode(withName: "//challengeActiveLabel") as! SKLabelNode
+        challengeActiveProgress = self.childNode(withName: "//challengeActiveProgress") as! SKLabelNode
+        challengeCompletedBanner = self.childNode(withName: "challengeCompletedBanner") as! SKSpriteNode
+        challengeCompletedIcon = self.childNode(withName: "//challengeCompletedIcon") as! SKSpriteNode
+        challengeCompletedIconBG = self.childNode(withName: "//challengeCompletedIconBG") as! SKSpriteNode
+        challengeCompletedLabel = self.childNode(withName: "//challengeCompletedLabel") as! SKLabelNode
+        challengeCompletedScreen = self.childNode(withName: "//challengeCompletedScreen") as! SKSpriteNode
+        challengeHolder = self.childNode(withName: "challengeHolder") as! SKSpriteNode
+        challengeIcon = self.childNode(withName: "//challengeIcon") as! SKSpriteNode
+        challengeIconBG = self.childNode(withName: "//challengeIconBG") as! SKSpriteNode
+        challengeLabel = self.childNode(withName: "//challengeLabel") as! SKLabelNode
+        clouds = self.childNode(withName: "clouds") as! SKEmitterNode
+        coinCountLabel = self.childNode(withName: "coinCountLabel") as! SKLabelNode
+        coinRewardLabel = self.childNode(withName: "//coinRewardLabel") as! SKLabelNode
+        completedSprite = self.childNode(withName: "//completedSprite") as! SKSpriteNode
+        enemyScrollLayer = self.childNode(withName: "enemyScrollLayer")
+        enemyScrollLayerFast = self.childNode(withName: "enemyScrollLayerFast")
+        enemyScrollLayerSlow = self.childNode(withName: "enemyScrollLayerSlow")
+        firstChallengeHolder = self.childNode(withName: "//firstChallengeHolder") as! SKSpriteNode
+        firstChallengeLabel = self.childNode(withName: "//firstChallengeLabel") as! SKLabelNode
+        firstChallengeIcon = self.childNode(withName: "//firstChallengeIcon") as! SKSpriteNode
+        firstChallengeIconBG = self.childNode(withName: "//firstChallengeIconBG") as! SKSpriteNode
+        firstProgressLabel = self.childNode(withName: "//firstProgressLabel") as! SKLabelNode
+        gameOverScreen = self.childNode(withName: "gameOverScreen") as! SKSpriteNode
+        highScoreLabel = self.childNode(withName: "//highScoreLabel") as! SKLabelNode
+        invisibleGround = self.childNode(withName: "//invisibleGround") as! SKSpriteNode
+        leaderboardsButton = self.childNode(withName: "//leaderboardsButton") as! MSButtonNode
+        leaderboardsScreen = self.childNode(withName: "//leaderboardsScreen") as! SKSpriteNode
+        levelHolder1 = self.childNode(withName: "levelHolder1") as! SKSpriteNode
+        levelHolder2 = self.childNode(withName: "levelHolder2") as! SKSpriteNode
+        levelInfoHolder = self.childNode(withName: "//levelInfoHolder") as! SKSpriteNode
+        levelLabel = self.childNode(withName: "//levelLabel") as! SKLabelNode
+        levelProgressBar = self.childNode(withName: "//levelProgressBar") as! SKSpriteNode
+        mountains1 = self.childNode(withName: "mountains1") as! SKSpriteNode
+        mountains2 = self.childNode(withName: "mountains2") as! SKSpriteNode
+        musicOff = self.childNode(withName: "//musicOff") as! MSButtonNode
+        musicOn = self.childNode(withName: "//musicOn") as! MSButtonNode
+        obstacleScrollLayer = self.childNode(withName: "obstacleScrollLayer")
+        pauseButton = self.childNode(withName: "pauseButton") as! MSButtonNode
+        pauseScreen = self.childNode(withName: "pauseScreen") as! SKSpriteNode
+        playAgainButton = self.childNode(withName: "//playAgainButton") as! MSButtonNode
+        playButton = self.childNode(withName: "//playButton") as! MSButtonNode
+        retryButton = self.childNode(withName: "//retryButton") as! MSButtonNode
+        startGroundLarge = self.childNode(withName: "//startGroundLarge") as! SKSpriteNode
+        scoreLabel = self.childNode(withName: "scoreLabel") as! SKLabelNode
+        scoreLabelGO = self.childNode(withName: "//scoreLabelGO") as! SKLabelNode
+        secondChallengeHolder = self.childNode(withName: "//secondChallengeHolder") as! SKSpriteNode
+        secondChallengeLabel = self.childNode(withName: "//secondChallengeLabel") as! SKLabelNode
+        secondChallengeIcon = self.childNode(withName: "//secondChallengeIcon") as! SKSpriteNode
+        secondChallengeIconBG = self.childNode(withName: "//secondChallengeIconBG") as! SKSpriteNode
+        secondProgressLabel = self.childNode(withName: "//secondProgressLabel") as! SKLabelNode
+        shopButton = self.childNode(withName: "//shopButton") as! MSButtonNode
+        soundsOff = self.childNode(withName: "//soundsOff") as! MSButtonNode
+        soundsOn = self.childNode(withName: "//soundsOn") as! MSButtonNode
+        startMountains = self.childNode(withName: "startMountains") as! SKSpriteNode
+        startingScrollLayer = self.childNode(withName: "startingScrollLayer")
+        startTreesBack = self.childNode(withName: "startTreesBack") as! SKSpriteNode
+        startTreesFront = self.childNode(withName: "startTreesFront") as! SKSpriteNode
+        thirdChallengeHolder = self.childNode(withName: "//thirdChallengeHolder") as! SKSpriteNode
+        thirdChallengeLabel = self.childNode(withName: "//thirdChallengeLabel") as! SKLabelNode
+        thirdChallengeIcon = self.childNode(withName: "//thirdChallengeIcon") as! SKSpriteNode
+        thirdChallengeIconBG = self.childNode(withName: "//thirdChallengeIconBG") as! SKSpriteNode
+        thirdProgressLabel = self.childNode(withName: "//thirdProgressLabel") as! SKLabelNode
+        totalCoinCountLabel = self.childNode(withName: "//totalCoinCountLabel") as! SKLabelNode
+        treesBack1 = self.childNode(withName: "treesBack1") as! SKSpriteNode
+        treesBack2 = self.childNode(withName: "treesBack2") as! SKSpriteNode
+        treesFront1 = self.childNode(withName: "treesFront1") as! SKSpriteNode
+        treesFront2 = self.childNode(withName: "treesFront2") as! SKSpriteNode
+        water = self.childNode(withName: "//water") as! SKSpriteNode
+        water2 = self.childNode(withName: "//water2") as! SKSpriteNode
         
         clouds.advanceSimulationTime(320)
         
-        coinRewardLabel.hidden = true
-        pauseScreen.hidden = true
-        soundsOn.hidden = true
-        soundsOff.hidden = true
-        musicOn.hidden = true
-        musicOff.hidden = true
+        coinRewardLabel.isHidden = true
+        pauseScreen.isHidden = true
+        soundsOn.isHidden = true
+        soundsOff.isHidden = true
+        musicOn.isHidden = true
+        musicOff.isHidden = true
         
         setupGroundPhysics()
         
@@ -258,11 +269,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         setButtonHandlers()
         
-        userDefaults = NSUserDefaults.standardUserDefaults()
-        playedGames = userDefaults.integerForKey("playedGames")
+        userDefaults = UserDefaults.standard
+        playedGames = userDefaults.integer(forKey: "playedGames")
         
-        soundsAreOn = userDefaults.boolForKey("soundsSettings")
-        musicIsOn = userDefaults.boolForKey("musicSettings")
+        soundsAreOn = userDefaults.bool(forKey: "soundsSettings")
+        musicIsOn = userDefaults.bool(forKey: "musicSettings")
         
         if musicIsOn! {
             playBackgroundMusic()
@@ -283,24 +294,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         loadAds()
         
         //Enter first State
-        gameState.enterState(StartingState)
+        gameState.enter(StartingState.self)
         
         //Observer to pause game when ad is clicked
-        NSNotificationCenter.defaultCenter().addObserver(
+        NotificationCenter.default.addObserver(
             self,
             selector: #selector(GameScene.pauseGame),
-            name: "pauseGame",
+            name: NSNotification.Name(rawValue: "pauseGame"),
             object: nil)
         
         //Observer to check if reward ad failed to load
-        NSNotificationCenter.defaultCenter().addObserver(
+        NotificationCenter.default.addObserver(
             self,
             selector: #selector(GameScene.receivedRewardAd),
-            name: "receivedReward",
+            name: NSNotification.Name(rawValue: "receivedReward"),
             object: nil)
     }
     
-    func didBeginContact(contact: SKPhysicsContact) {
+    func didBegin(_ contact: SKPhysicsContact) {
         /* Get references to bodies involved in collision */
         let contactA:SKPhysicsBody = contact.bodyA
         let contactB:SKPhysicsBody = contact.bodyB
@@ -315,13 +326,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         /* Player contact with floor */
         if  (categoryA == PhysicsCategory.Floor && categoryB == PhysicsCategory.Player) || (categoryA == PhysicsCategory.Player && categoryB == PhysicsCategory.Floor) {
             
-            if archer.state == .HurtJump || archer.state == .HurtDoubleJump {
-                archer.state = .Hurt
+            if archer.state == .hurtJump || archer.state == .hurtDoubleJump {
+                archer.state = .hurt
             }
             
-            if archer.state == .Dead || archer.state == .Running || archer.state == .Hurt { return }
+            if archer.state == .dead || archer.state == .running || archer.state == .hurt { return }
             
-            if archer.state == .DoubleJumping || archer.state == .HurtDoubleJump {
+            if archer.state == .doubleJumping || archer.state == .hurtDoubleJump {
                 archer.resetRotation()
             }
             
@@ -329,17 +340,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             if gameState.currentState is StartingState {
                 if playedGames < 3 {
-                    gameState.enterState(TutorialState)
+                    gameState.enter(TutorialState.self)
                 }
                 else {
-                    gameState.enterState(PlayingState)
+                    gameState.enter(PlayingState.self)
                 }
             }
         }
         
         /* Player contact with obstacle */
         if (categoryA == PhysicsCategory.Obstacle && categoryB == PhysicsCategory.Player) || (categoryA == PhysicsCategory.Player && categoryB == PhysicsCategory.Obstacle) {
-            if archer.state == .Hurt || archer.state == .HurtJump || archer.state == .HurtDoubleJump { return }
+            if archer.state == .hurt || archer.state == .hurtJump || archer.state == .hurtDoubleJump { return }
             
             archer.lives -= 1
             hearts.last!.removeFromParent()
@@ -350,41 +361,41 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 archer.die()
                 //Go to ExtraChanceState
                 if !didGetExtraChance && didRecieveRewardAd {
-                    gameState.enterState(ExtraChanceState)
+                    gameState.enter(ExtraChanceState.self)
                 }
                 else {
                     if didCompleteChallenge {
-                        gameState.enterState(ChallengeCompletedState)
+                        gameState.enter(ChallengeCompletedState.self)
                     }
                     else {
-                        gameState.enterState(GameOverState)
+                        gameState.enter(GameOverState.self)
                     }
                 }
             }
             else {
                 archer.hurt()
-                archer.state = .Hurt
+                archer.state = .hurt
                 archer.physicsBody?.contactTestBitMask = PhysicsCategory.Coin | PhysicsCategory.Heart | PhysicsCategory.IceBlock
-                archer.runAction(SKAction(named: "HurtFade")!, withKey: "hurtAnimation")
+                archer.run(SKAction(named: "HurtFade")!, withKey: "hurtAnimation")
             }
             
             /* Check what kind of object the player made contact with */
-            if nodeA.isKindOfClass(MeleeOrc) {
+            if nodeA.isKind(of: MeleeOrc.self) {
                 let orc = nodeA as! MeleeOrc
                 orc.hitArcher()
                 orc.physicsBody?.categoryBitMask = PhysicsCategory.None
 
             }
-            else if nodeB.isKindOfClass(MeleeOrc) {
+            else if nodeB.isKind(of: MeleeOrc.self) {
                 let orc = nodeB as! MeleeOrc
                 orc.hitArcher()
                 self.physicsBody?.categoryBitMask = PhysicsCategory.None
             }
-            else if nodeA.isKindOfClass(Spike) {
+            else if nodeA.isKind(of: Spike.self) {
                 let spike = nodeA as! Spike
                 spike.physicsBody?.categoryBitMask = PhysicsCategory.None
             }
-            else if nodeB.isKindOfClass(Spike) {
+            else if nodeB.isKind(of: Spike.self) {
                 let spike = nodeB as! Spike
                 spike.physicsBody?.categoryBitMask = PhysicsCategory.None
             }
@@ -392,82 +403,82 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         /* Heart - Player contact */
         if categoryA == PhysicsCategory.Heart && categoryB == PhysicsCategory.Player {
-            if nodeA.isKindOfClass(Heart) {
+            if nodeA.isKind(of: Heart.self) {
                 grabHeart(nodeA)
             }
         }
         else if categoryA == PhysicsCategory.Player && categoryB == PhysicsCategory.Heart {
-            if nodeB.isKindOfClass(Heart) {
+            if nodeB.isKind(of: Heart.self) {
                 grabHeart(nodeB)
             }
         }
         
         /* IceBlock - Player contact */
         if categoryA == PhysicsCategory.IceBlock && categoryB == PhysicsCategory.Player {
-            if nodeA.isKindOfClass(Orc) {
+            if nodeA.isKind(of: Orc.self) {
                 breakiceBlock(nodeA)
             }
         }
         else if categoryA == PhysicsCategory.Player && categoryB == PhysicsCategory.IceBlock {
-            if nodeB.isKindOfClass(Orc) {
+            if nodeB.isKind(of: Orc.self) {
                 breakiceBlock(nodeB)
             }
         }
         
         /* Obstacle - Arrow contact */
         if categoryA == PhysicsCategory.Obstacle && categoryB == PhysicsCategory.Arrow {
-            if nodeA.isKindOfClass(MeleeOrc) {
+            if nodeA.isKind(of: MeleeOrc.self) {
                 killOrc(nodeA, nodeArrow: nodeB)
             }
-            else if nodeA.isKindOfClass(Undead) {
+            else if nodeA.isKind(of: Undead.self) {
                 hitUndead(nodeB)
             }
         }
         else if categoryA == PhysicsCategory.Arrow && categoryB == PhysicsCategory.Obstacle {
-            if nodeB.isKindOfClass(MeleeOrc) {
+            if nodeB.isKind(of: MeleeOrc.self) {
                 killOrc(nodeB, nodeArrow: nodeA)
             }
-            else if nodeB.isKindOfClass(Undead) {
+            else if nodeB.isKind(of: Undead.self) {
                 hitUndead(nodeA)
             }
         }
         
         /* Coin - Player contact */
         if categoryA == PhysicsCategory.Coin || categoryB == PhysicsCategory.Coin {
-            if nodeA.isKindOfClass(Coin) {
+            if nodeA.isKind(of: Coin.self) {
                 grabCoin(nodeA)
             }
-            else if nodeB.isKindOfClass(Coin) {
+            else if nodeB.isKind(of: Coin.self) {
                 grabCoin(nodeB)
             }
         }
         
         /* Target - Arrow contact */
         if categoryA == PhysicsCategory.Target && categoryB == PhysicsCategory.Arrow {
-            if nodeA.isKindOfClass(Target) {
+            if nodeA.isKind(of: Target.self) {
                 hitTargetWithSpikes(nodeA, nodeArrow: nodeB)
             }
         }
         else if categoryA == PhysicsCategory.Arrow && categoryB == PhysicsCategory.Target {
-            if nodeB.isKindOfClass(Target) {
+            if nodeB.isKind(of: Target.self) {
                 hitTargetWithSpikes(nodeB, nodeArrow: nodeA)
             }
         }
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
        /* Called when a touch begins */
         if gameState.currentState is GameOverState || gameState.currentState is StartingState || gameState.currentState is ChallengeCompletedState || gameState.currentState is ExtraChanceState { return }
         
         let touch = touches.first
-        let location = touch?.locationInNode(self)
+        let location = touch?.location(in: self)
         if location?.x < (frame.width / 2) / 2 {
             // make the hero jump
-            if archer.state == .DoubleJumping || archer.state == .HurtDoubleJump { return }
+            if archer.state == .doubleJumping || archer.state == .hurtDoubleJump { return }
             
             if gameState.currentState is TutorialState { didTutJump = true }
             
-            if archer.state == .Jumping || archer.state == .HurtJump {
+            if archer.state == .jumping || archer.state == .hurtJump {
                 archer.doubleJump()
             }
             else {
@@ -479,7 +490,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 return
             }
             
-            let touchLocation = touch!.locationInNode(self)
+            let touchLocation = touch!.location(in: self)
             
             let swipe = CGVector(dx: archer.position.x - touchLocation.x, dy: archer.position.y - touchLocation.y)
             let mag = sqrt(pow(swipe.dx, 2) + pow(swipe.dy, 2))
@@ -502,7 +513,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
    
-    override func update(currentTime: NSTimeInterval) {
+    override func update(_ currentTime: TimeInterval) {
         if gameState.currentState is PauseState {
             return
         }
@@ -514,7 +525,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             deltaTime = 1.0 / 60.0
             lastUpdateTime = currentTime
         }
-        gameState.updateWithDeltaTime(deltaTime)
+        gameState.update(deltaTime: deltaTime)
         
         /* Scroll water to make it look animated */
         scrollSprite(water, speed: 0.8)
@@ -523,17 +534,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         /* Manage active arrows on scene */
         checkForArrowOutOfBounds()
         
-        if archer.state == .Hurt || archer.state == .HurtJump || archer.state == .HurtDoubleJump {
+        if archer.state == .hurt || archer.state == .hurtJump || archer.state == .hurtDoubleJump {
             hurtTimer += deltaTime
             if hurtTimer >= 1.25 {
-                archer.removeActionForKey("hurtAnimation")
+                archer.removeAction(forKey: "hurtAnimation")
                 archer.alpha = 1
                 
-                if archer.state == .HurtJump {
-                    archer.state = .Jumping
+                if archer.state == .hurtJump {
+                    archer.state = .jumping
                 }
-                else if archer.state == .HurtDoubleJump {
-                    archer.state = .DoubleJumping
+                else if archer.state == .hurtDoubleJump {
+                    archer.state = .doubleJumping
                 }
                 else {
                   archer.run()  
@@ -560,14 +571,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.pauseGame()
         }
         playButton.selectedHandler = {
-            self.gameState.enterState(PlayingState)
+            self.gameState.enter(PlayingState.self)
             
-            self.pauseScreen.hidden = true
+            self.pauseScreen.isHidden = true
             
-            self.musicOn.hidden = true
-            self.musicOff.hidden = true
-            self.soundsOn.hidden = true
-            self.soundsOff.hidden = true
+            self.musicOn.isHidden = true
+            self.musicOff.isHidden = true
+            self.soundsOn.isHidden = true
+            self.soundsOff.isHidden = true
         }
         retryButton.selectedHandler = {
             self.loadGameScene()
@@ -576,7 +587,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func loadGameScene() {
-        NSNotificationCenter.defaultCenter().postNotificationName("removeAds", object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "removeAds"), object: nil)
         if let scene = GameScene(fileNamed:"GameScene") {
             let skView = self.view!
             
@@ -584,7 +595,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             skView.ignoresSiblingOrder = true
             
             /* Set the scale mode to scale to fit the window */
-            scene.scaleMode = .Fill
+            scene.scaleMode = .fill
             
             skView.presentScene(scene)
         }
@@ -593,8 +604,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func setLeaderboardsSelectedHandler() {
         if leaderboardsAreOpen {
             leaderboardsButton.selectedHandler = {
-                let hideAction = SKAction.moveToX(-595, duration: 0.5)
-                self.leaderboardsScreen.runAction(hideAction)
+                let hideAction = SKAction.moveTo(x: -595, duration: 0.5)
+                self.leaderboardsScreen.run(hideAction)
                 
                 self.leaderboardsAreOpen = false
                 self.setLeaderboardsSelectedHandler()
@@ -602,8 +613,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         else {
             leaderboardsButton.selectedHandler = {
-                let showAction = SKAction.moveToX(-141, duration: 0.5)
-                self.leaderboardsScreen.runAction(showAction)
+                let showAction = SKAction.moveTo(x: -141, duration: 0.5)
+                self.leaderboardsScreen.run(showAction)
                 
                 self.leaderboardsAreOpen = true
                 self.setLeaderboardsSelectedHandler()
@@ -612,7 +623,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func pauseGame() {
-        gameState.enterState(PauseState)
+        gameState.enter(PauseState.self)
     }
     
     func setupGroundPhysics() {
@@ -622,19 +633,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         levelHolder2.physicsBody = getFloorPhysicsBody(texture: levelHolder2!.texture!, size: levelHolder2.size)
         
-        invisibleGround.physicsBody = SKPhysicsBody(rectangleOfSize: invisibleGround.size)
+        invisibleGround.physicsBody = SKPhysicsBody(rectangleOf: invisibleGround.size)
         invisibleGround.physicsBody?.affectedByGravity = false
-        invisibleGround.physicsBody?.dynamic = false
+        invisibleGround.physicsBody?.isDynamic = false
         invisibleGround.physicsBody?.categoryBitMask = PhysicsCategory.Floor
         invisibleGround.physicsBody?.contactTestBitMask = PhysicsCategory.None
         invisibleGround.physicsBody?.collisionBitMask = PhysicsCategory.Player
     }
     
-    func getFloorPhysicsBody(texture texture: SKTexture, size: CGSize) -> SKPhysicsBody {
+    func getFloorPhysicsBody(texture: SKTexture, size: CGSize) -> SKPhysicsBody {
         let body = SKPhysicsBody(texture: texture, size: size)
         
         body.affectedByGravity = false
-        body.dynamic = false
+        body.isDynamic = false
         body.restitution = 0
         body.categoryBitMask = PhysicsCategory.Floor
         body.contactTestBitMask = PhysicsCategory.Player
@@ -645,7 +656,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func loadAds() {
         //Call observer
-        NSNotificationCenter.defaultCenter().postNotificationName("loadAds", object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "loadAds"), object: nil)
     }
     
     func clearObstacles() {
@@ -655,7 +666,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         removeChildrenOfNode(enemyScrollLayerSlow)
     }
     
-    func removeChildrenOfNode(node: SKNode) {
+    func removeChildrenOfNode(_ node: SKNode) {
         for child in node.children {
             child.removeFromParent()
         }

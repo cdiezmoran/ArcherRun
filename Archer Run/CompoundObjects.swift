@@ -53,10 +53,10 @@ class CompoundObjects {
         
         let x = scene.size.width + 10
         let y = scene.levelHolder1.size.height + totalHeight
-        let newPosition = CGPointMake(x, y)
+        let newPosition = CGPoint(x: x, y: y)
         
         scene.obstacleScrollLayer.addChild(coinNode)
-        coinNode.position = scene.convertPoint(newPosition, toNode: scene.obstacleScrollLayer)
+        coinNode.position = scene.convert(newPosition, to: scene.obstacleScrollLayer)
         coinNode.zPosition = 50
     }
     
@@ -70,9 +70,9 @@ class CompoundObjects {
         let targetX = scene.size.width + (firstSpike.size.width * 5) / 2
         let targetY = CGFloat.random(min: scene.size.height / 2, max: scene.size.height - 100)
         
-        let targetPosition = CGPointMake(targetX, targetY)
+        let targetPosition = CGPoint(x: targetX, y: targetY)
         
-        target.position = scene.convertPoint(targetPosition, toNode: scene.obstacleScrollLayer)
+        target.position = scene.convert(targetPosition, to: scene.obstacleScrollLayer)
         scene.obstacleScrollLayer.addChild(target)
         
         /*-----------------------------SETUP CHAIN-----------------------------------------------*/
@@ -81,9 +81,9 @@ class CompoundObjects {
         
         for _ in 0..<Int(numberOfLinks) {
             let texture = SKTexture(imageNamed: "chain")
-            let chainLink = SKSpriteNode(texture: texture, color: UIColor.clearColor(), size: texture.size())
+            let chainLink = SKSpriteNode(texture: texture, color: UIColor.clear, size: texture.size())
             
-            chainLink.physicsBody = SKPhysicsBody(rectangleOfSize: texture.size())
+            chainLink.physicsBody = SKPhysicsBody(rectangleOf: texture.size())
             
             //chainLink.physicsBody?.mass *= 0.5
             
@@ -102,25 +102,25 @@ class CompoundObjects {
         
         for i in 0..<chainLinks.count {
             if i == 0 {
-                let position = scene.convertPoint(target.position, fromNode: scene.obstacleScrollLayer)
-                let pin = SKPhysicsJointPin.jointWithBodyA(target.physicsBody!, bodyB: chainLinks[i].physicsBody!, anchor: position)
-                scene.physicsWorld.addJoint(pin)
+                let position = scene.convert(target.position, from: scene.obstacleScrollLayer)
+                let pin = SKPhysicsJointPin.joint(withBodyA: target.physicsBody!, bodyB: chainLinks[i].physicsBody!, anchor: position)
+                scene.physicsWorld.add(pin)
             }
             else {
-                var anchor = scene.convertPoint(chainLinks[i].position, fromNode: scene.obstacleScrollLayer)
+                var anchor = scene.convert(chainLinks[i].position, from: scene.obstacleScrollLayer)
                 anchor.y -= 15
-                let pin = SKPhysicsJointPin.jointWithBodyA(chainLinks[i-1].physicsBody!, bodyB: chainLinks[i].physicsBody!, anchor: anchor)
-                scene.physicsWorld.addJoint(pin)
+                let pin = SKPhysicsJointPin.joint(withBodyA: chainLinks[i-1].physicsBody!, bodyB: chainLinks[i].physicsBody!, anchor: anchor)
+                scene.physicsWorld.add(pin)
             }
         }
         
         let lastLink = chainLinks.last!
         
-        let topNode = SKSpriteNode(color: UIColor.clearColor(), size: CGSize(width: 50, height: 50))
+        let topNode = SKSpriteNode(color: UIColor.clear, size: CGSize(width: 50, height: 50))
         
-        topNode.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 50, height: 50))
+        topNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 50, height: 50))
         topNode.physicsBody?.affectedByGravity = false
-        topNode.physicsBody?.dynamic = false
+        topNode.physicsBody?.isDynamic = false
         topNode.physicsBody?.allowsRotation = false
         
         topNode.physicsBody?.categoryBitMask = PhysicsCategory.None
@@ -129,14 +129,14 @@ class CompoundObjects {
         topNode.position = lastLink.position
         scene.obstacleScrollLayer.addChild(topNode)
         
-        let lastPinPosition = scene.convertPoint(topNode.position, fromNode: scene.obstacleScrollLayer)
-        let lastPin = SKPhysicsJointPin.jointWithBodyA(topNode.physicsBody!, bodyB: lastLink.physicsBody!, anchor: lastPinPosition)
-        scene.physicsWorld.addJoint(lastPin)
+        let lastPinPosition = scene.convert(topNode.position, from: scene.obstacleScrollLayer)
+        let lastPin = SKPhysicsJointPin.joint(withBodyA: topNode.physicsBody!, bodyB: lastLink.physicsBody!, anchor: lastPinPosition)
+        scene.physicsWorld.add(lastPin)
         
         /*-----------------------------SETUP SPIKES-----------------------------------------------*/
         let x = scene.size.width + 10
         let y = scene.levelHolder1.size.height + firstSpike.size.height / 2
-        firstSpike.position = scene.convertPoint(CGPointMake(x, y), toNode: target)
+        firstSpike.position = scene.convert(CGPoint(x: x, y: y), to: target)
         
         target.addChild(firstSpike)
         spikes.append(firstSpike)

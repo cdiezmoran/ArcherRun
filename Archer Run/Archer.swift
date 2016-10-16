@@ -9,7 +9,7 @@
 import SpriteKit
 
 enum EntityState {
-    case None, Jumping, Running, Dead, DoubleJumping, Hurt, HurtJump, HurtDoubleJump
+    case none, jumping, running, dead, doubleJumping, hurt, hurtJump, hurtDoubleJump
 }
 
 enum ArcherType: String {
@@ -38,12 +38,12 @@ class Archer: SKSpriteNode {
     var hurtCount: Int = 3
     
     var lives: Int = 2
-    var state: EntityState = .None
+    var state: EntityState = .none
     var type: ArcherType = .Archer
     
     init() {
         let defaulTexture = SKTexture(imageNamed: "idle-1")
-        super.init(texture: defaulTexture, color: UIColor.clearColor(), size: defaulTexture.size())
+        super.init(texture: defaulTexture, color: UIColor.clear, size: defaulTexture.size())
         
     /*--------------------------------------SETUP ARCHER------------------------------------------------*/
         setupArcher()
@@ -54,25 +54,25 @@ class Archer: SKSpriteNode {
         var textures = [SKTexture]()
         textures = getTextures(runName, total: runCount)
         
-        runAnimationOnce = SKAction.animateWithTextures(textures, timePerFrame: 0.05, resize: true, restore: false)
+        runAnimationOnce = SKAction.animate(with: textures, timePerFrame: 0.05, resize: true, restore: false)
         
-        runAnimation = SKAction.repeatActionForever(runAnimationOnce)
+        runAnimation = SKAction.repeatForever(runAnimationOnce)
         
     /*-------------------------------------JUMP ANIMATION-----------------------------------------------*/
         textures = getTextures(jumpName, total: jumpCount)
-        jumpAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.075, resize: true, restore: false)
+        jumpAnimation = SKAction.animate(with: textures, timePerFrame: 0.075, resize: true, restore: false)
         
     /*-------------------------------------DEAD ANIMATION-----------------------------------------------*/
         textures = getTextures(deadName, total: deadCount)
-        deadAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)
+        deadAnimation = SKAction.animate(with: textures, timePerFrame: 0.1, resize: true, restore: false)
         
     /*-------------------------------------SHOOT ANIMATION-----------------------------------------------*/
         textures = getTextures(shootName, total: shootCount)
-        shootAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.025, resize: true, restore: false)
+        shootAnimation = SKAction.animate(with: textures, timePerFrame: 0.025, resize: true, restore: false)
         
     /*-------------------------------------HURT ANIMATION-----------------------------------------------*/
         textures = getTextures(hurtName, total: hurtCount)
-        hurtAnimation = SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)
+        hurtAnimation = SKAction.animate(with: textures, timePerFrame: 0.1, resize: true, restore: false)
     }
     
     
@@ -89,12 +89,12 @@ class Archer: SKSpriteNode {
     }
     
     func createPhysicsBody() {
-        let archerPhysicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 26, height: 52), center: CGPoint(x: 0, y: -3))
+        let archerPhysicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 26, height: 52), center: CGPoint(x: 0, y: -3))
         
         archerPhysicsBody.affectedByGravity = true
         archerPhysicsBody.usesPreciseCollisionDetection = true
         archerPhysicsBody.allowsRotation = false
-        archerPhysicsBody.dynamic = true
+        archerPhysicsBody.isDynamic = true
         
         archerPhysicsBody.restitution = 0
         
@@ -107,67 +107,67 @@ class Archer: SKSpriteNode {
     
     
     func jump() {
-        removeActionForKey("runForever")
+        removeAction(forKey: "runForever")
         
         physicsBody?.applyImpulse(CGVector(dx: 0, dy: 30)) //Phone
         
-        runAction(jumpAnimation)
+        self.run(jumpAnimation)
         
-        if state != .Hurt {
-            state = .Jumping
+        if state != .hurt {
+            state = .jumping
         }
         else {
-            state = .HurtJump
+            state = .hurtJump
         }
     }
     
     func doubleJump() {
         physicsBody?.applyImpulse(CGVector(dx: 0, dy: 30))
         
-        let doubleJumpAction = SKAction.rotateByAngle(-6.2830, duration: 0.25)
-        runAction(doubleJumpAction, withKey: "doubleJump")
+        let doubleJumpAction = SKAction.rotate(byAngle: -6.2830, duration: 0.25)
+        self.run(doubleJumpAction, withKey: "doubleJump")
         
-        if state != .HurtJump {
-            state = .DoubleJumping
+        if state != .hurtJump {
+            state = .doubleJumping
         }
         else {
-            state = .HurtDoubleJump
+            state = .hurtDoubleJump
         }
     }
     
     func run() {
-        runAction(runAnimation, withKey: "runForever")
-        state = .Running
+        self.run(runAnimation, withKey: "runForever")
+        state = .running
     }
     
     func hurt() {
-        removeActionForKey("runForever")
+        removeAction(forKey: "runForever")
         
-        let waitForAnim = SKAction.waitForDuration(hurtAnimation.duration)
+        let waitForAnim = SKAction.wait(forDuration: hurtAnimation.duration)
         
         let sequenceAnims = SKAction.sequence([hurtAnimation, waitForAnim, runAnimationOnce])
         
-        runAction(sequenceAnims)
+        self.run(sequenceAnims)
     }
     
     func die() {
-        if state == .Dead { return }
+        if state == .dead { return }
         
         physicsBody?.categoryBitMask = PhysicsCategory.None
         physicsBody?.contactTestBitMask = PhysicsCategory.None
         
         removeAllActions()
         
-        runAction(deadAnimation)
+        self.run(deadAnimation)
         
-        state = .Dead
+        state = .dead
     }
     
     func shootArrowAnimation() {
-        runAction(shootAnimation)
+        self.run(shootAnimation)
     }
     
-    func getTextures(prefix: String, total: Int) -> [SKTexture] {
+    func getTextures(_ prefix: String, total: Int) -> [SKTexture] {
         var textures: [SKTexture] = []
         
         for index in 1...total {
@@ -181,12 +181,12 @@ class Archer: SKSpriteNode {
     
     func resetRotation() {
         removeAllActions()
-        let resetRotation = SKAction.rotateToAngle(6.2830, duration: 0)
-        runAction(resetRotation)
+        let resetRotation = SKAction.rotate(toAngle: 6.2830, duration: 0)
+        self.run(resetRotation)
     }
     
     func doRunAnimation() {
-        runAction(runAnimation, withKey: "runForever")
+        self.run(runAnimation, withKey: "runForever")
     }
     
     func revive() {
@@ -211,7 +211,7 @@ class Archer: SKSpriteNode {
         }
     }
     
-    func setNamePrefix(prefix: String) {
+    func setNamePrefix(_ prefix: String) {
         runName = prefix + runName
         jumpName = prefix + jumpName
         deadName = prefix + deadName
@@ -220,13 +220,13 @@ class Archer: SKSpriteNode {
     }
     
     func getArcherType() {
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        if let arrowRaw = userDefaults.stringForKey("archerRawValue") {
+        let userDefaults = UserDefaults.standard
+        if let arrowRaw = userDefaults.string(forKey: "archerRawValue") {
             self.type = ArcherType(rawValue: arrowRaw)!
         }
         else {
             type = .Archer
-            userDefaults.setObject(type.rawValue, forKey: "archerRawValue")
+            userDefaults.set(type.rawValue, forKey: "archerRawValue")
             userDefaults.synchronize()
         }
     }

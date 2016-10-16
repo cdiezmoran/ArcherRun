@@ -20,18 +20,18 @@ class PlayingState: GKState {
         self.scene = scene
     }
     
-    override func didEnterWithPreviousState(previousState: GKState?) {
+    override func didEnter(from previousState: GKState?) {
         compoundObjects = CompoundObjects(scene: scene)
     }
     
-    override func isValidNextState(stateClass: AnyClass) -> Bool {
+    override func isValidNextState(_ stateClass: AnyClass) -> Bool {
         return true
     }
     
-    override func willExitWithNextState(nextState: GKState) {
+    override func willExit(to nextState: GKState) {
     }
     
-    override func updateWithDeltaTime(seconds: NSTimeInterval) {
+    override func update(deltaTime seconds: TimeInterval) {
         scene.score += scene.floorSpeed * CGFloat(seconds)
         
         scene.floorSpeed += 0.001
@@ -67,7 +67,7 @@ class PlayingState: GKState {
         }
         
         //add heart every 100m
-        if round(scene.score) % 100 == 0 && round(scene.score) >= 100 {
+        if round(scene.score).truncatingRemainder(dividingBy: 100) == 0 && round(scene.score) >= 100 {
             if heartTimer >= 1 {
                 addSpriteToScene(Heart())
                 heartTimer = 0
@@ -81,47 +81,47 @@ class PlayingState: GKState {
         
         /*--------------------------------------------------------------------------------------*/
         if ChallengeManager.sharedInstance.notifyOnChallengeCompletion() {
-            let changeText = SKAction.runBlock({
+            let changeText = SKAction.run({
                 self.scene.challengeCompletedLabel.text = ChallengeManager.sharedInstance.challengeCompleted.description()
             })
-            let showBanner = SKAction.moveToY(355, duration: 0.5)
-            let wait = SKAction.waitForDuration(1)
-            let hideBanner = SKAction.moveToY(446.5, duration: 1)
+            let showBanner = SKAction.moveTo(y: 355, duration: 0.5)
+            let wait = SKAction.wait(forDuration: 1)
+            let hideBanner = SKAction.moveTo(y: 446.5, duration: 1)
             
             let bannerSequence = SKAction.sequence([changeText, showBanner, wait, hideBanner])
             
-            scene.challengeCompletedBanner.runAction(bannerSequence)
+            scene.challengeCompletedBanner.run(bannerSequence)
             scene.didCompleteChallenge = true
         }
     }
     
-    func addSpriteToScene(sprite: SKSpriteNode) {
+    func addSpriteToScene(_ sprite: SKSpriteNode) {
         let x = scene.size.width + sprite.size.width
         let y = scene.levelHolder1.size.height + sprite.size.height / 2
-        let newPosition = CGPointMake(x, y)
+        let newPosition = CGPoint(x: x, y: y)
         
-        if sprite.isKindOfClass(MeleeOrc) {
+        if sprite.isKind(of: MeleeOrc.self) {
             let randomSelector = CGFloat.random(min: 0, max: 1)
             if randomSelector <= 0.4 {
-                sprite.position = scene.convertPoint(newPosition, toNode: scene.enemyScrollLayer)
+                sprite.position = scene.convert(newPosition, to: scene.enemyScrollLayer)
                 scene.enemyScrollLayer.addChild(sprite)
             }
             else if randomSelector > 0.4 && randomSelector <= 0.8 {
-                sprite.position = scene.convertPoint(newPosition, toNode: scene.enemyScrollLayerSlow)
+                sprite.position = scene.convert(newPosition, to: scene.enemyScrollLayerSlow)
                 scene.enemyScrollLayerSlow.addChild(sprite)
             }
             else if randomSelector > 0.8 {
-                sprite.position = scene.convertPoint(newPosition, toNode: scene.enemyScrollLayerFast)
+                sprite.position = scene.convert(newPosition, to: scene.enemyScrollLayerFast)
                 scene.enemyScrollLayerFast.addChild(sprite)
             }
         }
-        else if sprite.isKindOfClass(Heart) {
-            sprite.position = scene.convertPoint(newPosition, toNode: scene.obstacleScrollLayer)
+        else if sprite.isKind(of: Heart.self) {
+            sprite.position = scene.convert(newPosition, to: scene.obstacleScrollLayer)
             scene.obstacleScrollLayer.addChild(sprite)
             sprite.position.y += sprite.size.height
         }
         else {
-            sprite.position = scene.convertPoint(newPosition, toNode: scene.obstacleScrollLayer)
+            sprite.position = scene.convert(newPosition, to: scene.obstacleScrollLayer)
             scene.obstacleScrollLayer.addChild(sprite)
         }
     }
@@ -151,7 +151,7 @@ class PlayingState: GKState {
             }
             else if randomSelector > 0.975 && scene.score >= 100 {
                 //Undead
-                scene.gameState.enterState(BossState)
+                scene.gameState.enter(BossState.self)
             }
             else if randomSelector > 0.975 && scene.score < 100 {
                 //Orc or Spike

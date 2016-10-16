@@ -14,7 +14,7 @@ class Coin: SKSpriteNode {
 
     
     init() {
-        super.init(texture: coinTexture, color: UIColor.clearColor(), size: CGSize(width: 20, height: 20))
+        super.init(texture: coinTexture, color: UIColor.clear, size: CGSize(width: 20, height: 20))
         
         createPhysicsBody()
     }
@@ -27,7 +27,7 @@ class Coin: SKSpriteNode {
         let body = SKPhysicsBody(circleOfRadius: 5)
         
         body.affectedByGravity = false
-        body.dynamic = false
+        body.isDynamic = false
         body.allowsRotation = false
         
         body.categoryBitMask = PhysicsCategory.Coin

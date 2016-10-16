@@ -27,7 +27,7 @@ class TutorialState: GKState {
         self.scene = scene
     }
     
-    override func didEnterWithPreviousState(previousState: GKState?) {
+    override func didEnter(from previousState: GKState?) {
         /*
          * Drag functionality was changed to tap have not changed var names yet
          * (Yes i'm way too lazy)
@@ -36,8 +36,8 @@ class TutorialState: GKState {
         tapSideWidth = (scene.size.width / 2) / 2
         dragSideWidth = scene.size.width - tapSideWidth
         
-        let white = UIColor.whiteColor()
-        let alphaWhite = white.colorWithAlphaComponent(0.3)
+        let white = UIColor.white
+        let alphaWhite = white.withAlphaComponent(0.3)
         
         separator = SKSpriteNode(color: alphaWhite, size: CGSize(width: 1.5, height: scene.size.height))
         separator.position.x = tapSideWidth
@@ -62,25 +62,25 @@ class TutorialState: GKState {
         dragLabel.position.x = (dragSideWidth / 2) + tapSideWidth
         dragLabel.position.y = scene.size.height / 2
         
-        let fadeAction = SKAction.fadeAlphaBy(0.3, duration: 0.5)
-        let fadeAnimation = SKAction.repeatActionForever(fadeAction)
+        let fadeAction = SKAction.fadeAlpha(by: 0.3, duration: 0.5)
+        let fadeAnimation = SKAction.repeatForever(fadeAction)
         
-        tapLabel.runAction(fadeAnimation)
-        dragLabel.runAction(fadeAnimation)
+        tapLabel.run(fadeAnimation)
+        dragLabel.run(fadeAnimation)
         
         scene.addChild(tapLabel)
         scene.addChild(dragLabel)
     }
     
-    override func isValidNextState(stateClass: AnyClass) -> Bool {
+    override func isValidNextState(_ stateClass: AnyClass) -> Bool {
         return true
     }
     
-    override func willExitWithNextState(nextState: GKState) {
+    override func willExit(to nextState: GKState) {
         
     }
     
-    override func updateWithDeltaTime(seconds: NSTimeInterval) {
+    override func update(deltaTime seconds: TimeInterval) {
         
         if !addedCorrectIndicator {
             if scene.didTutJump {
@@ -98,7 +98,7 @@ class TutorialState: GKState {
             dragLabel.removeFromParent()
             correctBox.removeFromParent()
             
-            scene.gameState.enterState(PlayingState)
+            scene.gameState.enter(PlayingState.self)
         }
         
         let floorSpeed: CGFloat = 4
@@ -127,14 +127,14 @@ class TutorialState: GKState {
         scene.scrollSpriteInState(scene.treesFront2, speed: treesFrontSpeed)
     }
     
-    func addCorrectIndicator(label: SKLabelNode, sideWidth: CGFloat) {
-        let greenColor = UIColor.greenColor()
-        let alphaGreen = greenColor.colorWithAlphaComponent(0.5)
+    func addCorrectIndicator(_ label: SKLabelNode, sideWidth: CGFloat) {
+        let greenColor = UIColor.green
+        let alphaGreen = greenColor.withAlphaComponent(0.5)
         
         correctBox = SKSpriteNode(color: alphaGreen, size: CGSize(width: sideWidth, height: scene.size.height))
         
         let completedTexture = SKTexture(imageNamed: "completed")
-        let completedIcon = SKSpriteNode(texture: completedTexture, color: UIColor.clearColor(), size: completedTexture.size())
+        let completedIcon = SKSpriteNode(texture: completedTexture, color: UIColor.clear, size: completedTexture.size())
         correctBox.addChild(completedIcon)
         completedIcon.position.x = 0
         completedIcon.position.y = 0
@@ -144,7 +144,7 @@ class TutorialState: GKState {
         correctBox.position.y = label.position.y
         correctBox.zPosition = 10
         
-        label.hidden = true
+        label.isHidden = true
         
         addedCorrectIndicator = true
     }

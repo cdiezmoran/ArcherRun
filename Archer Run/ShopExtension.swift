@@ -17,7 +17,7 @@ extension GameScene {
         gameOverScreen.addChild(window)
         window.zPosition = 50
         
-        let alphaBlack = UIColor.blackColor().colorWithAlphaComponent(0.65)
+        let alphaBlack = UIColor.black.withAlphaComponent(0.65)
         let bg = SKSpriteNode(color: alphaBlack, size: frame.size)
         window.addChild(bg)
         bg.zPosition = -5
@@ -37,9 +37,9 @@ extension GameScene {
         window.addChild(totalCoinsLabel)
         totalCoinsLabel.position = CGPoint(x: 0, y: 127.5)
         
-        totalCoinsLabel.text = String(userDefaults.integerForKey("totalCoins"))
+        totalCoinsLabel.text = String(userDefaults.integer(forKey: "totalCoins"))
         
-        let coinSprite = SKSpriteNode(texture: SKTexture(imageNamed: "coinGold"), color: UIColor.clearColor(), size: CGSize(width: 30, height: 30))
+        let coinSprite = SKSpriteNode(texture: SKTexture(imageNamed: "coinGold"), color: UIColor.clear, size: CGSize(width: 30, height: 30))
         window.addChild(coinSprite)
         coinSprite.position = CGPoint(x: 44, y: 172)
         
@@ -47,7 +47,7 @@ extension GameScene {
         let charactersTexture = SKTexture(imageNamed: "charactersButton")
         let miscTexture = SKTexture(imageNamed: "miscButton")
         
-        let arrowsButton = MSButtonNode(texture: arrowsTexture, color: UIColor.clearColor(), size: arrowsTexture.size())
+        let arrowsButton = MSButtonNode(texture: arrowsTexture, color: UIColor.clear, size: arrowsTexture.size())
         window.addChild(arrowsButton)
         arrowsButton.position = CGPoint(x: 0, y: 70)
         
@@ -56,7 +56,7 @@ extension GameScene {
             self.createItemsWindowForCategory("arrows", menuWindowCoinLabel: totalCoinsLabel)
         }
         
-        let charactersButton = MSButtonNode(texture: charactersTexture, color: UIColor.clearColor(), size: charactersTexture.size())
+        let charactersButton = MSButtonNode(texture: charactersTexture, color: UIColor.clear, size: charactersTexture.size())
         window.addChild(charactersButton)
         charactersButton.position = CGPoint(x: 0, y: -35)
         
@@ -64,19 +64,19 @@ extension GameScene {
             self.createItemsWindowForCategory("characters", menuWindowCoinLabel: totalCoinsLabel)
         }
         
-        let miscButton = MSButtonNode(texture: miscTexture, color: UIColor.clearColor(), size: miscTexture.size())
+        let miscButton = MSButtonNode(texture: miscTexture, color: UIColor.clear, size: miscTexture.size())
         window.addChild(miscButton)
         miscButton.position = CGPoint(x: 0, y: -140)
     }
     
-    func createItemsWindowForCategory(category: String, menuWindowCoinLabel: SKLabelNode) {
+    func createItemsWindowForCategory(_ category: String, menuWindowCoinLabel: SKLabelNode) {
         shopIndex = 0
         
         var itemData = [String: Bool]()
         var defaultsKey: String!
         var itemKeys = [String]()
         var spriteSize: CGSize = CGSize(width: 306, height: 45)
-        var totalCoinCount = userDefaults.integerForKey("totalCoins")
+        var totalCoinCount = userDefaults.integer(forKey: "totalCoins")
         
         if category == "arrows" {
             //get arrows data
@@ -114,17 +114,17 @@ extension GameScene {
         window.addChild(closeButton)
         closeButton.position = CGPoint(x: 265, y: 180)
         
-        let itemHolder = SKSpriteNode(texture: SKTexture(imageNamed: "item-holder"), color: UIColor.clearColor(), size: CGSize(width: 414, height: 175))
+        let itemHolder = SKSpriteNode(texture: SKTexture(imageNamed: "item-holder"), color: UIColor.clear, size: CGSize(width: 414, height: 175))
         window.addChild(itemHolder)
         itemHolder.position = CGPoint(x: 0, y: 70)
         
-        let itemSprite = SKSpriteNode(texture: item.texture, color: UIColor.clearColor(), size: spriteSize)
+        let itemSprite = SKSpriteNode(texture: item.texture, color: UIColor.clear, size: spriteSize)
         itemHolder.addChild(itemSprite)
         itemSprite.position = CGPoint(x: 0, y: 20)
         itemSprite.zPosition = 5
         
         let priceLabel = SKLabelNode(fontNamed: "Courier New Bold")
-        priceLabel.horizontalAlignmentMode = .Left
+        priceLabel.horizontalAlignmentMode = .left
         priceLabel.fontSize = 28
         priceLabel.fontColor = UIColor.flatYellowColor()
         itemHolder.addChild(priceLabel)
@@ -138,32 +138,32 @@ extension GameScene {
         itemNameLabel.position = CGPoint(x: 0, y: -65)
         
         let availableCoinsLabel = SKLabelNode(fontNamed: "Courier New Bold")
-        availableCoinsLabel.horizontalAlignmentMode = .Left
+        availableCoinsLabel.horizontalAlignmentMode = .left
         availableCoinsLabel.fontSize = 32
         availableCoinsLabel.text = String(totalCoinCount)
         window.addChild(availableCoinsLabel)
         availableCoinsLabel.position = CGPoint(x: -242, y: 161)
         
-        let coinSprite = SKSpriteNode(texture: SKTexture(imageNamed: "coinGold"), color: UIColor.clearColor(), size: CGSize(width: 30, height: 30))
+        let coinSprite = SKSpriteNode(texture: SKTexture(imageNamed: "coinGold"), color: UIColor.clear, size: CGSize(width: 30, height: 30))
         window.addChild(coinSprite)
         coinSprite.position = CGPoint(x: -250, y: 172.5)
         
-        let prevButton = MSButtonNode(texture: SKTexture(imageNamed: "prevButton"), color: UIColor.clearColor(), size: CGSize(width: 103, height: 103))
+        let prevButton = MSButtonNode(texture: SKTexture(imageNamed: "prevButton"), color: UIColor.clear, size: CGSize(width: 103, height: 103))
         window.addChild(prevButton)
         prevButton.position = CGPoint(x: -140, y: -140)
         
-        let nextButton = MSButtonNode(texture: SKTexture(imageNamed: "nextButton"), color: UIColor.clearColor(), size: CGSize(width: 103, height: 103))
+        let nextButton = MSButtonNode(texture: SKTexture(imageNamed: "nextButton"), color: UIColor.clear, size: CGSize(width: 103, height: 103))
         window.addChild(nextButton)
         nextButton.position = CGPoint(x: 140, y: -140)
         
-        let manageButton = MSButtonNode(texture: SKTexture(imageNamed: "buyButton"), color: UIColor.clearColor(), size: CGSize(width: 207, height: 52))
+        let manageButton = MSButtonNode(texture: SKTexture(imageNamed: "buyButton"), color: UIColor.clear, size: CGSize(width: 207, height: 52))
         window.addChild(manageButton)
         manageButton.position = CGPoint(x: 0, y: -140)
         
         let selectHandler: () -> Void = {
             self.setEquippedTypeForCategory(category, rawValue: item.key)
             manageButton.texture = SKTexture(imageNamed: "equippedPlaceholder")
-            manageButton.state = .Disabled
+            manageButton.state = .disabled
         }
         
         let buyHandler: () -> Void = {
@@ -173,8 +173,8 @@ extension GameScene {
                 itemData[item.key] = true
                 item.isBought = true
                 
-                self.userDefaults.setInteger(totalCoinCount, forKey: "totalCoins")
-                self.userDefaults.setObject(itemData, forKey: defaultsKey)
+                self.userDefaults.set(totalCoinCount, forKey: "totalCoins")
+                self.userDefaults.set(itemData, forKey: defaultsKey)
                 self.userDefaults.synchronize()
                 
                 let totalCoinString = String(totalCoinCount)
@@ -193,7 +193,7 @@ extension GameScene {
             priceLabel.text = ""
             if isEquipped(category, rawValue: item.key) {
                 manageButton.texture = SKTexture(imageNamed: "equippedPlaceholder")
-                manageButton.state = .Disabled
+                manageButton.state = .disabled
             }
             else {
                 manageButton.texture = SKTexture(imageNamed: "selectButton")
@@ -214,7 +214,7 @@ extension GameScene {
         }
     }
     
-    func updateStoreItem(next: Bool, itemKeys: [String], itemData: [String: Bool], itemNameLabel: SKLabelNode, itemSprite: SKSpriteNode, priceLabel: SKLabelNode, manageButton: MSButtonNode, category: String, selectHandler: () -> Void, buyHandler: () -> Void) -> ShopItem {
+    func updateStoreItem(_ next: Bool, itemKeys: [String], itemData: [String: Bool], itemNameLabel: SKLabelNode, itemSprite: SKSpriteNode, priceLabel: SKLabelNode, manageButton: MSButtonNode, category: String, selectHandler: @escaping () -> Void, buyHandler: @escaping () -> Void) -> ShopItem {
         if next {
             self.shopIndex += 1
             if self.shopIndex >= itemKeys.count {
@@ -241,26 +241,26 @@ extension GameScene {
             priceLabel.text = ""
             if isEquipped(category, rawValue: item.key) {
                 manageButton.texture = SKTexture(imageNamed: "equippedPlaceholder")
-                manageButton.state = .Disabled
+                manageButton.state = .disabled
             }
             else {
                 manageButton.texture = SKTexture(imageNamed: "selectButton")
                 manageButton.selectedHandler = selectHandler
-                manageButton.state = .Active
+                manageButton.state = .active
             }
         }
         else {
             priceLabel.text = String(item.price)
             manageButton.texture = SKTexture(imageNamed: "buyButton")
             manageButton.selectedHandler = buyHandler
-            manageButton.state = .Active
+            manageButton.state = .active
         }
         
         return item
     }
     
     func getAvailableShopItems() {
-        if let dict = userDefaults.dictionaryForKey("availableArrows") {
+        if let dict = userDefaults.dictionary(forKey: "availableArrows") {
             availableArrows = dict as! [String:Bool]
         }
         else {
@@ -268,37 +268,37 @@ extension GameScene {
             availableArrows["ice"] = false
             availableArrows["fire"] = false
             availableArrows["explosive"] = false
-            userDefaults.setObject(availableArrows, forKey: "availableArrows")
+            userDefaults.set(availableArrows, forKey: "availableArrows")
             userDefaults.synchronize()
         }
         
-        if let dict = userDefaults.dictionaryForKey("availableCharacters") {
+        if let dict = userDefaults.dictionary(forKey: "availableCharacters") {
             availableCharacters = dict as! [String: Bool]
         }
         else {
             availableCharacters["archer"] = true
             availableCharacters["angel"] = false
-            userDefaults.setObject(availableCharacters, forKey: "availableCharacters")
+            userDefaults.set(availableCharacters, forKey: "availableCharacters")
             userDefaults.synchronize()
         }
     }
     
-    func setEquippedTypeForCategory(category: String, rawValue: String) {
+    func setEquippedTypeForCategory(_ category: String, rawValue: String) {
         let key = getRawKeyForCategory(category)
         
-        userDefaults.setObject(rawValue, forKey: key)
+        userDefaults.set(rawValue, forKey: key)
         userDefaults.synchronize()
     }
     
-    func isEquipped(category: String, rawValue: String) -> Bool {
+    func isEquipped(_ category: String, rawValue: String) -> Bool {
         let key = getRawKeyForCategory(category)
         
-        let equippedRaw = userDefaults.stringForKey(key)
+        let equippedRaw = userDefaults.string(forKey: key)
         
         return equippedRaw == rawValue
     }
     
-    func getRawKeyForCategory(category: String) -> String {
+    func getRawKeyForCategory(_ category: String) -> String {
         var key: String = ""
         
         if category == "arrows" {

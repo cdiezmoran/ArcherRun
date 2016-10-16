@@ -19,28 +19,28 @@ class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate, GADBa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(
+        NotificationCenter.default.addObserver(
             self,
             selector: #selector(GameViewController.loadAds),
-            name: "loadAds",
+            name: NSNotification.Name(rawValue: "loadAds"),
             object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(
+        NotificationCenter.default.addObserver(
             self,
             selector: #selector(GameViewController.removeAdsOnGameOver),
-            name: "removeAds",
+            name: NSNotification.Name(rawValue: "removeAds"),
             object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(
+        NotificationCenter.default.addObserver(
             self,
             selector: #selector(GameViewController.showInterstitial),
-            name: "showInterstitial",
+            name: NSNotification.Name(rawValue: "showInterstitial"),
             object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(
+        NotificationCenter.default.addObserver(
             self,
             selector: #selector(GameViewController.showRewardVideoAd),
-            name: "showRewardVideo",
+            name: NSNotification.Name(rawValue: "showRewardVideo"),
             object: nil)
         
         if let scene = StartScene(fileNamed:"StartScene") {
@@ -51,25 +51,25 @@ class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate, GADBa
             skView.ignoresSiblingOrder = true
             
             /* Set the scale mode to scale to fit the window */
-            scene.scaleMode = .Fill
+            scene.scaleMode = .fill
             
             skView.presentScene(scene)
         }
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate : Bool {
         return true
     }
 
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return .AllButUpsideDown
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            return .allButUpsideDown
         } else {
-            return .All
+            return .all
         }
     }
 
@@ -78,45 +78,45 @@ class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate, GADBa
         // Release any cached data, images, etc that aren't in use.
     }
 
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
     func loadAds() {
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
-        bannerView.frame = CGRectMake((view!.bounds.size.width - kGADAdSizeBanner.size.width) / 2,
-                                      view!.bounds.size.height - kGADAdSizeBanner.size.height,
-                                      kGADAdSizeBanner.size.width, kGADAdSizeBanner.size.height);
+        bannerView.frame = CGRect(x: (view!.bounds.size.width - kGADAdSizeBanner.size.width) / 2,
+                                      y: view!.bounds.size.height - kGADAdSizeBanner.size.height,
+                                      width: kGADAdSizeBanner.size.width, height: kGADAdSizeBanner.size.height);
         bannerView.delegate = self
         bannerView.adUnitID = "ca-app-pub-1607117345046468/9082311632"
         
         bannerView.rootViewController = self
         view!.addSubview(bannerView)
         
-        bannerView.hidden = true
+        bannerView.isHidden = true
         
         let bannerRequest = GADRequest()
         bannerRequest.testDevices = ["65bff9d7a2bfc4f181d7db7dafdfcfa2", "Simulator"]
-        bannerView.loadRequest(bannerRequest)
+        bannerView.load(bannerRequest)
         
         //Interstitial from admob
         interstitial = GADInterstitial(adUnitID: "ca-app-pub-1607117345046468/5914009238")
         let request = GADRequest()
         request.testDevices = ["65bff9d7a2bfc4f181d7db7dafdfcfa2", "Simulator"]
-        interstitial.loadRequest(request)
+        interstitial.load(request)
         
         //Reward video
         GADRewardBasedVideoAd.sharedInstance().delegate = self
-        GADRewardBasedVideoAd.sharedInstance().loadRequest(GADRequest(), withAdUnitID: "ca-app-pub-1607117345046468/1983337237")
+        GADRewardBasedVideoAd.sharedInstance().load(GADRequest(), withAdUnitID: "ca-app-pub-1607117345046468/1983337237")
     }
     
-    func adViewDidReceiveAd(bannerView: GADBannerView!) {
-        self.bannerView.hidden = false
+    func adViewDidReceiveAd(_ bannerView: GADBannerView!) {
+        self.bannerView.isHidden = false
     }
     
-    func adView(bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
+    func adView(_ bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
         print("ERROR LOADING BANNER AD: \(error.description)")
-        self.bannerView.hidden = true
+        self.bannerView.isHidden = true
     }
     
     func removeAdsOnGameOver() {
@@ -129,34 +129,34 @@ class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate, GADBa
         return self
     }
     
-    func adViewWillPresentScreen(bannerView: GADBannerView!) {
-        NSNotificationCenter.defaultCenter().postNotificationName("pauseGame", object: nil)
+    func adViewWillPresentScreen(_ bannerView: GADBannerView!) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "pauseGame"), object: nil)
     }
     
     func showInterstitial() {
         if interstitial.isReady {
-            interstitial.presentFromRootViewController(self)
+            interstitial.present(fromRootViewController: self)
         }
     }
     
     func showRewardVideoAd() {
-        if GADRewardBasedVideoAd.sharedInstance().ready {
-            GADRewardBasedVideoAd.sharedInstance().presentFromRootViewController(self)
+        if GADRewardBasedVideoAd.sharedInstance().isReady {
+            GADRewardBasedVideoAd.sharedInstance().present(fromRootViewController: self)
         }
     }
     
-    func rewardBasedVideoAd(rewardBasedVideoAd: GADRewardBasedVideoAd!, didRewardUserWithReward reward: GADAdReward!) {
+    func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd!, didRewardUserWith reward: GADAdReward!) {
         //Give reward
         print("REWARD WORKED!")
-        NSNotificationCenter.defaultCenter().postNotificationName("giveExtraChance", object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "giveExtraChance"), object: nil)
     }
     
-    func rewardBasedVideoAdDidReceiveAd(rewardBasedVideoAd: GADRewardBasedVideoAd!) {
+    func rewardBasedVideoAdDidReceive(_ rewardBasedVideoAd: GADRewardBasedVideoAd!) {
         print("RECIEVED REWARD AD!")
-        NSNotificationCenter.defaultCenter().postNotificationName("receivedReward", object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "receivedReward"), object: nil)
     }
     
-    func rewardBasedVideoAd(rewardBasedVideoAd: GADRewardBasedVideoAd!, didFailToLoadWithError error: NSError!) {
-        print("REWARD AD FAILED: \(error.description)")
+    func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd!, didFailToLoadWithError error: Error!) {
+        print("REWARD AD FAILED")
     }
 }

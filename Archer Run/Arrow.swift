@@ -23,13 +23,13 @@ class Arrow: SKSpriteNode {
     let defaultSize = CGSize(width: 34.0, height: 8)
     
     init() {
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        if let arrowRaw = userDefaults.stringForKey("arrowRawValue") {
+        let userDefaults = UserDefaults.standard
+        if let arrowRaw = userDefaults.string(forKey: "arrowRawValue") {
             self.type = ArrowType(rawValue: arrowRaw)!
         }
         else {
             type = .Regular
-            userDefaults.setObject(type.rawValue, forKey: "arrowRawValue")
+            userDefaults.set(type.rawValue, forKey: "arrowRawValue")
             userDefaults.synchronize()
         }
         
@@ -52,7 +52,7 @@ class Arrow: SKSpriteNode {
             break
         }
         
-        super.init(texture: defaultTexture, color: UIColor.clearColor(), size: defaultSize)
+        super.init(texture: defaultTexture, color: UIColor.clear, size: defaultSize)
         
         if type == .Ice {
             addArrowParticles("IceTrail", advanceByTime: 0.6)
@@ -68,7 +68,7 @@ class Arrow: SKSpriteNode {
     }
     
     init(isObstacle uselessBool: Bool) {
-        super.init(texture: SKTexture(imageNamed: "arrow"), color: UIColor.clearColor(), size: defaultSize)
+        super.init(texture: SKTexture(imageNamed: "arrow"), color: UIColor.clear, size: defaultSize)
         
         self.type = .Regular
         xScale = -1
@@ -82,7 +82,7 @@ class Arrow: SKSpriteNode {
     
     func createPhysicsBody() {
         //let body = SKPhysicsBody(texture: defaultTexture, size: defaultSize)
-        let body = SKPhysicsBody(rectangleOfSize: defaultSize)
+        let body = SKPhysicsBody(rectangleOf: defaultSize)
         
         body.mass = 0.0037
         
@@ -105,7 +105,7 @@ class Arrow: SKSpriteNode {
         physicsBody = body
     }
     
-    func addArrowParticles(fileName: String, advanceByTime time: NSTimeInterval) {
+    func addArrowParticles(_ fileName: String, advanceByTime time: TimeInterval) {
         let particles = SKEmitterNode(fileNamed: fileName)!
         particles.advanceSimulationTime(time)
         addChild(particles)

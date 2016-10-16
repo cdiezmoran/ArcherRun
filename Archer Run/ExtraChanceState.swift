@@ -22,36 +22,36 @@ class ExtraChanceState: GKState {
         self.scene = scene
     }
     
-    override func didEnterWithPreviousState(previousState: GKState?) {
-        NSNotificationCenter.defaultCenter().postNotificationName("removeAds", object: nil)
+    override func didEnter(from previousState: GKState?) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "removeAds"), object: nil)
 
-        NSNotificationCenter.defaultCenter().addObserver(
+        NotificationCenter.default.addObserver(
             self,
             selector: #selector(ExtraChanceState.keepPlaying),
-            name: "giveExtraChance",
+            name: NSNotification.Name(rawValue: "giveExtraChance"),
             object: nil)
         
         createUI()
     }
     
-    override func isValidNextState(stateClass: AnyClass) -> Bool {
+    override func isValidNextState(_ stateClass: AnyClass) -> Bool {
         return true
     }
     
-    override func willExitWithNextState(nextState: GKState) {
+    override func willExit(to nextState: GKState) {
         window.removeFromParent()
     }
     
-    override func updateWithDeltaTime(seconds: NSTimeInterval) {
+    override func update(deltaTime seconds: TimeInterval) {
         
     }
     
     func gameOver() {
         if scene.didCompleteChallenge {
-            scene.gameState.enterState(ChallengeCompletedState)
+            scene.gameState.enter(ChallengeCompletedState.self)
         }
         else {
-            scene.gameState.enterState(GameOverState)
+            scene.gameState.enter(GameOverState.self)
         }
     }
     
@@ -63,11 +63,11 @@ class ExtraChanceState: GKState {
         scene.archer.run()
         scene.clearObstacles()
         
-        scene.gameState.enterState(PlayingState)
+        scene.gameState.enter(PlayingState.self)
     }
     
     func createUI() {
-        let blackAlpha = UIColor.blackColor().colorWithAlphaComponent(0.65)
+        let blackAlpha = UIColor.black.withAlphaComponent(0.65)
         window = SKSpriteNode(color: blackAlpha, size: CGSize(width: scene.size.width, height: scene.size.height))
         window.zPosition = 100
         
@@ -83,16 +83,16 @@ class ExtraChanceState: GKState {
         secondLabel.position = CGPoint(x: 0, y: 80)
         
         let heartTexture = SKTexture(imageNamed: "heartFinal")
-        let heartSprite = SKSpriteNode(texture: heartTexture, color: UIColor.clearColor(), size: heartTexture.size())
+        let heartSprite = SKSpriteNode(texture: heartTexture, color: UIColor.clear, size: heartTexture.size())
         window.addChild(heartSprite)
         
         let noThanksTexture = SKTexture(imageNamed: "noThanksButton")
-        noThanksButton = MSButtonNode(texture: noThanksTexture, color: UIColor.clearColor(), size: noThanksTexture.size())
+        noThanksButton = MSButtonNode(texture: noThanksTexture, color: UIColor.clear, size: noThanksTexture.size())
         window.addChild(noThanksButton)
         noThanksButton.position = CGPoint(x: -118, y: -120)
         
         let watchTexture = SKTexture(imageNamed: "watchButton")
-        watchButton = MSButtonNode(texture: watchTexture, color: UIColor.clearColor(), size: watchTexture.size())
+        watchButton = MSButtonNode(texture: watchTexture, color: UIColor.clear, size: watchTexture.size())
         window.addChild(watchButton)
         watchButton.position = CGPoint(x: 126, y: -120)
         
@@ -105,7 +105,7 @@ class ExtraChanceState: GKState {
     func setButtonHandlers() {
         watchButton.selectedHandler = {
             //Show video
-            NSNotificationCenter.defaultCenter().postNotificationName("showRewardVideo", object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "showRewardVideo"), object: nil)
         }
         noThanksButton.selectedHandler = {
             //End game

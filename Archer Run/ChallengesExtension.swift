@@ -41,30 +41,30 @@ extension GameScene {
     
     func showChallengesAtGameStart() {
         //Show banner
-        let showBanner = SKAction.moveToY(355, duration: 0.5)
+        let showBanner = SKAction.moveTo(y: 355, duration: 0.5)
         
         //Get first challenge info
-        let updateInfoFirst = SKAction.runBlock({
+        let updateInfoFirst = SKAction.run({
             self.updateForChallengeKey("firstChallenge")
         })
         //wait for 0.5 seconds
-        let wait = SKAction.waitForDuration(1.5)
+        let wait = SKAction.wait(forDuration: 1.5)
         //repeat for other to challenges
-        let updateInfoSecond = SKAction.runBlock({
+        let updateInfoSecond = SKAction.run({
             self.updateForChallengeKey("secondChallenge")
         })
-        let updateInfoThird = SKAction.runBlock({
+        let updateInfoThird = SKAction.run({
             self.updateForChallengeKey("thirdChallenge")
         })
         //Hide banner
-        let hideBanner = SKAction.moveToY(446.5, duration: 0.5)
+        let hideBanner = SKAction.moveTo(y: 446.5, duration: 0.5)
         
         //Run action
         let sequence = SKAction.sequence([updateInfoFirst, showBanner, wait, updateInfoSecond, wait, updateInfoThird, wait, hideBanner])
-        challengeActiveBanner.runAction(sequence)
+        challengeActiveBanner.run(sequence)
     }
     
-    func updateForChallengeKey(key: String) {
+    func updateForChallengeKey(_ key: String) {
         let challenge = ChallengeManager.sharedInstance.activeChallenges[key]!
         challengeActiveLabel.text = challenge.description()
         challengeActiveProgress.text = challenge.progressDescription()
