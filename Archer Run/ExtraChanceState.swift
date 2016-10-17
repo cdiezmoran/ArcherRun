@@ -43,7 +43,7 @@ class ExtraChanceState: GKState {
     }
     
     override func update(deltaTime seconds: TimeInterval) {
-        
+        scene.keepEnemiesMoving(deltaTime: seconds)
     }
     
     func gameOver() {

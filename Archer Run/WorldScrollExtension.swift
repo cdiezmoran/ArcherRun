@@ -88,4 +88,12 @@ extension GameScene {
             }
         }
     }
+    
+    func keepEnemiesMoving(deltaTime seconds: TimeInterval) {
+        let moveSpeed = CGFloat(60 * seconds)
+        
+        enemyScrollLayer.position.x -= moveSpeed
+        enemyScrollLayerSlow.position.x -= moveSpeed
+        enemyScrollLayerFast.position.x -= moveSpeed
+    }
 }

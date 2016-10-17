@@ -23,11 +23,15 @@ class MeleeOrc: Orc {
         
         runAnimation = SKAction.repeatForever(animate)
         
-        run(runAnimation)        
+        run()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    func run() {
+        run(runAnimation)
     }
     
     func hitArcher() {

@@ -22,6 +22,10 @@ class PlayingState: GKState {
     
     override func didEnter(from previousState: GKState?) {
         compoundObjects = CompoundObjects(scene: scene)
+        
+        if previousState is BossState {
+            scene.removeUndead()
+        }
     }
     
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {

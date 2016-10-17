@@ -22,6 +22,11 @@ class PauseState: GKState {
         scene.toggleMusicAndSoundVisibility()
         
         scene.archer.removeAllActions()
+        scene.archer.physicsBody?.isDynamic = false
+        
+        scene.removeOrcActionsFor(parentNode: scene.enemyScrollLayer)
+        scene.removeOrcActionsFor(parentNode: scene.enemyScrollLayerFast)
+        scene.removeOrcActionsFor(parentNode: scene.enemyScrollLayerSlow)
     }
     
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {
@@ -31,5 +36,11 @@ class PauseState: GKState {
     override func willExit(to nextState: GKState) {
         //resume animations
         scene.archer.doRunAnimation()
+        scene.archer.physicsBody?.isDynamic = true
+        scene.archer.resetRotation()
+        
+        scene.makeOrcsRunFor(parentNode: scene.enemyScrollLayer)
+        scene.makeOrcsRunFor(parentNode: scene.enemyScrollLayerFast)
+        scene.makeOrcsRunFor(parentNode: scene.enemyScrollLayerSlow)
     }
 }

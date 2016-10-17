@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -18,7 +19,6 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
     return false
   }
 }
-
 
 struct PhysicsCategory {
     static let None:        UInt32 = 0          // 0000
@@ -468,7 +468,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
        /* Called when a touch begins */
-        if gameState.currentState is GameOverState || gameState.currentState is StartingState || gameState.currentState is ChallengeCompletedState || gameState.currentState is ExtraChanceState { return }
+        if gameState.currentState is GameOverState || gameState.currentState is StartingState || gameState.currentState is ChallengeCompletedState || gameState.currentState is ExtraChanceState || gameState.currentState is PauseState { return }
         
         let touch = touches.first
         let location = touch?.location(in: self)

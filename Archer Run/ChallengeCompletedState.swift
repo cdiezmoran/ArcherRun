@@ -17,7 +17,9 @@ class ChallengeCompletedState: GKState {
         self.scene = scene
     }
     
-    override func didEnter(from previousState: GKState?) {        
+    override func didEnter(from previousState: GKState?) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "removeAds"), object: nil)
+        
         scene.challengeCompletedScreen.zPosition = 0
         scene.levelInfoHolder.zPosition = 1
         
@@ -53,9 +55,7 @@ class ChallengeCompletedState: GKState {
     }
     
     override func update(deltaTime seconds: TimeInterval) {
-        scene.enemyScrollLayer.position.x -= 4
-        scene.enemyScrollLayerSlow.position.x -= 4
-        scene.enemyScrollLayerFast.position.x -= 4
+        scene.keepEnemiesMoving(deltaTime: seconds)
     }
     
     func challengeCompletedSequence(_ challenge: Challenge) -> [SKAction] {

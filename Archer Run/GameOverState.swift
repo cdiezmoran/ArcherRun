@@ -78,11 +78,7 @@ class GameOverState: GKState {
     }
     
     override func update(deltaTime seconds: TimeInterval) {
-        let moveSpeed = CGFloat(60 * seconds)
-        
-        scene.enemyScrollLayer.position.x -= moveSpeed
-        scene.enemyScrollLayerSlow.position.x -= moveSpeed
-        scene.enemyScrollLayerFast.position.x -= moveSpeed
+        scene.keepEnemiesMoving(deltaTime: seconds)
     }
     
     func moveAndShowSoundButtons() {

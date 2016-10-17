@@ -197,4 +197,38 @@ extension GameScene {
         
         playArrowHitSound()
     }
+    
+    func removeUndead() {
+        var moveToAction: SKAction
+        if undead.state == .dead {
+            //Move undead down and to the middle
+            moveToAction = SKAction.move(to: CGPoint(x: size.width / 2, y: -size.height * 2), duration: 1)
+        }
+        else {
+            //Move undead up and to the middle
+            moveToAction = SKAction.move(to: CGPoint(x: 0, y: size.height * 2), duration: 1)
+        }
+        
+        let removeFromParent = SKAction.run({ self.undead.removeFromParent() })
+        
+        let sequence = SKAction.sequence([moveToAction, removeFromParent])
+        
+        undead.run(sequence)
+    }
+    
+    func removeOrcActionsFor(parentNode node: SKNode) {
+        for child in node.children {
+            child.removeAllActions()
+        }
+    }
+    
+    func makeOrcsRunFor(parentNode node: SKNode) {
+        for child in node.children {
+            if child.isKind(of: MeleeOrc.self) {
+                let orc = child as! MeleeOrc
+                orc.run()
+            }
+        }
+    }
+    
 }

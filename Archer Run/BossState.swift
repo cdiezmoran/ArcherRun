@@ -22,14 +22,22 @@ class BossState: GKState {
     }
 
     override func didEnter(from previousState: GKState?) {
+        //Set or replace scene.undead
         scene.undead = Undead()
+        
+        //create x position
         let x = scene.size.width + 10
+        
+        //create y position value from a range
         let minY = scene.levelHolder1.size.height + scene.undead.size.height
         let maxY = scene.size.height - scene.undead.size.height
         let y = CGFloat.random(min: minY, max: maxY)
+        
         scene.undead.position = CGPoint(x: x, y: y)
+        
         createMagicPlatform()
         createHealthBar()
+        
         checkPosition = scene.undead.position
     }
     
@@ -38,24 +46,8 @@ class BossState: GKState {
     }
     
     override func willExit(to nextState: GKState) {
-        var moveToAction: SKAction
-        if scene.undead.state == .dead {
-            //moveToAction = SKAction.moveToY(-scene.size.height * 2, duration: 1)
-            moveToAction = SKAction.move(to: CGPoint(x: scene.size.width / 2, y: -scene.size.height * 2), duration: 1)
-        }
-        else {
-            //moveToAction = SKAction.moveToY(scene.size.height * 2, duration: 1)
-            moveToAction = SKAction.move(to: CGPoint(x: 0, y: scene.size.height * 2), duration: 1)
-        }
-        
-        let removeFromParent = SKAction.run({ self.scene.undead.removeFromParent() })
-        
-        let sequence = SKAction.sequence([moveToAction, removeFromParent])
-        
         undeadArrowTimer = 0
         arrowCount = 0
-        
-        scene.undead.run(sequence)
     }
     
     override func update(deltaTime seconds: TimeInterval) {
